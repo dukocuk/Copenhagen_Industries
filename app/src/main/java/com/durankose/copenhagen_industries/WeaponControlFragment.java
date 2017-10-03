@@ -24,7 +24,7 @@ public class WeaponControlFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Log.d(TAG, "Du er inde i Weapon Control");
+        Log.d(TAG, "Du er inde i Weapon Control.");
         return inflater.inflate(R.layout.fragment_weapon_control, container, false);
     }
 
