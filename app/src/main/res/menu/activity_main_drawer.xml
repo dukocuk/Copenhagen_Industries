@@ -7,10 +7,6 @@
             android:icon="@drawable/ic_aim_1"
             android:title="Weapon Control" />
         <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_settings_black_24dp"
-            android:title="Settings" />
-        <item
             android:id="@+id/nav_devices"
             android:icon="@drawable/ic_rifle"
             android:title="Devices" />

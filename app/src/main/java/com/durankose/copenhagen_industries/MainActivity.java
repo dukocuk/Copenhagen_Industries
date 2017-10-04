@@ -1,10 +1,9 @@
 package com.durankose.copenhagen_industries;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,12 +17,17 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    // timeout for starts skærmen
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
 
         /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -84,14 +88,12 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_weaponControl) {
-            // Handle the camera action
+            // Handle the Weappon Control
             Toast.makeText(this, "Weapon Control", Toast.LENGTH_SHORT).show();
             WeaponControlFragment weaponControlFragment = new WeaponControlFragment();
             FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction().replace(R.id.layout_for_fragment, weaponControlFragment, weaponControlFragment.getTag()).commit();
 
-        } else if (id == R.id.nav_settings) {
-            Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_devices) {
             Toast.makeText(this, "Devices", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_help) {
