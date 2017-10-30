@@ -1,11 +1,10 @@
 package com.durankose.copenhagen_industries;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,16 +24,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        */
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -82,24 +71,55 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_weaponControl) {
-            // Handle the camera action
-            Toast.makeText(this, "Weapon Control", Toast.LENGTH_SHORT).show();
-            WeaponControlFragment weaponControlFragment = new WeaponControlFragment();
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(R.id.layout_for_fragment, weaponControlFragment, weaponControlFragment.getTag()).commit();
-
-        } else if (id == R.id.nav_settings) {
+        /**
+       if (id == R.id.nav_settings) {
             Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+           SettingsFragment settings = new SettingsFragment();
+           FragmentManager manager = getSupportFragmentManager();
+           manager.beginTransaction().replace(R.id.layout_for_fragment, settings, settings.getTag()).commit();
+
         } else if (id == R.id.nav_devices) {
             Toast.makeText(this, "Devices", Toast.LENGTH_SHORT).show();
+           DevicesFragment devices = new DevicesFragment();
+           FragmentManager manager = getSupportFragmentManager();
+           manager.beginTransaction().replace(R.id.layout_for_fragment, devices, devices.getTag()).commit();
         } else if (id == R.id.nav_help) {
             Toast.makeText(this, "Help", Toast.LENGTH_SHORT).show();
+           HelpFragment help = new HelpFragment();
+           FragmentManager manager = getSupportFragmentManager();
+           manager.beginTransaction().replace(R.id.layout_for_fragment, help, help.getTag()).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+**/
+        displaySelectedScreen(id);
         return true;
+    }
+
+    public void displaySelectedScreen(int id) {
+        Fragment fragment = null;
+
+
+        switch (id) {
+            case R.id.nav_devices:
+                fragment = new DevicesFragment();
+                break;
+            case R.id.nav_settings:
+                fragment = new SettingsFragment();
+                break;
+            case R.id.nav_help:
+                fragment = new HelpFragment();
+                break;
+        }
+
+        if (fragment != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.layout_for_fragment, fragment, fragment.getTag()).commit();
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+
     }
 }

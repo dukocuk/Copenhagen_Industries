@@ -1,13 +1,14 @@
 <resources>
-    <string name="app_name">Copenhagen Industries</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
+
+    <string name="app_name">Copenhagen Industries</string>
+    <string name="devices_fragment">Devices</string>
+    <string name="settings_fragment">Settings</string>
+    <string name="help_fragment">Help</string>
     <string name="weapon_control_fragment">Weapon Control</string>
 </resources>
