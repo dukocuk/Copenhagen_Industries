@@ -36,4 +36,6 @@ public class SettingsFragment extends Fragment {
         getActivity().setTitle(getString(R.string.settings_fragment));
     }
 
+
+
 }

@@ -2,7 +2,6 @@ package com.durankose.copenhagen_industries;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -11,11 +10,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -46,61 +49,32 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_actionbar, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Toast.makeText(this, "Clicked Settings", Toast.LENGTH_SHORT).show();
+                break;
         }
 
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        /**
-       if (id == R.id.nav_settings) {
-            Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
-           SettingsFragment settings = new SettingsFragment();
-           FragmentManager manager = getSupportFragmentManager();
-           manager.beginTransaction().replace(R.id.layout_for_fragment, settings, settings.getTag()).commit();
-
-        } else if (id == R.id.nav_devices) {
-            Toast.makeText(this, "Devices", Toast.LENGTH_SHORT).show();
-           DevicesFragment devices = new DevicesFragment();
-           FragmentManager manager = getSupportFragmentManager();
-           manager.beginTransaction().replace(R.id.layout_for_fragment, devices, devices.getTag()).commit();
-        } else if (id == R.id.nav_help) {
-            Toast.makeText(this, "Help", Toast.LENGTH_SHORT).show();
-           HelpFragment help = new HelpFragment();
-           FragmentManager manager = getSupportFragmentManager();
-           manager.beginTransaction().replace(R.id.layout_for_fragment, help, help.getTag()).commit();
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-**/
         displaySelectedScreen(id);
         return true;
     }
 
     public void displaySelectedScreen(int id) {
         Fragment fragment = null;
-
-
         switch (id) {
             case R.id.nav_devices:
                 fragment = new DevicesFragment();

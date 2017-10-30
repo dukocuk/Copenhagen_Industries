@@ -5,10 +5,19 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class DevicesFragment extends Fragment {
@@ -24,11 +33,83 @@ public class DevicesFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         Log.d(TAG, "Du er inde i Devices");
-        return inflater.inflate(R.layout.fragment_devices, container, false);
+        View view = inflater.inflate(R.layout.fragment_devices, container, false);
+
+        final String[] menuItems = {"Type 92 machine gun", "AG-043", "AK-47"};
+
+        ListView listView = view.findViewById(R.id.list_view);
+        /**
+        ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(
+                getActivity(),
+                android.R.layout.simple_list_item_1,
+                menuItems
+        );
+         **/
+
+
+        class CustomAdapter extends BaseAdapter {
+
+            @Override
+            public int getCount() {
+                return menuItems.length;
+            }
+
+            @Override
+            public Object getItem(int i) {
+                return null;
+            }
+
+            @Override
+            public long getItemId(int i) {
+                return 0;
+            }
+
+            @Override
+            public View getView(int i, View view, ViewGroup viewGroup) {
+                View view1 = inflater.inflate(R.layout.list_items, null);
+
+                TextView mTextView = (TextView) view1.findViewById(R.id.itemText);
+                ImageView mImageView = (ImageView) view1.findViewById(R.id.itemImage);
+
+                mTextView.setText(menuItems[i]);
+                return view1;
+            }
+
+        }
+
+        CustomAdapter customAdapter = new CustomAdapter();
+        listView.setAdapter(customAdapter);
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            Fragment fragment;
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i == 0){
+                    Toast.makeText(getActivity(), "clicked first weapon", Toast.LENGTH_SHORT).show();
+                    fragment = new WeaponControlFragment();
+                    fragmentTransaction.replace(R.id.layout_for_fragment, fragment, fragment.getTag()).commit();
+                } else if (i == 1){
+                    Toast.makeText(getActivity(), "clicked second weapon", Toast.LENGTH_SHORT).show();
+                    fragment = new WeaponControlFragment();
+                    fragmentTransaction.replace(R.id.layout_for_fragment, fragment, fragment.getTag()).commit();
+                } else if (i == 2){
+                    Toast.makeText(getActivity(), "clicked third weapon", Toast.LENGTH_SHORT).show();
+                    fragment = new WeaponControlFragment();
+                    fragmentTransaction.replace(R.id.layout_for_fragment, fragment, fragment.getTag()).commit();
+                }
+            }
+        });
+
+        return view;
+
     }
 
     @Override
@@ -36,5 +117,7 @@ public class DevicesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle(getString(R.string.devices_fragment));
     }
+
+
 
 }
