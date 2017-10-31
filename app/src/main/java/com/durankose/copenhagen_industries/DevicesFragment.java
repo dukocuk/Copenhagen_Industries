@@ -41,13 +41,6 @@ public class DevicesFragment extends Fragment {
         final String[] menuItems = {"Type 92 machine gun", "AG-043", "AK-47"};
 
         ListView listView = view.findViewById(R.id.list_view);
-        /**
-        ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(
-                getActivity(),
-                android.R.layout.simple_list_item_1,
-                menuItems
-        );
-         **/
 
 
         class CustomAdapter extends BaseAdapter {

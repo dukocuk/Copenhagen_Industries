@@ -11,4 +11,13 @@
     <string name="settings_fragment">Settings</string>
     <string name="help_fragment">Help</string>
     <string name="weapon_control_fragment">Weapon Control</string>
+    
+    
+    <string name="weapon_control_name">Name:</string>
+    <string name="weapon_control_status">Status:</string>
+    <string name="weapon_control_battery">Battery</string>
+    <string name="weapon_control_oxygen">Oxygen</string>
+    <string name="weapon_control_propane">Propane</string>
+    <string name="weapon_control_mode">Mode</string>
+    
 </resources>

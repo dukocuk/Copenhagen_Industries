@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.SeekBar;
 
 
 public class WeaponControlFragment extends Fragment {
@@ -27,7 +27,12 @@ public class WeaponControlFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d(TAG, "Du er inde i Weapon Control.");
-        return inflater.inflate(R.layout.fragment_weapon_control, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_weapon_control, container, false);
+
+
+
+        return view;
     }
 
     @Override
@@ -35,5 +40,6 @@ public class WeaponControlFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle(getString(R.string.weapon_control_fragment));
     }
+
 
 }
