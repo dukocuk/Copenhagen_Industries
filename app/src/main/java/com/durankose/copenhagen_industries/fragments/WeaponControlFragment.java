@@ -1,7 +1,8 @@
-package com.durankose.copenhagen_industries;
+package com.durankose.copenhagen_industries.fragments;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,6 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 
+import com.durankose.copenhagen_industries.R;
+
+import java.util.HashMap;
+
 
 public class WeaponControlFragment extends Fragment {
     /** Formaalet med TAG er at kunne fejlfinde hvis noget skulle gaa galt.
@@ -17,6 +22,8 @@ public class WeaponControlFragment extends Fragment {
      *  "D/DevicesFragment: Du er inde i Devices"
      */
     private final String TAG = this.getClass().getSimpleName();
+    private Handler bluetoothHandler;
+
     public WeaponControlFragment() {
         // Required empty public constructor
     }
@@ -30,6 +37,18 @@ public class WeaponControlFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_weapon_control, container, false);
 
+
+        bluetoothHandler = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+
+                if(msg.what == 0) {
+                    HashMap<String,String> hashMap = (HashMap<String,String>) msg.obj;
+                    //t1.setText("Armedstate: " + hashMap.get("IArm"));
+
+
+                }
+            }
+        };
 
 
         return view;

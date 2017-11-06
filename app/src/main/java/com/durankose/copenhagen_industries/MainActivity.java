@@ -14,6 +14,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.durankose.copenhagen_industries.fragments.DevicesFragment;
+import com.durankose.copenhagen_industries.fragments.HelpFragment;
+import com.durankose.copenhagen_industries.fragments.SettingsFragment;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 

@@ -1,4 +1,4 @@
-package com.durankose.copenhagen_industries;
+package com.durankose.copenhagen_industries.fragments;
 
 
 import android.os.Bundle;
@@ -9,15 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.durankose.copenhagen_industries.R;
 
-public class HelpFragment extends Fragment {
+
+public class SettingsFragment extends Fragment {
 
     /** Formaalet med TAG er at kunne fejlfinde hvis noget skulle gaa galt.
      *  Vi kan så proppe den TAG i en LOG.d og eks. få
      *  "D/DevicesFragment: Du er inde i Devices"
      */
     private final String TAG = this.getClass().getSimpleName();
-    public HelpFragment() {
+    public SettingsFragment() {
         // Required empty public constructor
     }
 
@@ -26,14 +28,16 @@ public class HelpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Log.d(TAG, "Du er inde i Help");
-        return inflater.inflate(R.layout.fragment_help, container, false);
+        Log.d(TAG, "Du er inde i Settings");
+        return inflater.inflate(R.layout.fragment_settings, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle(getString(R.string.help_fragment));
+        getActivity().setTitle(getString(R.string.settings_fragment));
     }
+
+
 
 }
