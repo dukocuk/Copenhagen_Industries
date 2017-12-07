@@ -6,4 +6,5 @@ package com.lasse.bluetoothconnection.interfacePackage;
 
 public interface IObserver {
     void notifyObs();
+    void notifyObsConnectionLost();
 }

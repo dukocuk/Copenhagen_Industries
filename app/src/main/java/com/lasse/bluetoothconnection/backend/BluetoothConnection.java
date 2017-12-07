@@ -180,7 +180,10 @@ public class BluetoothConnection implements IBluetooth {
 
     @Override
     public boolean isAlive() {
-        return connecterThread.isAlive();
+        if(connecterThread != null) {
+            return connecterThread.isAlive();
+        }
+        return false;
     }
 
 

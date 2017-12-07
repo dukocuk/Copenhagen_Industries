@@ -50,7 +50,6 @@ class ConnecterThread implements Runnable {
             tmpIn = bluetoothSocket.getInputStream();
             tmpOut = bluetoothSocket.getOutputStream();
         } catch (IOException e) {
-            shutdown();
             e.printStackTrace();
         }
         inputStream = tmpIn;
@@ -69,9 +68,10 @@ class ConnecterThread implements Runnable {
         while(!shutdown) {
             if(!bluetoothSocket.isConnected()) {
                 handlerToNotify.obtainMessage(handlerStates.getHandlerStateDisconnected()).sendToTarget();
-                Log.d("DIS","asdf");
+                shutdown = true;
                 return;
             }
+
 
 
             try {
@@ -80,6 +80,9 @@ class ConnecterThread implements Runnable {
                 handlerToNotify.obtainMessage(handlerStates.getHandlerStateInformationReceived(), bytes, -1, readMSG).sendToTarget();
             }
             catch (IOException e) {
+                Log.d("isConnected()", "" + bluetoothSocket.isConnected());
+                shutdown = true;
+                handlerToNotify.obtainMessage(handlerStates.getHandlerStateDisconnected()).sendToTarget();
                 e.printStackTrace();
             }
         }
@@ -90,6 +93,7 @@ class ConnecterThread implements Runnable {
             outputStream.close();
             bluetoothSocket.close();
         } catch (IOException e) {
+
             e.printStackTrace();
         }
 

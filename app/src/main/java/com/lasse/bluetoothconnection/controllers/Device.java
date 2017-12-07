@@ -155,6 +155,7 @@ public class Device implements ISubject{
 
 
     private void updateInformation(String info) {
+        Log.d("info",info);
         String[] informationReceived = info.split(";");
         String[] infopart = informationReceived[1].split(",");
         for(String parts : infopart) {
@@ -221,18 +222,25 @@ public class Device implements ISubject{
                 if (msg == null) {
                     return;
                 }
+
                 messageReceived = (String) msg.obj;
                 recDataString.append(messageReceived);
                 int endOfLineIndex = recDataString.indexOf(">");
                 if (endOfLineIndex > 0) {
                     String dataInPrint = recDataString.substring(1, endOfLineIndex);
                     Log.i("dataInPrint", dataInPrint);
+                    if(dataInPrint == "") {
+                        return;
+                    }
                     updateInformation(dataInPrint);
                     recDataString = new StringBuilder();
                 }
             }
-            if(msg.what==handlerStates.getHandlerStateDisconnected()) {
+            else if(msg.what==handlerStates.getHandlerStateDisconnected()) {
                 resetDynamicInformation();
+                for(IObserver o : listToNotify) {
+                    o.notifyObsConnectionLost();
+                }
             }
         }
     }

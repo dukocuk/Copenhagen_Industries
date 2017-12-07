@@ -1,8 +1,10 @@
 package com.lasse.bluetoothconnection.fragments;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -56,6 +58,8 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         mode = (TextView) root.findViewById(R.id.weapon_control_mode);
         aSwitch = (Switch) root.findViewById(R.id.weapon_control_switch);
 
+
+
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -69,6 +73,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                 }
             }
         });
+
 
 
         resetDisplay();
@@ -86,13 +91,12 @@ public class WeaponControlFragment extends Fragment implements IObserver {
             }
         };
         deviceController.getDeviceCurrentlyDisplayed().addToObserverList(this);
+
+
         return root;
     }
 
-//    @Override
-//    public void notify(); {
-//        updateDisplay();
-//    }
+
 
     private void resetDisplay() {
         String na = "N/A";
@@ -134,6 +138,30 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     @Override
     public void notifyObs() {
         updateDisplay();
+    }
+
+    @Override
+    public void notifyObsConnectionLost() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        builder.setTitle("Forbindelse mistet.\nLav ny forbindelse?");
+        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+
+                new ProgressTask((getContext())).execute();
+            }
+        });
+        builder.setNegativeButton("Nej", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                aSwitch.setClickable(false);
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private class ProgressTask extends AsyncTask<String, Void, Boolean> {
@@ -183,6 +211,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
             return null;
         }
     }
+
 
     @Override
     public void onDestroy() {
