@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.durankose.copenhagen_industries.SplashScreen">
+    tools:context="com.lasse.bluetoothconnection.activities.SplashScreen">
 
 
     <ImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="fitXY"
-        android:src="@drawable/splash"
+        android:src="@drawable/splashscreeen"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp"
         tools:layout_constraintTop_creator="1"

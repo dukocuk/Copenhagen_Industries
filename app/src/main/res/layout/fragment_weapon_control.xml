@@ -3,169 +3,235 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.durankose.copenhagen_industries.fragments.WeaponControlFragment"
+    tools:context="com.lasse.bluetoothconnection.fragments.WeaponControlFragment"
     tools:layout_editor_absoluteY="81dp"
-    tools:layout_editor_absoluteX="0dp">
+    tools:layout_editor_absoluteX="0dp"
+    android:layout_margin="24dp"
+    >
+
 
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/image_ak47"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/weapon_control_image_header"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        app:srcCompat="@drawable/image_ak47"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/weapon_control_status"
-        android:layout_above="@+id/tableLayout"
-        android:layout_toEndOf="@+id/imageView2"
-        android:layout_marginStart="18dp" />
+        android:id="@+id/weapon_control_headline"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/weapon_control_image_header"
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/weapon_control_name"
-        android:layout_marginEnd="20dp"
-        android:layout_below="@+id/imageView2"
-        android:layout_toStartOf="@+id/imageView2"
-        android:layout_marginTop="20dp" />
+        android:layout_alignTop="@+id/weapon_control_image_header"
+        android:layout_marginStart="19dp"
+        android:layout_toEndOf="@+id/weapon_control_image_header"
+        android:text="@string/weapon_control"
+        android:textSize="30dp"
+        android:gravity="center"
+
+
+        />
 
 
     <TableLayout
-        android:id="@+id/tableLayout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        tools:layout_editor_absoluteY="208dp"
-        tools:layout_editor_absoluteX="8dp"
-        android:layout_marginTop="65dp"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        >
+        android:layout_below="@id/weapon_control_image_header"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="20dp"
 
-        <TableRow>
+        android:stretchColumns="*"
 
-            <TextView
-                android:id="@+id/textViewBattery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="102dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/weapon_control_battery"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2"
-                android:gravity="center_horizontal"/>
+        android:id="@+id/tableLayout">
+        <!--android:background="@drawable/weapon_control_row_background"  border in tablelayout-->
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textViewBatteryPercent"
+                android:id="@+id/weapon_control_name_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="102dp"
-                android:layout_marginTop="8dp"
-                android:text="97%"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-        </TableRow>
 
-        <TableRow>
+
+                android:text="Name"
+                android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textViewOxygen"
-                android:layout_width="wrap_content"
+                android:id="@+id/weapon_control_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="102dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/weapon_control_oxygen"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+                android:gravity="right"
 
-            <TextView
-                android:id="@+id/textViewOxygenPercent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="102dp"
-                android:layout_marginTop="8dp"
-                android:text="85%"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:id="@+id/textViewPropane"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="102dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/weapon_control_battery"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-            <TextView
-                android:id="@+id/textViewPropanePercent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="102dp"
-                android:layout_marginTop="8dp"
-                android:text="38%"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+                android:text="MadsMikkelsen"
+                android:textSize="18sp" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="40dp">
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textViewMode"
+                android:id="@+id/weapon_control_status_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="102dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/weapon_control_mode"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+                android:text="Status"
+
+                android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textViewModePercent"
-                android:layout_width="wrap_content"
+                android:id="@+id/weapon_control_status"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="102dp"
-                android:layout_marginTop="8dp"
-                android:text="Semi Auto"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+                android:gravity="right"
+                android:text="Armed"
+                android:textSize="18sp" />
+
+
         </TableRow>
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/filler1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/weapon_control_battery_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="Battery"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/weapon_control_battery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:gravity="right"
+                android:text="20%"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/weapon_control_oxygen_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="Oxygen"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/weapon_control_oxygen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:gravity="right"
+                android:text="45%"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/weapon_control_propane_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Propane"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:id="@+id/weapon_control_propane"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="47%"
+                android:textSize="18sp"
+                android:gravity="right"
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/filler2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/filler3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/weapon_control_mode_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mode"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:id="@+id/weapon_control_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Burst"
+                android:textSize="18sp"
+                android:gravity="right"
+
+                />
+        </TableRow>
 
     </TableLayout>
 
-    <android.support.v7.widget.SwitchCompat
+    <Switch
+        android:id="@+id/weapon_control_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:theme="@style/SwitchCompatTheme"
-        android:layout_below="@+id/tableLayout"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp"
-        android:id="@+id/switchCompat" />
+        android:layout_marginBottom="73dp"
+        android:checked="false"
+        android:switchMinWidth="200dp"
+        android:switchTextAppearance="@style/TextAppearance.AppCompat" />
 
 
-    <TextView
-        android:id="@+id/textViewArmedDisarmed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="102dp"
-        android:layout_marginTop="22dp"
-        android:text="Disarmed"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        android:layout_below="@+id/switchCompat"
-        android:layout_centerHorizontal="true" />
 </RelativeLayout>
