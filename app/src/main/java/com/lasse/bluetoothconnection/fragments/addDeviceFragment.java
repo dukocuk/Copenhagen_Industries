@@ -57,7 +57,7 @@ public class addDeviceFragment extends Fragment implements View.OnClickListener{
 
         if(myBluetoothAdapter == null)
         {
-           Toast.makeText(getContext(),"NoBTAdapter",Toast.LENGTH_LONG).show();
+           Toast.makeText(getActivity(),"NoBTAdapter",Toast.LENGTH_LONG).show();
             getActivity().finish();
         }
         //If it isn't enabled
@@ -88,10 +88,10 @@ public class addDeviceFragment extends Fragment implements View.OnClickListener{
         }
         else
         {
-            Toast.makeText(getContext(), "No Paired Bluetooth Devices Found.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "No Paired Bluetooth Devices Found.", Toast.LENGTH_LONG).show();
         }
 
-        final ArrayAdapter adapter = new ArrayAdapter(getContext(),android.R.layout.simple_list_item_1, devicesName);
+        final ArrayAdapter adapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1, devicesName);
         pairedBTDevicesList.setAdapter(adapter);
         pairedBTDevicesList.setOnItemClickListener(myListClickListener); //Method called when the device from the list is clicked
 

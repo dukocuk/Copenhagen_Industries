@@ -37,7 +37,7 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
         addNewDevice.setOnClickListener(this);
         ArrayList<String> list = deviceController.getDeviceNameList();
 
-        arrayAdapter = new ArrayAdapter(getContext(),android.R.layout.simple_list_item_1,list);
+        arrayAdapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,list);
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
 
