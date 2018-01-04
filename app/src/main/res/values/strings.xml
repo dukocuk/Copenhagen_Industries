@@ -7,13 +7,18 @@
     <string name="action_settings">Settings</string>
 
 
-
-    <string name="devices_fragment">Devices</string>
-    <string name="settings_fragment">Settings</string>
+    //Help
     <string name="help_fragment">Help</string>
+
+
+    //Devices
+    <string name="devices_fragment">Devices</string>
+
+    //Settings
+    <string name="settings_fragment">Settings</string>
+
+    //Weapon Control
     <string name="weapon_control_fragment">Weapon Control</string>
-
-
     <string name="weapon_control_name">Name:</string>
     <string name="weapon_control_status">Status:</string>
     <string name="weapon_control_battery">Battery</string>
@@ -21,4 +26,6 @@
     <string name="weapon_control_propane">Propane</string>
     <string name="weapon_control_mode">Mode</string>
     <string name="weapon_control">Weapon Control</string>
+
+
 </resources>

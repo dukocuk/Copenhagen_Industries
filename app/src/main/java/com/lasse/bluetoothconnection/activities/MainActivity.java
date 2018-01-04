@@ -3,9 +3,6 @@ package com.lasse.bluetoothconnection.activities;
 import android.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,7 +17,7 @@ import com.crashlytics.android.Crashlytics;
 import com.lasse.bluetoothconnection.R;
 import com.lasse.bluetoothconnection.fragments.HelpFragment;
 import com.lasse.bluetoothconnection.fragments.KnownDevicesListFragment;
-import com.lasse.bluetoothconnection.fragments.WeaponControlFragment;
+
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity
