@@ -71,6 +71,9 @@ public class Device implements ISubject{
     }
 
     public boolean connectionAlive() {
+        if(connection == null) {
+            return false;
+        }
         return connection.isAlive();
     }
     public void getTotalStatus() {
@@ -88,6 +91,10 @@ public class Device implements ISubject{
 
     public String getSerialNumber() {
         return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 
     public boolean isArmedState() {
@@ -130,7 +137,7 @@ public class Device implements ISubject{
         return gunType;
     }
 
-
+    public String getMacAddress() { return macAddress;}
 
 
 
@@ -155,9 +162,17 @@ public class Device implements ISubject{
 
 
     private void updateInformation(String info) {
-        Log.d("info",info);
+
+        Log.d("info+mac",macAddress + " " + info);
         String[] informationReceived = info.split(";");
-        String[] infopart = informationReceived[1].split(",");
+        String[] infopart;
+        try {
+            infopart = informationReceived[1].split(",");
+        }
+        catch(ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+            return;
+        }
         for(String parts : infopart) {
             String part[] = parts.split(":");
 

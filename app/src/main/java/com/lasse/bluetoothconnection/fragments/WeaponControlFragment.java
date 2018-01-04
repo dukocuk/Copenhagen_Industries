@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,12 +33,13 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
 
     //Textviews:
-    private TextView name;
+    private EditText name;
     private TextView status;
     private TextView battery;
     private TextView oxygen;
     private TextView propane;
     private TextView mode;
+    private EditText RoF;
     private Switch aSwitch;
 
     private DeviceController deviceController;
@@ -50,12 +52,13 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(com.lasse.bluetoothconnection.R.layout.fragment_weapon_control,container,false);
-        name = (TextView) root.findViewById(R.id.weapon_control_name);
+        name = (EditText) root.findViewById(R.id.weapon_control_name);
         status = (TextView) root.findViewById(R.id.weapon_control_status);
         battery = (TextView) root.findViewById(R.id.weapon_control_battery);
         oxygen = (TextView) root.findViewById(R.id.weapon_control_oxygen);
         propane = (TextView) root.findViewById(R.id.weapon_control_propane);
         mode = (TextView) root.findViewById(R.id.weapon_control_mode);
+        RoF = (EditText) root.findViewById(R.id.weapon_control_RoF);
         aSwitch = (Switch) root.findViewById(R.id.weapon_control_switch);
 
 
@@ -78,13 +81,13 @@ public class WeaponControlFragment extends Fragment implements IObserver {
             }
         });
 
+        deviceController = DeviceController.getInstance();
 
 
         resetDisplay();
-
-        task = new ProgressTask(getActivity()).execute();
-        deviceController = DeviceController.getInstance();
-
+        if(!deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
+            task = new ProgressTask(getActivity()).execute();
+        }
 
         updateDisplay();
         handler = new Handler() {

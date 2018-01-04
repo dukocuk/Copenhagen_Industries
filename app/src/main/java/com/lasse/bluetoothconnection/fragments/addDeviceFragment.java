@@ -105,9 +105,15 @@ public class addDeviceFragment extends Fragment implements View.OnClickListener{
         {
             String name = devicesName.get(position);
             String macAddress = devicesMacAddress.get(position);
+            if(deviceController.inDeviceList(macAddress)) {
+                Toast.makeText(getActivity(), "Device already added", Toast.LENGTH_SHORT).show();
+
+                return;
+            }
             
             try {
                 deviceController.addDevice(new Device(name,macAddress));
+                deviceController.saveData(getActivity());
             } catch (DeviceControllerNotInstantiatedException deviceControllerNotInstantiated) {
                 deviceControllerNotInstantiated.printStackTrace();
                             

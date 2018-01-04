@@ -58,19 +58,20 @@
                 android:id="@+id/weapon_control_name_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-
                 android:text="Name"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@android:color/black"/>
 
-            <TextView
+            <EditText
                 android:id="@+id/weapon_control_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-
+                android:background="@android:color/transparent"
+                android:gravity="end"
+                android:enabled="false"
                 android:text="MadsMikkelsen"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@android:color/black"/>
         </TableRow>
 
         <TableRow
@@ -84,7 +85,8 @@
 
                 android:text="Status"
 
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:id="@+id/weapon_control_status"
@@ -93,7 +95,8 @@
 
                 android:gravity="right"
                 android:text="Armed"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@android:color/black"/>
 
 
         </TableRow>
@@ -120,7 +123,8 @@
                 android:layout_height="wrap_content"
 
                 android:text="Battery"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:id="@+id/weapon_control_battery"
@@ -129,7 +133,8 @@
 
                 android:gravity="right"
                 android:text="20%"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@android:color/black"/>
         </TableRow>
 
         <TableRow
@@ -142,7 +147,8 @@
                 android:layout_height="wrap_content"
 
                 android:text="Oxygen"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:id="@+id/weapon_control_oxygen"
@@ -151,7 +157,8 @@
 
                 android:gravity="right"
                 android:text="45%"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@android:color/black"/>
         </TableRow>
 
         <TableRow
@@ -164,6 +171,7 @@
                 android:layout_height="wrap_content"
                 android:text="Propane"
                 android:textSize="18sp"
+                android:textColor="@android:color/black"
                 />
 
             <TextView
@@ -172,6 +180,7 @@
                 android:layout_height="wrap_content"
                 android:text="47%"
                 android:textSize="18sp"
+                android:textColor="@android:color/black"
                 android:gravity="right"
                 />
         </TableRow>
@@ -207,7 +216,7 @@
                 android:layout_height="wrap_content"
                 android:text="Mode"
                 android:textSize="18sp"
-                />
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:id="@+id/weapon_control_mode"
@@ -215,9 +224,32 @@
                 android:layout_height="wrap_content"
                 android:text="Burst"
                 android:textSize="18sp"
+                android:textColor="@android:color/black"
                 android:gravity="right"
 
                 />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/weapon_control_RoF_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rate of Fire"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"/>
+
+            <EditText
+                android:id="@+id/weapon_control_RoF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:clickable="false"
+                android:enabled="false"
+                android:gravity="end"
+                android:inputType="number"
+                android:text="1000"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"/>
         </TableRow>
 
     </TableLayout>
@@ -232,6 +264,15 @@
         android:checked="false"
         android:switchMinWidth="200dp"
         android:switchTextAppearance="@style/TextAppearance.AppCompat" />
+
+    <Button
+        android:id="@+id/weapon_control_doneEditing_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:text="Done editing" />
 
 
 </RelativeLayout>

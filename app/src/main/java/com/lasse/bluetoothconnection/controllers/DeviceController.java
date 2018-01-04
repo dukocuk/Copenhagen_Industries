@@ -1,5 +1,10 @@
 package com.lasse.bluetoothconnection.controllers;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
 import com.lasse.bluetoothconnection.exceptions.DeviceControllerNotInstantiatedException;
 
 import java.io.Serializable;
@@ -85,6 +90,46 @@ public class DeviceController implements Serializable {
     public Device getDeviceCurrentlyDisplayed() {
         return deviceCurrentlyDisplayed;
     }
+
+    public boolean inDeviceList(String MacAddress) {
+        for(Device d : devices) {
+            if(MacAddress.equals(d.getMacAddress())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void saveData(Activity activity){
+        StringBuilder stringBuilder = new StringBuilder();
+        for(Device d : devices) {
+            stringBuilder.append(d.getName() + ",");
+            stringBuilder.append(d.getMacAddress() + ",");
+            stringBuilder.append(d.getSerialNumber()+";");
+        }
+        stringBuilder.deleteCharAt(stringBuilder.length()-1);
+        Log.d("savaData",stringBuilder.toString());
+        PreferenceManager.getDefaultSharedPreferences(activity).edit().putString("deviceList",stringBuilder.toString()).apply();
+
+    }
+    public void loadData(Activity activity) throws DeviceControllerNotInstantiatedException {
+        if(!PreferenceManager.getDefaultSharedPreferences(activity).contains("deviceList")) {
+            return;
+        }
+        String deviceList = PreferenceManager.getDefaultSharedPreferences(activity).getString("deviceList", "");
+
+        String[] deviceArray = deviceList.split(";");
+        for(String d : deviceArray) {
+            String[] info = d.split(",");
+            Device toBeAdded = new Device(info[0],info[1]);
+            toBeAdded.setSerialNumber(info[2]);
+            if(!inDeviceList(toBeAdded.getMacAddress())) {
+                addDevice(toBeAdded);
+            }
+
+        }
+    }
+
 
 
 }

@@ -10,9 +10,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.lasse.bluetoothconnection.controllers.DeviceController;
 import com.lasse.bluetoothconnection.R;
+import com.lasse.bluetoothconnection.exceptions.DeviceControllerNotInstantiatedException;
 
 import java.util.ArrayList;
 
@@ -34,6 +36,12 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
         addNewDevice = (Button) root.findViewById(R.id.known_devices_add_new_device);
         listView = (ListView) root.findViewById(R.id.knowndevices_listview);
         deviceController = DeviceController.getInstance();
+        try {
+            deviceController.loadData(getActivity());
+        } catch (DeviceControllerNotInstantiatedException e) {
+            e.printStackTrace();
+            Toast.makeText(getActivity(), "Unable to load data", Toast.LENGTH_SHORT).show();
+        }
         addNewDevice.setOnClickListener(this);
         ArrayList<String> list = deviceController.getDeviceNameList();
 
@@ -70,4 +78,8 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
             getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).commit();
         }
     }
+
+
+
+
 }
