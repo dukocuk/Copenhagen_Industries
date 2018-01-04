@@ -3,21 +3,20 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
 
 
-    //Help
+    <!--Help-->
     <string name="help_fragment">Help</string>
 
 
-    //Devices
+    <!--Devices-->
     <string name="devices_fragment">Devices</string>
 
-    //Settings
+    <!--Settings-->
     <string name="settings_fragment">Settings</string>
 
-    //Weapon Control
+    <!--Weapon Control-->
     <string name="weapon_control_fragment">Weapon Control</string>
     <string name="weapon_control_name">Name:</string>
     <string name="weapon_control_status">Status:</string>
