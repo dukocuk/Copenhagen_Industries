@@ -21,6 +21,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.SplashScreen" ></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="492836018c84cdc8cea4137bd1654e8abd773c5e" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
