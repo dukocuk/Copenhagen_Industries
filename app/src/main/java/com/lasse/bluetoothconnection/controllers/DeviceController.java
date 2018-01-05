@@ -41,6 +41,8 @@ public class DeviceController implements Serializable {
         return sSoleInstance;
     }
 
+
+
     /**
      * Add a device to the list.
      * @param device device to be added.
@@ -76,6 +78,14 @@ public class DeviceController implements Serializable {
         }
 
         return nameList;
+    }
+
+    /**
+     * getter for devicelist
+     * @return List<Device> devices
+     */
+    public List<Device> getDevices() {
+        return devices;
     }
 
     /**

@@ -1,7 +1,9 @@
 package com.lasse.bluetoothconnection.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +11,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lasse.bluetoothconnection.controllers.Device;
 import com.lasse.bluetoothconnection.controllers.DeviceController;
 import com.lasse.bluetoothconnection.R;
 import com.lasse.bluetoothconnection.exceptions.DeviceControllerNotInstantiatedException;
@@ -43,16 +48,36 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
             Toast.makeText(getActivity(), "Unable to load data", Toast.LENGTH_SHORT).show();
         }
         addNewDevice.setOnClickListener(this);
-        ArrayList<String> list = deviceController.getDeviceNameList();
 
-        arrayAdapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,list);
-        listView.setAdapter(arrayAdapter);
+        // stringlist
+//        ArrayList<String> list = deviceController.getDeviceNameList();
+//        arrayAdapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,list);
+//
+//        listView.setAdapter(arrayAdapter);
+//        listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+//
+//                String name = (String) arrayAdapter.getItem(position);
+//
+//                deviceController.setDeviceCurrentlyDisplayed(name);
+//
+//                WeaponControlFragment fragment = new WeaponControlFragment();
+//                getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).commit();
+//
+//            }
+//        });
+
+        // devicelist
+        ArrayList<Device> deviceList = (ArrayList<Device>) deviceController.getDevices();
+        final DeviceAdapter deviceAdapter = new DeviceAdapter(getActivity(), deviceList);
+        listView.setAdapter(deviceAdapter);
         listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
 
-                String name = (String) arrayAdapter.getItem(position);
+                String name = (String) deviceAdapter.getItem(position).getName();
 
                 deviceController.setDeviceCurrentlyDisplayed(name);
 
@@ -63,8 +88,6 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
         });
         return root;
     }
-
-
 
     /**
      * Called when a view has been clicked.
@@ -79,7 +102,32 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
         }
     }
 
+    class DeviceAdapter extends ArrayAdapter<Device> {
+        public DeviceAdapter(Context context, ArrayList<Device> devices) {
+            super(context, 0, devices);
+        }
 
+        @NonNull
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            Device device = getItem(position);
+
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.device_list_elem, parent, false);
+            }
+            // Lookup view for data population
+            ImageView deviceLogo = (ImageView) convertView.findViewById(R.id.device_logo);
+            TextView deviceName = (TextView) convertView.findViewById(R.id.device_name);
+            Button deviceArmStatus = (Button) convertView.findViewById(R.id.device_arm_status);
+            // Populate the data into the template view using the data object
+
+            deviceName.setText(device.getName());
+
+
+            // Return the completed view to render on screen
+            return convertView;
+        }
+    }
 
 
 }
