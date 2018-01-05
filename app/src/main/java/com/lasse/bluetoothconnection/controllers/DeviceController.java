@@ -11,31 +11,28 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by lasse on 21-11-2017.
- */
 
 public class DeviceController implements Serializable {
 
-    private static volatile DeviceController sSoleInstance;
-    List<Device> devices;
-    Device deviceCurrentlyDisplayed;
+    private static volatile DeviceController sSoleInstance;     //Singleton cass.
+    List<Device> devices;                                       //List of devices.
+    Device deviceCurrentlyDisplayed;                            //The device currently being showed on the screen.
 
 
     private DeviceController() {
-        //Prevent form the reflection api.
+        //Prevent from the reflection api.
         if (sSoleInstance != null) {
             throw new RuntimeException("Use getInstance() method to get the single instance of this class.");
         }
-        devices = new ArrayList<>();
+        devices = new ArrayList<>();        //Instantiate deviceList.
     }
 
 
     public static DeviceController getInstance() {
         //Double check locking pattern
-        if (sSoleInstance == null) { //Check for the first time
+        if (sSoleInstance == null) { //Check for the first time                 //If singleton is null, proceed.
 
-            synchronized (DeviceController.class) {   //Check for the second time.
+            synchronized (DeviceController.class) {   //Check for the second time.  and avoid raceconditions. yay
                 //if there is no instance available... create new one
                 if (sSoleInstance == null) sSoleInstance = new DeviceController();
             }
@@ -44,13 +41,11 @@ public class DeviceController implements Serializable {
         return sSoleInstance;
     }
 
-    //If we ever need to serialize the device list. Which we probably need to do, when remembering the devices.
-    //Make singleton from serialize and deserialize operation.
-    protected DeviceController readResolve() {
-        return getInstance();
-    }
-
-
+    /**
+     * Add a device to the list.
+     * @param device device to be added.
+     * @throws DeviceControllerNotInstantiatedException
+     */
     public void addDevice(Device device) throws DeviceControllerNotInstantiatedException {
         if (sSoleInstance == null) {
             throw new DeviceControllerNotInstantiatedException();
@@ -58,18 +53,22 @@ public class DeviceController implements Serializable {
         devices.add(device);
     }
 
+    /**
+     * Remove a device from the list.
+     * @param device
+     * @throws DeviceControllerNotInstantiatedException
+     */
     public void removeDevice(Device device) throws DeviceControllerNotInstantiatedException {
         if (sSoleInstance == null) {
             throw new DeviceControllerNotInstantiatedException();
         }
-        for (Device d : devices) {
-            if (d.equals(device)) {
-                devices.remove(device);
-            }
-        }
+        devices.remove(device);
     }
 
-
+    /**
+     * Returns an arraylist of devicenames.
+     * @return ArrayList<String> nameList
+     */
     public ArrayList<String> getDeviceNameList() {
         ArrayList<String> nameList = new ArrayList<>();
         for (Device d : devices) {
@@ -79,6 +78,10 @@ public class DeviceController implements Serializable {
         return nameList;
     }
 
+    /**
+     * Sets the device Currently displayed on screen.
+     * @param name
+     */
     public void setDeviceCurrentlyDisplayed(String name) {
         for (Device d : devices) {
             if (d.getName().equals(name)) {
@@ -87,10 +90,19 @@ public class DeviceController implements Serializable {
         }
     }
 
+    /**
+     * Getter
+     * @return Device.
+     */
     public Device getDeviceCurrentlyDisplayed() {
         return deviceCurrentlyDisplayed;
     }
 
+    /**
+     * If macAddress already exists in devicelist return true.
+     * @param MacAddress
+     * @return      True if in devicelist
+     */
     public boolean inDeviceList(String MacAddress) {
         for(Device d : devices) {
             if(MacAddress.equals(d.getMacAddress())) {
@@ -100,6 +112,10 @@ public class DeviceController implements Serializable {
         return false;
     }
 
+    /**
+     * Save the deviceList
+     * @param activity
+     */
     public void saveData(Activity activity){
         StringBuilder stringBuilder = new StringBuilder();
         for(Device d : devices) {
@@ -112,6 +128,12 @@ public class DeviceController implements Serializable {
         PreferenceManager.getDefaultSharedPreferences(activity).edit().putString("deviceList",stringBuilder.toString()).apply();
 
     }
+
+    /**
+     * Load an devicelist saved to memory.
+     * @param activity
+     * @throws DeviceControllerNotInstantiatedException
+     */
     public void loadData(Activity activity) throws DeviceControllerNotInstantiatedException {
         if(!PreferenceManager.getDefaultSharedPreferences(activity).contains("deviceList")) {
             return;

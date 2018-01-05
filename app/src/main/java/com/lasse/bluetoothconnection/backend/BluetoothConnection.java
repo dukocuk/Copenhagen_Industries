@@ -10,26 +10,21 @@ import com.lasse.bluetoothconnection.interfacePackage.IBluetooth;
 
 import java.io.IOException;
 
-
+/**
+ * Definition of commands
+ */
 public class BluetoothConnection implements IBluetooth {
 
     private ConnecterThread connecterThread;
 
-
-    //private String commands[] = {"GST","GSS","GTS","SAS","SFM","SRF","SGN","KCA"};
-
-
     //Handler
     private final Handler handlerToNotify;
 
-    // TODO: Check for null values in cmd
-    // TODO: How do we know its a GST string. How is the message formatted. Arduino puzzle yay.
-    // Message format: <GST;IArm:1,IFM:0,IRoF:10>
+
     public BluetoothConnection(Handler handler) {
         this.handlerToNotify = handler;
 
     }
-
 
     /**
      * Starts a new connection to the device with the provided macaddress
@@ -45,22 +40,21 @@ public class BluetoothConnection implements IBluetooth {
 
         if(myBluetoothAdapter == null)
         {
-            throw new NoBTAdapterException();
+            throw new NoBTAdapterException();           //If the device doesn't have a bluetoothadapter.
 
         }
 
         //If it isn't enabled
         else if(!myBluetoothAdapter.isEnabled())
         {
-            throw new BTNotEnabledException();
+            throw new BTNotEnabledException();          //If the device's bluetooth isn't enabled.
         }
 
-        connecterThread = new ConnecterThread(macAddress,handlerToNotify);
-        if(connecterThread.isAlive()) {
+        connecterThread = new ConnecterThread(macAddress,handlerToNotify);      //Instantiate the connecterthread
+        if(connecterThread.isAlive()) {                                         //If the socket isn't null and a connection has been established.
             //Starts the connection
-            new Thread(connecterThread).start();
+            new Thread(connecterThread).start();                                //Begin listening for messages.
         }
-        System.out.println("Reached end of startConnection Method");
 
     }
 
@@ -75,9 +69,8 @@ public class BluetoothConnection implements IBluetooth {
 
 
     /**
-     * This functions return an arraylist with the propany, oxygen and battery lvl.
-     *
-     *
+     * Get status.
+     * Check interface for more details
      */
     @Override
     public void getStatus() throws IOException {
@@ -90,7 +83,8 @@ public class BluetoothConnection implements IBluetooth {
     }
 
     /**
-     *
+     * Get shooting status.
+     * Check interface for more details.
      */
     @Override
     public void getShootingStatus() throws IOException {
@@ -118,6 +112,11 @@ public class BluetoothConnection implements IBluetooth {
         connecterThread.write(command);
     }
 
+    /**
+     * Arms and disarms the weapon.
+     * @param state boolean. true if armed false if disamred.
+     * @throws IOException
+     */
     @Override
     public void setArmedState(boolean state) throws IOException {
         String command = "<SAS:";
@@ -179,6 +178,10 @@ public class BluetoothConnection implements IBluetooth {
         connecterThread.write(command);
     }
 
+    /**
+     * If thread isn't null and is alive return true.
+     * @return
+     */
     @Override
     public boolean isAlive() {
         if(connecterThread != null) {

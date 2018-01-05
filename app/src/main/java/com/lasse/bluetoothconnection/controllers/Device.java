@@ -52,7 +52,9 @@ public class Device implements ISubject{
     }
 
 
-
+    /**
+     *     Resets the device information.
+     */
     private void resetDynamicInformation() {
         armedState = false;
         fireMode = 0;
@@ -63,18 +65,30 @@ public class Device implements ISubject{
     }
 
 
-
+    /**
+     * Start the bluetoothconnection
+     * @throws BTNotEnabledException
+     * @throws NoBTAdapterException
+     */
     public void startConnection() throws BTNotEnabledException, NoBTAdapterException {
         connection = new BluetoothConnection(deviceHandler);
         connection.startConnection(macAddress);
     }
 
+    /**
+     * If the connection isn't null, returns the connections status.
+     * @return
+     */
     public boolean connectionAlive() {
         if(connection == null) {
             return false;
         }
         return connection.isAlive();
     }
+
+    /**
+     * Get total status of weapon.
+     */
     public void getTotalStatus() {
         try {
             connection.getTotalStatus();
@@ -83,7 +97,7 @@ public class Device implements ISubject{
         }
     }
 
-
+    //Getters and setters
     public String getName() {
         return name;
     }
@@ -139,12 +153,19 @@ public class Device implements ISubject{
     public String getMacAddress() { return macAddress;}
 
 
-
+    /**
+     * Add observer to list to be notified.
+     * @param observer
+     */
     @Override
     public void addToObserverList(IObserver observer) {
         listToNotify.add(observer);
     }
 
+    /**
+     * Remove an observer from the observer-list.
+     * @param observer
+     */
     @Override
     public void removeFromObserverList(IObserver observer) {
         if(listToNotify.contains(observer)) {
@@ -152,6 +173,9 @@ public class Device implements ISubject{
         }
     }
 
+    /**
+     * Notify every observer
+     */
     @Override
     public void notifyList() {
         for(IObserver o : listToNotify) {
@@ -159,9 +183,11 @@ public class Device implements ISubject{
         }
     }
 
-
+    /**
+     * Splits the received command into different pieces and updates device information according to received information.
+     * @param info Command received.
+     */
     private void updateInformation(String info) {
-
         Log.d("info+mac",macAddress + " " + info);
         String[] informationReceived = info.split(";");
         String[] infopart;
@@ -222,35 +248,40 @@ public class Device implements ISubject{
 
 
         }
-        notifyList();
+        notifyList();               //Notify observers that device information has changed.
     }
+
+    /**
+     * Custom handler.
+     */
     class InformationHandler extends Handler {
         private StringBuilder recDataString = new StringBuilder();
         private String messageReceived;
 
         @Override
         public void handleMessage(final Message msg) {
-            if(msg.what == handlerStates.getHandlerStateInformationReceived()) {
+            if(msg.what == handlerStates.getHandlerStateInformationReceived()) { //New characters from inputstream.
                 super.handleMessage(msg);
 
                 if (msg == null) {
                     return;
                 }
 
-                messageReceived = (String) msg.obj;
+                messageReceived = (String) msg.obj;  //Get the new characters
                 recDataString.append(messageReceived);
-                int endOfLineIndex = recDataString.indexOf(">");
-                if (endOfLineIndex > 0) {
-                    String dataInPrint = recDataString.substring(1, endOfLineIndex);
+                int endOfLineIndex = recDataString.indexOf(">");        //Index of end char.
+                if (endOfLineIndex > 0) {                               //If we have the end char, handle the message.
+                    String dataInPrint = recDataString.substring(1, endOfLineIndex);    //Remove 1st char and get the rest of the msg.
                     Log.i("dataInPrint", dataInPrint);
-                    if(dataInPrint == "") {
+                        if(dataInPrint.equals("")) {            //If we received an empty msg.
                         return;
                     }
-                    updateInformation(dataInPrint);
-                    recDataString = new StringBuilder();
+                    updateInformation(dataInPrint);             //Act according to the msg.
+                    recDataString.delete(recDataString.indexOf("<"),recDataString.indexOf(">")); //Clear the stringbuilder.
+                    //recDataString = new StringBuilder();      This works if line above doesn't. Test atm.
                 }
             }
-            else if(msg.what==handlerStates.getHandlerStateDisconnected()) {
+            else if(msg.what==handlerStates.getHandlerStateDisconnected()) {        //Notify observers that the connection has been lost.
                 resetDynamicInformation();
                 for(IObserver o : listToNotify) {
                     o.notifyObsConnectionLost();
