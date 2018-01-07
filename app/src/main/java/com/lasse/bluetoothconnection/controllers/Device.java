@@ -44,6 +44,7 @@ public class Device implements ISubject{
     public Device(final String name, String macAddress) {
         this.name = name;
         this.macAddress = macAddress;
+        this.gunType = "AK47";
         fireMode = -1;
         rateOfFire = -1;
         listToNotify = new ArrayList<>();
