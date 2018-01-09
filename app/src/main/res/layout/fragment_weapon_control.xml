@@ -30,7 +30,7 @@
         android:layout_alignTop="@+id/weapon_control_image_header"
         android:layout_marginStart="19dp"
         android:layout_toEndOf="@+id/weapon_control_image_header"
-        android:text="@string/weapon_control"
+        android:text="@string/weaponcontrol"
         android:textSize="30sp"
         android:gravity="center"
 
