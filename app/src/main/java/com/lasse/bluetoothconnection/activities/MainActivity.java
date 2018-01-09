@@ -97,8 +97,6 @@ public class MainActivity extends PinActivity
         });
 
 
-        KnownDevicesListFragment fragment = new KnownDevicesListFragment();
-        getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).commit();
 
 
         //fetching SharedPreferences to save locale in them
