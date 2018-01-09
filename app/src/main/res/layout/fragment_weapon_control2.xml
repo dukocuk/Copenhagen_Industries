@@ -24,10 +24,10 @@
         android:layout_marginEnd="20dp"
         android:layout_marginStart="79dp"
         android:layout_marginTop="37dp"
-        android:background="@drawable/bigbob"
-
-        android:fontFamily="@android"
+        android:text="Big Bob"
         android:textColor="@android:color/white"
+        android:textSize="26sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ImageViewWeapon"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +38,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="41dp"
-        android:background="@drawable/battery"
+        android:text="Battery"
+        android:textSize="26sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ImageViewWeapon" />
 
@@ -60,7 +63,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="14dp"
-        android:background="@drawable/oxygen"
+        android:text="Oxygen"
+        android:textColor="@android:color/white"
+        android:textSize="26sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewBattery" />
 
@@ -70,9 +76,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-
+        android:textColor="@android:color/white"
         android:layout_marginTop="14dp"
-        android:background="@drawable/propan"
+        android:text="Propan"
+        android:textSize="26sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewOxygen" />
 
@@ -82,9 +90,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-
+        android:textColor="@android:color/white"
         android:layout_marginTop="100dp"
-        android:background="@drawable/mode"
+        android:text="Mode"
+        android:textSize="26sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewPropan" />
 
