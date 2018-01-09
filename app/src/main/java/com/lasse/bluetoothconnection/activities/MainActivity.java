@@ -38,6 +38,27 @@ public class MainActivity extends PinActivity
     @SuppressWarnings("unchecked")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Nedbrudsrapportering sker kun når appen testes udenfor emulatoren
+        boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
+        if (!EMULATOR) {
+            Fabric.with(this, new Crashlytics());
+        }
+
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        KnownDevicesListFragment fragment = new KnownDevicesListFragment();
+        getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).commit();
+
 
 
         //Login
@@ -63,26 +84,8 @@ public class MainActivity extends PinActivity
         }
 
 
-        // Nedbrudsrapportering sker kun når appen testes udenfor emulatoren
-        boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
-        if (!EMULATOR) {
-            Fabric.with(this, new Crashlytics());
-        }
 
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-       // setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        KnownDevicesListFragment fragment = new KnownDevicesListFragment();
-            getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).commit();
 
 
 
