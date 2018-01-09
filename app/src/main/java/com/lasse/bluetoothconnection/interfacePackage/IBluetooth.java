@@ -52,7 +52,7 @@ public interface IBluetooth {
      *     - Armed state            <br>
      *     - FireMode               <br>
      *     - Rate of fire           <br>
-     *     - Oxygen lvl             <br>
+     *     - oxygen lvl             <br>
      *     - Propane lvl            <br>
      *     - battery lvl            <br>
      * @return ArrayList<String>

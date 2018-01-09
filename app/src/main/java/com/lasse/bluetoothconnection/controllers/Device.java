@@ -239,7 +239,7 @@ public class Device implements ISubject{
                 }
                 case "IO": {
                     this.oxygen = part[1];
-                    Log.d("Oxygen", part[1]);
+                    Log.d("oxygen", part[1]);
                     break;
                 }
                 case "IP": {

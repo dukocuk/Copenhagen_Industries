@@ -17,6 +17,7 @@ public class HelpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_help,container,false);
 
+
         WebView webview = root.findViewById(R.id.webview);
         webview.loadUrl("file:///android_asset/help_web/index.html");
 
