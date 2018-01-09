@@ -1,33 +1,64 @@
 package com.lasse.bluetoothconnection.activities;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.Transition;
-import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.github.orangegangsters.lollipin.lib.PinActivity;
+import com.github.orangegangsters.lollipin.lib.managers.AppLock;
+import com.github.orangegangsters.lollipin.lib.managers.LockManager;
 import com.lasse.bluetoothconnection.R;
 import com.lasse.bluetoothconnection.fragments.HelpFragment;
 import com.lasse.bluetoothconnection.fragments.KnownDevicesListFragment;
 
 import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import static android.content.ContentValues.TAG;
+
+
+
+public class MainActivity extends PinActivity
+        implements NavigationView.OnNavigationItemSelectedListener
+{
+    private static final int REQUEST_CODE_ENABLE = 11;
+
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Login
+        LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
+        lockManager.enableAppLock(this, CustomPinActivity.class);
+        lockManager.getAppLock().setLogoId(R.drawable.ci_logo_login_100);
+
+        //lockManager.disableAppLock();
+        //lockManager.getAppLock().disableAndRemoveConfiguration();
+
+        Intent intent = new Intent(MainActivity.this, CustomPinActivity.class);
+
+        //If there is a passcode, go to normal unlockscreen, if there isn't force them to make one
+        if(lockManager.getAppLock().isPasscodeSet()) {
+            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
+        } else{
+            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
+            startActivityForResult(intent, REQUEST_CODE_ENABLE);
+            lockManager.getAppLock().setLogoId(R.drawable.ci_logo_login_100);
+            Log.d(TAG, "Pincode enabled");
+        }
+
 
         // Nedbrudsrapportering sker kun når appen testes udenfor emulatoren
         boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
@@ -35,13 +66,9 @@ public class MainActivity extends AppCompatActivity
             Fabric.with(this, new Crashlytics());
         }
 
-
-
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-
+       // setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -53,6 +80,9 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         KnownDevicesListFragment fragment = new KnownDevicesListFragment();
             getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).commit();
+
+
+
     }
 
     @Override
@@ -70,6 +100,7 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+
     }
 
     @Override
