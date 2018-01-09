@@ -180,7 +180,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         }
         if(!(deviceController.getDeviceCurrentlyDisplayed().getBattery()==null)) {
             battery.setText(deviceController.getDeviceCurrentlyDisplayed().getBattery());
-            Log.d("Battery", "" + deviceController.getDeviceCurrentlyDisplayed().getBattery());
+            Log.d("battery", "" + deviceController.getDeviceCurrentlyDisplayed().getBattery());
         }
         if(!(deviceController.getDeviceCurrentlyDisplayed().getOxygen()==null)) {
             oxygen.setText(deviceController.getDeviceCurrentlyDisplayed().getOxygen());
