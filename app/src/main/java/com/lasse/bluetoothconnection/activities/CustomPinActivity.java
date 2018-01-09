@@ -1,10 +1,10 @@
 package com.lasse.bluetoothconnection.activities;
 
-import android.app.Application;
 
-import com.github.orangegangsters.lollipin.lib.managers.AppLock;
-import com.github.orangegangsters.lollipin.lib.managers.AppLockActivity;
-import com.github.orangegangsters.lollipin.lib.managers.LockManager;
+
+import com.github.omadahealth.lollipin.lib.managers.AppLockActivity;
+
+
 
 /**
  * Created by Ejer on 07-01-2018.

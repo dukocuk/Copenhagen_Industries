@@ -15,9 +15,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
-import com.github.orangegangsters.lollipin.lib.PinActivity;
-import com.github.orangegangsters.lollipin.lib.managers.AppLock;
-import com.github.orangegangsters.lollipin.lib.managers.LockManager;
+import com.github.omadahealth.lollipin.lib.PinActivity;
+import com.github.omadahealth.lollipin.lib.managers.AppLock;
+import com.github.omadahealth.lollipin.lib.managers.LockManager;
 import com.lasse.bluetoothconnection.R;
 import com.lasse.bluetoothconnection.fragments.HelpFragment;
 import com.lasse.bluetoothconnection.fragments.KnownDevicesListFragment;
@@ -58,7 +58,6 @@ public class MainActivity extends PinActivity
         navigationView.setNavigationItemSelectedListener(this);
         KnownDevicesListFragment fragment = new KnownDevicesListFragment();
         getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).commit();
-
 
 
         //Login
