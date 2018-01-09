@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">BluetoothConnection</string>
 
+    <!--App-->
+    <string name="app_name">Copenhagen Industries</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
@@ -22,6 +23,12 @@
     <string name="weaponcontrol_oxygen">Oxygen</string>
     <string name="weaponcontrol_propan">Propan</string>
     <string name="weaponcontrol_mode">Mode</string>
+    <string name="devicelist_name">Device</string>
+    <string name="devicelist_safe">Safe</string>
+    <string name="adddevices_paried">Paried Devices</string>
+    <string name="maindrawer_devices">Devices</string>
+    <string name="maindrawer_settings">Settings</string>
+    <string name="maindrawer_help">Help</string>
 
 
 </resources>
