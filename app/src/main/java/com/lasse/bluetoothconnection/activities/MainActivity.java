@@ -50,6 +50,7 @@ public class MainActivity extends PinActivity
 
 
 
+
     @Override
     @SuppressWarnings("unchecked")
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +107,11 @@ public class MainActivity extends PinActivity
 
 
 
+
+
+
+
+        /*
         //Login
         LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
         lockManager.enableAppLock(this, CustomPinActivity.class);
@@ -127,6 +133,7 @@ public class MainActivity extends PinActivity
             lockManager.getAppLock().setFingerprintAuthEnabled(false);
             Log.d(TAG, "Pincode enabled");
         }
+        */
 
 
 
