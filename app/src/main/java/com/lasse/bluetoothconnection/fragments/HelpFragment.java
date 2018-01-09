@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 
 import com.lasse.bluetoothconnection.R;
 
@@ -15,6 +16,10 @@ public class HelpFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_help,container,false);
+
+        WebView webview = root.findViewById(R.id.webview);
+        webview.loadUrl("file:///android_asset/help_web/index.html");
+
         return root;
     }
 }
