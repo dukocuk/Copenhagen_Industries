@@ -11,21 +11,17 @@
 
 
     <!--Devices-->
-    <string name="devices_fragment">Devices</string>
 
     <!--Settings-->
-    <string name="settings_fragment">Settings</string>
 
     <!--Weapon Control-->
-    <string name="weapon_control_fragment">Weapon Control</string>
-    <string name="weapon_control_name">Name:</string>
-    <string name="weapon_control_status">Status:</string>
-    <string name="weapon_control_battery">Battery</string>
-    <string name="weapon_control_oxygen">Oxygen</string>
-    <string name="weapon_control_propane">Propane</string>
-    <string name="weapon_control_mode">Mode</string>
-    <string name="weapon_control">Weapon Control</string>
-    <string name="safe">Safe</string>
+    <string name="weaponcontrol">Weapon Control</string>
+    <string name="weaponcontrol_safe">Safe</string>
+    <string name="weaponcontrol_battery">Battery</string>
+    <string name="weaponcontrol_weaponname">Big Bob</string>
+    <string name="weaponcontrol_oxygen">Oxygen</string>
+    <string name="weaponcontrol_propan">Propan</string>
+    <string name="weaponcontrol_mode">Mode</string>
 
 
 </resources>
