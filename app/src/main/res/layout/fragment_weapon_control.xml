@@ -57,22 +57,26 @@
 
             <TextView
                 android:id="@+id/weapon_control_name_text"
-                android:layout_width="wrap_content"
+                android:layout_width="34dp"
                 android:layout_height="wrap_content"
                 android:text="Name"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/weapon_control_name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@android:color/transparent"
-                android:gravity="end"
                 android:enabled="false"
-                android:text="WeaponName"
+                android:gravity="end"
+                android:hint="Weapon Name"
+                android:inputType="text"
+                android:maxLength="25"
+                android:text="Weapon Name"
+                android:textColor="@android:color/black"
                 android:textSize="18sp"
-                android:textColor="@android:color/black"/>
+                />
         </TableRow>
 
         <TableRow
@@ -95,7 +99,7 @@
                 android:layout_height="wrap_content"
 
                 android:gravity="right"
-                android:text="Armed"
+                android:text="Safe"
                 android:textSize="18sp"
                 android:textColor="@android:color/black"/>
 
@@ -133,7 +137,7 @@
                 android:layout_height="wrap_content"
 
                 android:gravity="right"
-                android:text="20%"
+                android:text="Battery Level"
                 android:textSize="18sp"
                 android:textColor="@android:color/black"/>
         </TableRow>
@@ -157,7 +161,7 @@
                 android:layout_height="wrap_content"
 
                 android:gravity="right"
-                android:text="45%"
+                android:text="Oxygen Level"
                 android:textSize="18sp"
                 android:textColor="@android:color/black"/>
         </TableRow>
@@ -179,7 +183,7 @@
                 android:id="@+id/weapon_control_propane"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="47%"
+                android:text="Propane Level"
                 android:textSize="18sp"
                 android:textColor="@android:color/black"
                 android:gravity="right"
@@ -231,13 +235,14 @@
                 />
         </TableRow>
         <TableRow>
+
             <TextView
                 android:id="@+id/weapon_control_RoF_text"
-                android:layout_width="wrap_content"
+                android:layout_width="74dp"
                 android:layout_height="wrap_content"
                 android:text="Rate of Fire"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/weapon_control_RoF"
@@ -248,6 +253,7 @@
                 android:enabled="false"
                 android:gravity="end"
                 android:inputType="number"
+                android:maxLength="10"
                 android:text="1000"
                 android:textSize="18sp"
                 android:textColor="@android:color/black"/>
@@ -259,21 +265,22 @@
         android:id="@+id/weapon_control_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/tableLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="73dp"
+        android:layout_marginTop="24dp"
         android:checked="false"
         android:switchMinWidth="200dp"
         android:switchTextAppearance="@style/TextAppearance.AppCompat" />
 
     <Button
         android:id="@+id/weapon_control_doneEditing_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
-        android:text="Done editing" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="40dp"
+        android:text="Start Editing"
+        android:textAllCaps="false" />
 
 
 </RelativeLayout>

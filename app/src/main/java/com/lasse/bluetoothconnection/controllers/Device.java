@@ -103,6 +103,11 @@ public class Device implements ISubject{
         return name;
     }
 
+    public void setName(String name) throws IOException {
+        this.name = name;
+        connection.setGunName(name);
+    }
+
     public String getSerialNumber() {
         return serialNumber;
     }

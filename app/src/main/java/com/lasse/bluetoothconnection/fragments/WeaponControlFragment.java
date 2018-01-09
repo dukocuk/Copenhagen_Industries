@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -33,14 +34,26 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
 
     //Textviews:
-    private EditText name;
     private TextView status;
     private TextView battery;
     private TextView oxygen;
     private TextView propane;
+
+    //Shooting mode information
     private TextView mode;
-    private EditText RoF;
+    private String[] modeStrings = {"Semi", "Burst", "Full Automatic"};
+    private int[] pngRecourses;
+    private int modeNr = 0;
+
+    private EditText rateOfFire;
+    private EditText name;
+
     private Switch aSwitch;
+
+    private Button editBtn;
+
+    private boolean editMode = false;
+
 
     private DeviceController deviceController;
 
@@ -58,9 +71,9 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         oxygen = (TextView) root.findViewById(R.id.weapon_control_oxygen);
         propane = (TextView) root.findViewById(R.id.weapon_control_propane);
         mode = (TextView) root.findViewById(R.id.weapon_control_mode);
-        RoF = (EditText) root.findViewById(R.id.weapon_control_RoF);
+        rateOfFire = (EditText) root.findViewById(R.id.weapon_control_RoF);
         aSwitch = (Switch) root.findViewById(R.id.weapon_control_switch);
-
+        editBtn = (Button) root.findViewById(R.id.weapon_control_doneEditing_button);
 
 
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -78,6 +91,51 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!editMode) {
+                    editBtn.setText("Done Editing");
+                    editMode = true;
+
+                    name.setEnabled(true);
+                    rateOfFire.setEnabled(true);
+
+                }
+                else {
+                    editMode = false;
+                    try {
+                        deviceController.getDeviceCurrentlyDisplayed().setName(name.getText().toString());
+                        deviceController.getDeviceCurrentlyDisplayed().setRateOfFire(Integer.parseInt(rateOfFire.getText().toString()));
+                        name.clearFocus();
+                        rateOfFire.clearFocus();
+                        name.setEnabled(false);
+                        rateOfFire.setEnabled(false);
+                        editBtn.setText("Start Editing");
+                    } catch (IOException e) {
+                        Toast.makeText(getActivity(), "Invalid Rate of Fire", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        mode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                modeNr++;
+                modeNr = modeNr%3;
+                mode.setText(modeStrings[modeNr]);
+                try {
+                    if(deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
+                        deviceController.getDeviceCurrentlyDisplayed().setFireMode(modeNr);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //TODO change image resource.
             }
         });
 
@@ -108,7 +166,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     private void resetDisplay() {
         String na = "N/A";
         name.setText(na);
-        status.setText("Disarmed");
+        status.setText("Safe");
         battery.setText(na);
         oxygen.setText(na);
         propane.setText(na);

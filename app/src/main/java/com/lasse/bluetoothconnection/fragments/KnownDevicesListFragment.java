@@ -89,7 +89,7 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
     public void onClick(View v) {
         if(v==addNewDevice) {
             addDeviceFragment fragment = new addDeviceFragment();
-            getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).commit();
+            getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).addToBackStack(null).commit();
         }
     }
 
@@ -131,7 +131,7 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
                     deviceController.setDeviceCurrentlyDisplayed(name);
 
                     WeaponControlFragment fragment = new WeaponControlFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).addToBackStack(null).commit();
                 }
             };
             deviceLogo.setOnClickListener(goToControlFragment);
@@ -141,14 +141,16 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
             View.OnClickListener toggleArm = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String buttonText;
+                    String buttonText = "DC";
                     Button b = (Button) v;
                     try {
-                        boolean state = device.isArmedState();
-                        device.setArmedState(!state);
-                        buttonText = state ? "Armed" : "Safe";
+                        if(device.connectionAlive()) {
+                            boolean state = device.isArmedState();
+                            device.setArmedState(!state);
+                            buttonText = state ? "Armed" : "Safe";
+                        }
                     } catch (IOException e) {
-                        buttonText = "Ikke forbundet";
+                        buttonText = "DC";
                     }
                     b.setText(buttonText);
                 }
@@ -168,6 +170,7 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
             return gunlogo;
         }
     }
+
 
 
 }
