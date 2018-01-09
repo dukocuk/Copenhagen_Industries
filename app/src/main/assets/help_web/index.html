@@ -1,28 +1,89 @@
+<!DOCTYPE html>
 <html>
     <head>
-
+        <link rel="stylesheet" type="text/css" href="style.css" />
     </head>
     <body>
-        <h2>How to connect new weapons</h2>
-        <ol>
-            <li><p>Use your phones bluetooth settings to pair with the device</p></li>
-            <li><p>Go to <b>Devices</b> > <b>Add new device</b></li>
-            <li><p>Choose the device you previously paired with</p></li>
-            <li><p>Your device is now set up!</p></li>
-        </ol>
 
-        <h2>How to arm/disarm weapons</h2>
-        <ol>
-            <li><p>Go to <b>Devices</b></p></li>
-            <li><p>From here you can arm/disarm all your weapons</p></li>
-        </ol>
 
-        <h2>How to rename a weapon</h2>
-        <ol>
-            <li><p>Go to <b>Devices</b> </p></li>
-            <li><p>Press the name of the weapon you want to rename</p></li>
-            <li><p>...</p></li>
-        </ol>
-        <div><p></p></div>
+        <button class="accordion">How to connect a new weapon</button>
+        <div class="panel">
+            <ol>
+                <li><p>Use your phones bluetooth settings to pair with the device</p></li>
+                <li><p>Go to <span class="named">Devices</span> > <span class="named">Add device(+)</span></li>
+                <li><p>Choose the device you previously paired with</p></li>
+                <li><p>Your device is now connected!</p></li>
+            </ol>
+        </div>
+
+        <button class="accordion">How to arm/disarm weapons</button>
+        <div class="panel">
+            <ol>
+                <li><p>Go to <span class="named">Devices</span></p></li>
+                <li><p>From here you can arm/disarm all your weapons</p></li>
+            </ol>
+        </div>
+
+        <button class="accordion">How to set burst mode on weapon</button>
+        <div class="panel">
+            <ol>
+                <li><p>Go to <span class="named">Devices</span></p></li>
+                <li><p>Press the name of the weapon you want to control</p></li>
+                <li><p>Press <span class="named">Start editing</span> and select the desired burst mode</p></li>
+            </ol>
+        </div>
+
+        <button class="accordion">How to rename a weapon</button>
+        <div class="panel">
+            <ol>
+                <li><p>Go to <span class="named">Devices</span> </p></li>
+                <li><p>Press the name of the weapon you want to rename</p></li>
+                <li><p>Press <span class="named">Start editing</span> and press the name</p></li>
+            </ol>
+        </div>
+
+        <button class="accordion">How to remove pincode from app</button>
+        <div class="panel">
+            <p>For safety reasons you must have a pincode</p>
+        </div>
+
+        <button class="accordion">How to remove a weapon from the app</button>
+        <div class="panel">
+            <p>This is currently not possible. For now you can un-install the app and re-install it,
+                but be aware this will remove all your weapons from the app</p>
+        </div>
+
+
+        <footer>
+            <div id="ci-info">
+                <img src="ci_logo.svg" />
+                <div>
+                    <h3>Anything else?</h3>
+                    <p>website:<br><a href="http://cph.industries/">cph.industries</a></p>
+                    <p>mail:<br><a href="mailto:HQ@Cph.Industries">HQ@Cph.Industries</a></p>
+                    <p>phone:<br><a href=tel:+4524830310">+4524830310</a></p>
+                </div>
+            </div>
+
+        </footer>
+
+        <script>
+            // fra: https://www.w3schools.com/howto/howto_js_accordion.asp
+
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+              acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight){
+                  panel.style.maxHeight = null;
+                } else {
+                  panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+              });
+            }
+        </script>
     </body>
 </html>
