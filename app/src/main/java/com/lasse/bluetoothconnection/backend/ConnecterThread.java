@@ -82,6 +82,7 @@ class ConnecterThread implements Runnable {
             try {
                 bytes = inputStream.read(buffer);
                 String readMSG = new String(buffer, 0, bytes);
+                Log.d("ConnecterThread", readMSG);
                 handlerToNotify.obtainMessage(handlerStates.getHandlerStateInformationReceived(), bytes, -1, readMSG).sendToTarget();
             }
             catch (IOException e) {

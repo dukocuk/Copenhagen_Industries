@@ -269,10 +269,6 @@ public class Device implements ISubject{
             if(msg.what == handlerStates.getHandlerStateInformationReceived()) { //New characters from inputstream.
                 super.handleMessage(msg);
 
-                if (msg == null) {
-                    return;
-                }
-
                 messageReceived = (String) msg.obj;  //Get the new characters
                 recDataString.append(messageReceived);
                 int endOfLineIndex = recDataString.indexOf(">");        //Index of end char.
@@ -283,8 +279,8 @@ public class Device implements ISubject{
                         return;
                     }
                     updateInformation(dataInPrint);             //Act according to the msg.
-                    recDataString.delete(recDataString.indexOf("<"),recDataString.indexOf(">")); //Clear the stringbuilder.
-                    //recDataString = new StringBuilder();      This works if line above doesn't. Test atm.
+                    //recDataString.delete(recDataString.indexOf("<"),recDataString.indexOf(">")); //Clear the stringbuilder.
+                    recDataString = new StringBuilder();      //This works if line above doesn't. Test atm.
                 }
             }
             else if(msg.what==handlerStates.getHandlerStateDisconnected()) {        //Notify observers that the connection has been lost.
