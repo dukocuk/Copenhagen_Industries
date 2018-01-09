@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Copenhagen Industries</string>
+    <string name="navigation_drawer_open">Åben navigationsskuffen</string>
+    <string name="navigation_drawer_close">Luk navigationsskuffen</string>
+    <string name="action_settings">Indstillinger</string>
+    <string name="help_fragment">Hjælp</string>
+    <string name="weaponcontrol">Våben Kontrol</string>
+    <string name="weaponcontrol_safe">Sikker</string>
+    <string name="weaponcontrol_battery">Batteri</string>
+    <string name="weaponcontrol_weaponname">Big Bob</string>
+    <string name="weaponcontrol_oxygen">Oxygen</string>
+    <string name="weaponcontrol_propan">Propan</string>
+    <string name="weaponcontrol_mode">Tilstand</string>
+    <string name="devicelist_name">Enhed</string>
+    <string name="devicelist_safe">Sikker</string>
+    <string name="adddevices_paried">Parrede Enheder</string>
+    <string name="maindrawer_devices">Enheder</string>
+    <string name="maindrawer_settings">Indstillinger</string>
+    <string name="maindrawer_help">Hjælp</string>
+</resources>

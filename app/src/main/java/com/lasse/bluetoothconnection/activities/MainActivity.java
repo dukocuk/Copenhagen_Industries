@@ -25,6 +25,7 @@ import com.lasse.bluetoothconnection.fragments.AddDevicesFragment;
 import com.lasse.bluetoothconnection.fragments.HelpFragment;
 import com.lasse.bluetoothconnection.fragments.KnownDevicesListFragment;
 import com.lasse.bluetoothconnection.fragments.SettingsFragment;
+import com.lasse.bluetoothconnection.fragments.WeaponControlFragment;
 
 import java.util.Locale;
 
