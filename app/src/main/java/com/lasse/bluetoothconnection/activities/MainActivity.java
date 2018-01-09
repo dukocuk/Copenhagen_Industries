@@ -21,18 +21,15 @@ import com.github.omadahealth.lollipin.lib.PinActivity;
 import com.github.omadahealth.lollipin.lib.managers.AppLock;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
 import com.lasse.bluetoothconnection.R;
-import com.lasse.bluetoothconnection.fragments.AddDevicesFragment;
 import com.lasse.bluetoothconnection.fragments.HelpFragment;
 import com.lasse.bluetoothconnection.fragments.KnownDevicesListFragment;
 import com.lasse.bluetoothconnection.fragments.SettingsFragment;
-import com.lasse.bluetoothconnection.fragments.WeaponControlFragment;
 
 import java.util.Locale;
 
 import io.fabric.sdk.android.Fabric;
 
 import static android.content.ContentValues.TAG;
-
 
 
 public class MainActivity extends PinActivity
@@ -111,7 +108,7 @@ public class MainActivity extends PinActivity
 
 
 
-        /*
+
         //Login
         LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
         lockManager.enableAppLock(this, CustomPinActivity.class);
@@ -133,7 +130,7 @@ public class MainActivity extends PinActivity
             lockManager.getAppLock().setFingerprintAuthEnabled(false);
             Log.d(TAG, "Pincode enabled");
         }
-        */
+
 
 
 

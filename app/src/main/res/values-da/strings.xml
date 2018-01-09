@@ -18,4 +18,5 @@
     <string name="maindrawer_devices">Enheder</string>
     <string name="maindrawer_settings">Indstillinger</string>
     <string name="maindrawer_help">Hjælp</string>
+    <string name="adddevice_paireddevices">Parrede Enheder</string>
 </resources>

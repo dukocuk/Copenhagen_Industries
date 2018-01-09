@@ -1,7 +1,6 @@
 package com.lasse.bluetoothconnection.controllers;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
