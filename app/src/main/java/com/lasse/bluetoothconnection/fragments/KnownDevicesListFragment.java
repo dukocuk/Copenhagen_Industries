@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +30,7 @@ import java.util.HashMap;
 
 public class KnownDevicesListFragment extends Fragment implements View.OnClickListener{
 
-    private Button addNewDevice;
+    private FloatingActionButton addNewDevice;
     private ListView listView;
 
     private ArrayAdapter arrayAdapter;
@@ -41,8 +42,8 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_known_devices,container,false);
 
-        addNewDevice = (Button) root.findViewById(R.id.known_devices_add_new_device);
-        listView = (ListView) root.findViewById(R.id.knowndevices_listview);
+        addNewDevice = (FloatingActionButton) root.findViewById(R.id.known_devices_floatingActionButton);
+        listView = (ListView) root.findViewById(R.id.known_devices_listView);
         deviceController = DeviceController.getInstance();
         try {
             deviceController.loadData(getActivity());
@@ -118,7 +119,21 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
             // Populate template view using the data object
             deviceLogo.setImageResource(findLogoForGunType(device.getGunType()));
             deviceName.setText(device.getName());
-            String armStatusText = device.isArmedState() ? "Armed" : "Safe";
+            String armStatusText = "";
+            if(device.connectionAlive()) {
+                if (device.isArmedState()) {
+                    armStatusText = "Armed";
+                    deviceArmStatus.setBackgroundColor(getResources().getColor(R.color.colorButtonRed));
+                } else {
+                    armStatusText = "Safe";
+                    deviceArmStatus.setBackgroundColor(getResources().getColor(R.color.colorButtonGreen));
+                }
+            }
+            else {
+                armStatusText = "DC";
+                deviceArmStatus.setBackgroundColor(getResources().getColor(R.color.colorButtonGrey));
+            }
+
             deviceArmStatus.setText(armStatusText);
 
             // Manage clicks to go to the control fragment
@@ -143,14 +158,25 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
                 public void onClick(View v) {
                     String buttonText = "DC";
                     Button b = (Button) v;
+                    b.setBackgroundColor(getResources().getColor(R.color.colorButtonGrey));
+
                     try {
                         if(device.connectionAlive()) {
                             boolean state = device.isArmedState();
                             device.setArmedState(!state);
-                            buttonText = state ? "Armed" : "Safe";
+                            if(device.isArmedState()) {
+                                b.setBackgroundColor(getResources().getColor(R.color.colorButtonRed));
+                                buttonText = "Armed";
+                            }
+                            else {
+                                b.setBackgroundColor(getResources().getColor(R.color.colorButtonGreen));
+                                buttonText = "Safe";
+                            }
                         }
                     } catch (IOException e) {
                         buttonText = "DC";
+                        b.setBackgroundColor(getResources().getColor(R.color.colorButtonGrey));
+
                     }
                     b.setText(buttonText);
                 }
