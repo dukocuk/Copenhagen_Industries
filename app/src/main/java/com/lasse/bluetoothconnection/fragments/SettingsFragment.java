@@ -14,8 +14,10 @@ import com.lasse.bluetoothconnection.R;
  */
 
 public class SettingsFragment extends Fragment {
+
+    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_weapon_control,container,false);
+        View root = inflater.inflate(R.layout.fragment_settings,container,false);
         return root;
     }
 }

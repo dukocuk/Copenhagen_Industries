@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,8 +31,6 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
 
     private FloatingActionButton addNewDevice;
     private ListView listView;
-
-    private ArrayAdapter arrayAdapter;
 
     private DeviceController deviceController;
 
@@ -89,7 +86,7 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
     @Override
     public void onClick(View v) {
         if(v==addNewDevice) {
-            addDeviceFragment fragment = new addDeviceFragment();
+            AddDevicesFragment fragment = new AddDevicesFragment();
             getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).addToBackStack(null).commit();
         }
     }

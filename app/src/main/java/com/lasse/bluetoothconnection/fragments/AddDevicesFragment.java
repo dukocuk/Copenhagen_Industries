@@ -25,7 +25,7 @@ import com.lasse.bluetoothconnection.exceptions.DeviceControllerNotInstantiatedE
 import java.util.Set;
 import java.util.ArrayList;
 
-public class addDeviceFragment extends Fragment implements View.OnClickListener{
+public class AddDevicesFragment extends Fragment implements View.OnClickListener{
 
     //Widgets
     private Button btnPaired;

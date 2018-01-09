@@ -2,8 +2,10 @@ package com.lasse.bluetoothconnection.activities;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,8 +21,12 @@ import com.github.omadahealth.lollipin.lib.PinActivity;
 import com.github.omadahealth.lollipin.lib.managers.AppLock;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
 import com.lasse.bluetoothconnection.R;
+import com.lasse.bluetoothconnection.fragments.AddDevicesFragment;
 import com.lasse.bluetoothconnection.fragments.HelpFragment;
 import com.lasse.bluetoothconnection.fragments.KnownDevicesListFragment;
+import com.lasse.bluetoothconnection.fragments.SettingsFragment;
+
+import java.util.Locale;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -32,6 +38,15 @@ public class MainActivity extends PinActivity
         implements NavigationView.OnNavigationItemSelectedListener
 {
     private static final int REQUEST_CODE_ENABLE = 11;
+
+    //for multilanguage
+    private static final String LOCALE_KEY = "localekey";
+    private static final String DANISH_LOCALE = "da";
+    private static final String ENGLISH_LOCALE = "en_US";
+    private static final String LOCALE_PREF_KEY = "localePref";
+    private Locale locale;
+
+
 
 
     @Override
@@ -48,16 +63,48 @@ public class MainActivity extends PinActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment = null;
+                int itemId = item.getItemId();
+                if (itemId == R.id.nav_devices) {
+                    fragment = new KnownDevicesListFragment();
+                }
+                if (itemId == R.id.nav_settings) {
+                    fragment = new SettingsFragment();
+                }
+                if (itemId == R.id.nav_help) {
+                    fragment = new HelpFragment();
+                }
+
+                if (fragment != null) {
+                    getFragmentManager().beginTransaction().replace(R.id.content_main_fragment, fragment).commit();
+                    drawer.closeDrawers();
+                    return true;
+                }
+
+
+                return false;
+            }
+        });
+
+
         KnownDevicesListFragment fragment = new KnownDevicesListFragment();
         getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).commit();
+
+
+        //fetching SharedPreferences to save locale in them
+        SharedPreferences sp = getSharedPreferences(LOCALE_PREF_KEY, MODE_PRIVATE);
+        String localeString = sp.getString(LOCALE_KEY, ENGLISH_LOCALE);
+
 
 
         //Login
