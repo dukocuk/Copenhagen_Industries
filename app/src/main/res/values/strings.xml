@@ -25,6 +25,7 @@
     <string name="weapon_control_propane">Propane</string>
     <string name="weapon_control_mode">Mode</string>
     <string name="weapon_control">Weapon Control</string>
+    <string name="safe">Safe</string>
 
 
 </resources>

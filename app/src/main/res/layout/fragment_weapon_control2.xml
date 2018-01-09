@@ -25,7 +25,6 @@
         android:layout_marginStart="79dp"
         android:layout_marginTop="37dp"
         android:fontFamily="@android"
-        android:text="TextView"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ImageViewWeapon"
@@ -38,7 +37,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="41dp"
-        android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ImageViewWeapon"
         android:background="@drawable/battery"/>
@@ -61,7 +59,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="14dp"
-        android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewBattery"
         android:background="@drawable/oxygen"/>
@@ -113,12 +110,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:layout_marginTop="350dp"
-        android:text="Button"
+        android:text="@string/safe"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ImageViewWeapon"
-        android:background="@drawable/state"/>
+        android:background="@drawable/safe"/>
 
 
 </android.support.constraint.ConstraintLayout>
