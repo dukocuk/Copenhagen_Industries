@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
 
     private FloatingActionButton addNewDevice;
     private ListView listView;
+    private ConstraintLayout noItemView;
 
     private ArrayAdapter arrayAdapter;
 
@@ -44,6 +46,8 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
 
         addNewDevice = (FloatingActionButton) root.findViewById(R.id.known_devices_floatingActionButton);
         listView = (ListView) root.findViewById(R.id.known_devices_listView);
+        noItemView = (ConstraintLayout) root.findViewById(R.id.no_item_view);
+
         deviceController = DeviceController.getInstance();
         try {
             deviceController.loadData(getActivity());
@@ -53,31 +57,12 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
         }
         addNewDevice.setOnClickListener(this);
 
-        // stringlist
-//        ArrayList<String> list = deviceController.getDeviceNameList();
-//        arrayAdapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1,list);
-//
-//        listView.setAdapter(arrayAdapter);
-//        listView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-//
-//                Log.d("onItemClick(arrayadapter   )", "onItemClick() called with: parent = [" + parent + "], view = [" + view + "], position = [" + position + "], id = [" + id + "]");
-//                String name = (String) arrayAdapter.getItem(position);
-//
-//                deviceController.setDeviceCurrentlyDisplayed(name);
-//
-//                WeaponControlFragment fragment = new WeaponControlFragment();
-//                getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).commit();
-//
-//            }
-//        });
-
         // devicelist
         ArrayList<Device> deviceList = (ArrayList<Device>) deviceController.getDevices();
         final DeviceAdapter deviceAdapter = new DeviceAdapter(getActivity(), deviceList);
         listView.setAdapter(deviceAdapter);
+
+        if (!deviceList.isEmpty()) noItemView.setVisibility(View.INVISIBLE);
         return root;
     }
 
