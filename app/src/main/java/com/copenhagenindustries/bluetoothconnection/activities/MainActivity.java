@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.crashlytics.android.Crashlytics;
 import com.github.omadahealth.lollipin.lib.PinActivity;
@@ -28,8 +30,7 @@ import io.fabric.sdk.android.Fabric;
 import static android.content.ContentValues.TAG;
 
 
-public class MainActivity extends PinActivity
-        implements NavigationView.OnNavigationItemSelectedListener
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
     private static final int REQUEST_CODE_ENABLE = 11;
 
@@ -47,7 +48,7 @@ public class MainActivity extends PinActivity
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

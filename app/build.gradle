@@ -55,4 +55,5 @@ dependencies {
     compile('com.github.omadahealth:lollipin:2.1.0@aar') {
         transitive = true
     }
+
 }
