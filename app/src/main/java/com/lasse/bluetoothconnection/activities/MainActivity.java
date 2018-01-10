@@ -2,10 +2,8 @@ package com.lasse.bluetoothconnection.activities;
 
 import android.app.Fragment;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -25,7 +23,6 @@ import com.lasse.bluetoothconnection.fragments.HelpFragment;
 import com.lasse.bluetoothconnection.fragments.KnownDevicesListFragment;
 import com.lasse.bluetoothconnection.fragments.SettingsFragment;
 
-import java.util.Locale;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -37,28 +34,19 @@ public class MainActivity extends PinActivity
 {
     private static final int REQUEST_CODE_ENABLE = 11;
 
-    //for multilanguage
-    private static final String LOCALE_KEY = "localekey";
-    private static final String DANISH_LOCALE = "da";
-    private static final String ENGLISH_LOCALE = "en_US";
-    private static final String LOCALE_PREF_KEY = "localePref";
-    private Locale locale;
-
-
-
-
 
     @Override
     @SuppressWarnings("unchecked")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
         // Nedbrudsrapportering sker kun når appen testes udenfor emulatoren
         boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
         if (!EMULATOR) {
             Fabric.with(this, new Crashlytics());
         }
 
-        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // setSupportActionBar(toolbar);
 
@@ -69,42 +57,7 @@ public class MainActivity extends PinActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment fragment = null;
-                int itemId = item.getItemId();
-                if (itemId == R.id.nav_devices) {
-                    fragment = new KnownDevicesListFragment();
-                }
-                if (itemId == R.id.nav_settings) {
-                    fragment = new SettingsFragment();
-                }
-                if (itemId == R.id.nav_help) {
-                    fragment = new HelpFragment();
-                }
-
-                if (fragment != null) {
-                    getFragmentManager().beginTransaction().replace(R.id.content_main_fragment, fragment).commit();
-                    drawer.closeDrawers();
-                    return true;
-                }
-
-
-                return false;
-            }
-        });
-
-
-
-
-        //fetching SharedPreferences to save locale in them
-        SharedPreferences sp = getSharedPreferences(LOCALE_PREF_KEY, MODE_PRIVATE);
-        String localeString = sp.getString(LOCALE_KEY, ENGLISH_LOCALE);
-
-
-
-
+        navigationView.setNavigationItemSelectedListener(this);
 
 
 
@@ -173,27 +126,29 @@ public class MainActivity extends PinActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
         Fragment fragment = null;
-        if (id == R.id.nav_devices) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.nav_devices) {
             fragment = new KnownDevicesListFragment();
         }
-        else if(id == R.id.nav_help) {
+        if (itemId == R.id.nav_settings) {
+            fragment = new SettingsFragment();
+        }
+        if (itemId == R.id.nav_help) {
             fragment = new HelpFragment();
         }
-        else if(id == R.id.nav_settings) {
-            Toast.makeText(this,"You clicked on settings",Toast.LENGTH_LONG).show();
-        }
-        if(fragment != null) {
+
+        if (fragment != null) {
             getFragmentManager().beginTransaction().replace(R.id.content_main_fragment, fragment).commit();
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+
     }
 }
