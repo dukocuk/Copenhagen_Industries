@@ -2,8 +2,11 @@ package com.copenhagenindustries.bluetoothconnection.fragments;
 
 
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,14 +31,14 @@ import java.util.ArrayList;
 public class AddDevicesFragment extends Fragment implements View.OnClickListener{
 
     //Widgets
-    private Button btnPaired;
+    private FloatingActionButton btnPaired;
     private ListView pairedBTDevicesList;
 
     //Bluetooth
     protected BluetoothAdapter myBluetoothAdapter = null;             //The devices bluetoothadapter.
 
-    private ArrayList<String> devicesName;
-    private ArrayList<String> devicesMacAddress;
+    private ArrayList<String> devicesName = new ArrayList<>();
+    private ArrayList<String> devicesMacAddress = new ArrayList<>();
     private DeviceController deviceController;
 
 
@@ -45,8 +48,8 @@ public class AddDevicesFragment extends Fragment implements View.OnClickListener
         View root = inflater.inflate(R.layout.fragment_add_device,container,false);
 
         //Calling widgets
-        btnPaired = (Button) root.findViewById(com.copenhagenindustries.bluetoothconnection.R.id.BPair);
-        pairedBTDevicesList = (ListView) root.findViewById(R.id.listView);
+        btnPaired = (FloatingActionButton) root.findViewById(R.id.add_device_floatingActionButton);
+        pairedBTDevicesList = (ListView) root.findViewById(R.id.add_device_listview);
         btnPaired.setOnClickListener(this);
 
         deviceController = DeviceController.getInstance();
@@ -68,6 +71,21 @@ public class AddDevicesFragment extends Fragment implements View.OnClickListener
             startActivityForResult(enableBTIntent,1);
         }
         pairedDevicesList();
+
+        final BroadcastReceiver bReciever = new BroadcastReceiver() {
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                    BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                    // Create a new device item
+                    devicesName.add(device.getName());
+                    devicesMacAddress.add(device.getAddress());
+
+                }
+            }
+        };
+
+
         return root;
     }
 
@@ -75,8 +93,7 @@ public class AddDevicesFragment extends Fragment implements View.OnClickListener
     private void pairedDevicesList()
     {
         Set<BluetoothDevice> pairedDevices = myBluetoothAdapter.getBondedDevices();
-        devicesName = new ArrayList();
-        devicesMacAddress = new ArrayList();
+
 
         if (pairedDevices.size()>0)
         {
@@ -131,7 +148,12 @@ public class AddDevicesFragment extends Fragment implements View.OnClickListener
     {
         if(v == btnPaired) {
             pairedDevicesList(); //method that will be called
+            scanForDevices();
         }
+    }
+
+    public void scanForDevices() {
+
     }
 
 }

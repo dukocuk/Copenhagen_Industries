@@ -4,19 +4,16 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatCallback;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.crashlytics.android.Crashlytics;
 import com.github.omadahealth.lollipin.lib.PinActivity;
@@ -33,7 +30,7 @@ import io.fabric.sdk.android.Fabric;
 import static android.content.ContentValues.TAG;
 
 
-public class MainActivity extends PinActivity implements NavigationView.OnNavigationItemSelectedListener
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
 
     @Override
@@ -59,6 +56,9 @@ public class MainActivity extends PinActivity implements NavigationView.OnNaviga
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        KnownDevicesListFragment  fragment = new KnownDevicesListFragment();
+        getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).commit();
 
     }
 

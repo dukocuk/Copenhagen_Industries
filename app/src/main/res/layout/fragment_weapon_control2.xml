@@ -7,30 +7,30 @@
     tools:context="com.copenhagenindustries.bluetoothconnection.fragments.WeaponControlFragment">
 
 
+
     <ImageView
-        android:id="@+id/ImageViewWeapon"
+        android:id="@+id/weapon_control_image_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="37dp"
-        android:background="@drawable/weapon"
+        android:src="@drawable/weapon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewWeponName"
+        android:id="@+id/weapon_control_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="79dp"
-        android:layout_marginTop="37dp"
         android:text="@string/weaponcontrol_weaponname"
         android:textColor="@android:color/white"
         android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ImageViewWeapon"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/weapon_control_image_header"
+        tools:layout_editor_absoluteY="37dp" />
 
     <TextView
         android:id="@+id/textViewBattery"
@@ -43,7 +43,7 @@
         android:textColor="@android:color/white"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ImageViewWeapon" />
+        app:layout_constraintTop_toBottomOf="@+id/weapon_control_image_header" />
 
     <ImageView
         android:id="@+id/imageViewBatteryStatus"
@@ -55,7 +55,7 @@
         android:background="@drawable/battery1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textViewBattery"
-        app:layout_constraintTop_toTopOf="@+id/textViewWeponName" />
+        app:layout_constraintTop_toTopOf="@+id/weapon_control_name" />
 
     <TextView
         android:id="@+id/textViewOxygen"
@@ -123,7 +123,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ImageViewWeapon" />
+        app:layout_constraintTop_toBottomOf="@+id/weapon_control_image_header" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -135,6 +135,7 @@ public class Device implements ISubject{
     public int getRateOfFire() {
         return rateOfFire;
     }
+
     public void setRateOfFire(int rateOfFire) throws IOException {
         this.rateOfFire = rateOfFire;
         connection.setRateOfFire(rateOfFire);
