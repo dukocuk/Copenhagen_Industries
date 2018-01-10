@@ -12,17 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.copenhagenindustries.bluetoothconnection.activities.MainActivity"
+            android:name="com.copenhagenindustries.bluetoothconnection.activities.CustomApplication"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name="com.copenhagenindustries.bluetoothconnection.activities.SplashScreen" ></activity>
+        <activity android:name="com.copenhagenindustries.bluetoothconnection.activities.MainActivity"/>
         <activity android:name="com.copenhagenindustries.bluetoothconnection.activities.CustomPinActivity"/>
         <meta-data
             android:name="io.fabric.ApiKey"

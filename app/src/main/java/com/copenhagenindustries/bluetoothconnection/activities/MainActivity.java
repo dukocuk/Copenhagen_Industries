@@ -4,16 +4,19 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatCallback;
+import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import com.crashlytics.android.Crashlytics;
 import com.github.omadahealth.lollipin.lib.PinActivity;
@@ -30,10 +33,8 @@ import io.fabric.sdk.android.Fabric;
 import static android.content.ContentValues.TAG;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+public class MainActivity extends PinActivity implements NavigationView.OnNavigationItemSelectedListener
 {
-    private static final int REQUEST_CODE_ENABLE = 11;
-
 
     @Override
     @SuppressWarnings("unchecked")
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -58,38 +59,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
-
-
-        //Login
-        LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
-        lockManager.enableAppLock(this, CustomPinActivity.class);
-        lockManager.getAppLock().setLogoId(R.drawable.ci_logo_login_50);
-        lockManager.getAppLock().setFingerprintAuthEnabled(false);
-
-        //lockManager.disableAppLock();
-        //lockManager.getAppLock().disableAndRemoveConfiguration();
-
-        Intent intent = new Intent(MainActivity.this, CustomPinActivity.class);
-
-        //If there is a passcode, go to normal unlockscreen, if there isn't force them to make one
-        if(lockManager.getAppLock().isPasscodeSet()) {
-            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
-        } else{
-            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
-            startActivityForResult(intent, REQUEST_CODE_ENABLE);
-            lockManager.getAppLock().setLogoId(R.drawable.ci_logo_login_50);
-            lockManager.getAppLock().setFingerprintAuthEnabled(false);
-            Log.d(TAG, "Pincode enabled");
-        }
-
-
-
-
-
-
-
 
     }
 
@@ -149,6 +118,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
             return true;
-
     }
 }

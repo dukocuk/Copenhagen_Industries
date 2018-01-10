@@ -2,8 +2,16 @@ package com.copenhagenindustries.bluetoothconnection.activities;
 
 
 
-import com.github.omadahealth.lollipin.lib.managers.AppLockActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 
+import com.copenhagenindustries.bluetoothconnection.R;
+import com.github.omadahealth.lollipin.lib.managers.AppLock;
+import com.github.omadahealth.lollipin.lib.managers.AppLockActivity;
+import com.github.omadahealth.lollipin.lib.managers.LockManager;
+
+import static android.content.ContentValues.TAG;
 
 
 /**
@@ -26,7 +34,13 @@ public class CustomPinActivity extends AppLockActivity {
 
     @Override
     public void onPinSuccess(int attempts) {
+        Intent intent2 = new Intent(CustomPinActivity.this, MainActivity.class);
+        startActivity(intent2);
+    }
 
+    @Override
+    public int getContentView(){
+        return R.layout.activity_pin_code;
     }
 
     @Override
