@@ -19,7 +19,6 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         app:srcCompat="@drawable/logo_wide_transparent_dark"
-        android:contentDescription="TODO"
         tools:ignore="ContentDescription" />
 
 

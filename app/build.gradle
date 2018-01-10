@@ -5,6 +5,7 @@ buildscript {
 
     dependencies {
         classpath 'io.fabric.tools:gradle:1.25.1'
+
     }
 }
 apply plugin: 'com.android.application'
@@ -17,7 +18,7 @@ repositories {
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "27.0.1"
+    buildToolsVersion "27.0.2"
     defaultConfig {
         applicationId "com.lasse.bluetoothconnection"
         minSdkVersion 21
@@ -25,6 +26,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -41,8 +43,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:27.0.2'
-    compile 'com.android.support:support-v4:27.0.2'
     compile 'com.android.support:design:27.0.2'
+    compile 'com.android.support:support-v13:27.0.2'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:multidex:1.0.2'
     testCompile 'junit:junit:4.12'
@@ -50,7 +52,8 @@ dependencies {
         transitive = true
     }
     //Lollipin
-    compile ('com.github.orangegangsters:lollipin:2.0.0@aar') {
+    compile('com.github.omadahealth:lollipin:2.1.0@aar') {
         transitive = true
     }
+
 }
