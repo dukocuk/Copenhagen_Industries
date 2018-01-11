@@ -42,7 +42,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
     //Shooting mode information
     private ImageView mode;
-    private int[] modeImages = {R.drawable.weapon_control_bullet_semi,R.drawable.weapon_control_bullet_burst,R.drawable.weapon_control_bullet_fullauto};
+    private int[] modeImages = {R.drawable.bullet_single,R.drawable.bullet_burst,R.drawable.bullet_auto};
     private int modeNr = 0;
 
     private ImageView battery;
