@@ -11,6 +11,9 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -39,7 +42,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
     //Shooting mode information
     private ImageView mode;
-    private int[] modeImages = {R.drawable.weapon_control_bullet_semi,R.drawable.weapon_control_bullet_burst,R.drawable.weapon_control_bullet_fullauto};
+    private int[] modeImages = {R.drawable.bullet_single,R.drawable.bullet_burst,R.drawable.bullet_auto};
     private int modeNr = 0;
 
     private ImageView battery;
@@ -65,6 +68,8 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(com.copenhagenindustries.bluetoothconnection.R.layout.fragment_weapon_control,container,false);
+        setHasOptionsMenu(true);
+
         name = (EditText) root.findViewById(R.id.weapon_control_name);
         battery = (ImageView) root.findViewById(R.id.weapon_control_battery_image);
         oxygen = (TextView) root.findViewById(R.id.weapon_control_oxygen);
@@ -304,5 +309,43 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         task = null;
         super.onDestroy();
 
+    }
+
+
+    // make the fragments menu from the ressource file
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        Log.d("yo", "onCreateOptionsMenu: ");
+        inflater.inflate(R.menu.weapon_control, menu);
+    }
+
+    // menu item was pressed
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("trykkede på noget", "onOptionsItemSelected: ");
+        switch (item.getItemId()) {
+            case R.id.edit_weapon:
+                changeNameDialog();
+                return true;
+            case R.id.delete_weapon:
+                return true;
+            default:
+                break;
+        }
+        return false;
+    }
+
+    private void changeNameDialog(){
+        Log.d("min log", "changeNameDialog: ");
+
+        // 1. Instantiate an AlertDialog.Builder with its constructor
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        // 2. Chain together various setter methods to set the dialog characteristics
+                builder.setMessage("Whatup?")
+                        .setTitle("Er du nede?");
+
+        // 3. Get the AlertDialog from create()
+        AlertDialog dialog = builder.create();
     }
 }
