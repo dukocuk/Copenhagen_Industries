@@ -1,18 +1,20 @@
 body{
     margin: 0;
     padding: 0;
+    background-color: #303030;
 }
 
 footer {
     width: 100%;
     margin: 0;
-    background-color: lightgrey;
+    background-color: #303030;
 }
 
 footer #ci-info{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    color: white;
 }
 
 footer #ci-info img {
