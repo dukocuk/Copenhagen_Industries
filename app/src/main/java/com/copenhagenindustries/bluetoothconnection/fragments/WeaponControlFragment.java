@@ -273,6 +273,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         public ProgressTask(Context context) {
             this.context = context;
             dialog = new ProgressDialog(context);
+            dialog.setCancelable(false);
         }
 
 

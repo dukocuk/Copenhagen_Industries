@@ -28,8 +28,8 @@
 
             <ImageView
                 android:id="@+id/weapon_control_image_header"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:srcCompat="@drawable/weapon"
                 tools:ignore="ContentDescription" />
 
