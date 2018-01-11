@@ -36,6 +36,7 @@ public class CustomPinActivity extends AppLockActivity {
     public void onPinSuccess(int attempts) {
         Intent intent2 = new Intent(CustomPinActivity.this, MainActivity.class);
         startActivity(intent2);
+        finish();
     }
 
     @Override

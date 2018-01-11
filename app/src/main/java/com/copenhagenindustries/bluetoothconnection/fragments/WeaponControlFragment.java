@@ -64,7 +64,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(com.copenhagenindustries.bluetoothconnection.R.layout.fragment_weapon_control_portrait,container,false);
+        View root = inflater.inflate(com.copenhagenindustries.bluetoothconnection.R.layout.fragment_weapon_control,container,false);
         name = (EditText) root.findViewById(R.id.weapon_control_name);
         battery = (ImageView) root.findViewById(R.id.weapon_control_battery_image);
         oxygen = (TextView) root.findViewById(R.id.weapon_control_oxygen);
