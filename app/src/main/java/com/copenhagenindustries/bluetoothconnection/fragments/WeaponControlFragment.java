@@ -39,7 +39,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
     //Shooting mode information
     private ImageView mode;
-    private int[] modeImages = {R.drawable.bulletsingle,R.drawable.bulletburst,R.drawable.bulletauto};
+    private int[] modeImages = {R.drawable.weapon_control_bullet_semi,R.drawable.weapon_control_bullet_burst,R.drawable.weapon_control_bullet_fullauto};
     private int modeNr = 0;
 
     private ImageView battery;
@@ -64,7 +64,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(com.copenhagenindustries.bluetoothconnection.R.layout.fragment_weapon_control,container,false);
+        View root = inflater.inflate(com.copenhagenindustries.bluetoothconnection.R.layout.fragment_weapon_control_portrait,container,false);
         name = (EditText) root.findViewById(R.id.weapon_control_name);
         battery = (ImageView) root.findViewById(R.id.weapon_control_battery_image);
         oxygen = (TextView) root.findViewById(R.id.weapon_control_oxygen);
@@ -99,6 +99,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                 }
                 else {
                     aButton.setBackgroundColor(getResources().getColor(R.color.colorButtonGrey));
+                    aButton.setBackground(getResources().getDrawable(R.drawable.weapon_control_button_disconnected));
                 }
             }
         });
