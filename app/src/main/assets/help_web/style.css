@@ -76,3 +76,13 @@ footer #ci-info div {
     overflow: hidden;
     transition: max-height 0.2s ease-out;
 }
+
+/* unvisited link */
+a:link {
+    color: lightblue;
+}
+
+/* visited link */
+a:visited {
+    color: green;
+}
