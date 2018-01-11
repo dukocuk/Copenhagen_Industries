@@ -23,7 +23,10 @@
             </intent-filter>
         </activity>
         <activity android:name="com.copenhagenindustries.bluetoothconnection.activities.SplashScreen" ></activity>
-        <activity android:name="com.copenhagenindustries.bluetoothconnection.activities.MainActivity">
+        <activity
+            android:name="com.copenhagenindustries.bluetoothconnection.activities.MainActivity"
+            android:windowSoftInputMode="adjustPan"
+            >
         </activity>
         <activity android:name="com.copenhagenindustries.bluetoothconnection.activities.CustomPinActivity"/>
         <meta-data
