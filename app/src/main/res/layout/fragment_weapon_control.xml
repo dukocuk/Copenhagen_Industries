@@ -10,33 +10,37 @@
 
 
 
-
     <TableLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="20dp"
+        android:stretchColumns="1"
+        android:id="@+id/tablelayout1">
 
-        android:stretchColumns="*"
-
-        android:id="@+id/tableLayout">
-        <!--android:background="@drawable/weapon_control_row_background"  border in tablelayout-->
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center"
+            >
 
             <ImageView
                 android:id="@+id/weapon_control_image_header"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-
                 app:srcCompat="@drawable/image_ak47"
                 tools:ignore="ContentDescription" />
 
+
+
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            >
             <EditText
                 android:id="@+id/weapon_control_name"
                 android:layout_width="match_parent"
@@ -54,8 +58,22 @@
                 android:textSize="18sp"
 
                 />
-
         </TableRow>
+
+
+    </TableLayout>
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="20dp"
+
+        android:stretchColumns="*"
+        android:layout_below="@+id/tablelayout1"
+        android:id="@+id/tableLayout">
+        <!--android:background="@drawable/weapon_control_row_background"  border in tablelayout-->
+
 
 
 
