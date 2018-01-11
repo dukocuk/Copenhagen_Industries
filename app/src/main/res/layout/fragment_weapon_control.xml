@@ -16,7 +16,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="20dp"
-        android:stretchColumns="1"
+        android:stretchColumns="*"
         android:id="@+id/tablelayout1">
 
 
@@ -30,7 +30,7 @@
                 android:id="@+id/weapon_control_image_header"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                app:srcCompat="@drawable/image_ak47"
+                app:srcCompat="@drawable/weapon"
                 tools:ignore="ContentDescription" />
 
 
@@ -45,7 +45,6 @@
                 android:id="@+id/weapon_control_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="right"
                 android:background="@android:color/transparent"
                 android:enabled="false"
                 android:fontFamily="@font/aldrich"
@@ -54,7 +53,7 @@
                 android:inputType="text"
                 android:maxLength="25"
                 android:text="Weapon Name"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="18sp"
 
                 />
@@ -103,7 +102,7 @@
                 android:layout_gravity="center|start"
 
                 android:text="Battery"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="18sp"
                 
                 />
@@ -133,7 +132,7 @@
                 android:text="Oxygen"
                 android:textSize="18sp"
                 
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/white"/>
 
             <TextView
                 android:id="@+id/weapon_control_oxygen"
@@ -143,7 +142,7 @@
                 android:gravity="right"
                 android:text="Oxygen Level"
                 android:textSize="18sp"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 />
         </TableRow>
 
@@ -157,7 +156,7 @@
                 android:layout_height="wrap_content"
                 android:text="Propane"
                 android:textSize="18sp"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 
                 />
 
@@ -167,7 +166,7 @@
                 android:layout_height="wrap_content"
                 android:text="Propane Level"
                 android:textSize="18sp"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:gravity="right"
                 
                 />
@@ -206,16 +205,16 @@
                 android:layout_height="wrap_content"
                 android:text="Mode"
                 android:textSize="18sp"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/weapon_control_mode_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
-                android:background="@drawable/weapon_control_bullet_fullauto" />
-
+                android:src="@drawable/bullet_auto"
+            />
         </TableRow>
         <TableRow>
 
@@ -224,7 +223,7 @@
                 android:layout_width="74dp"
                 android:layout_height="wrap_content"
                 android:text="Rate of Fire"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="18sp"
                 />
 
@@ -240,7 +239,7 @@
                 android:maxLength="10"
                 android:text="1000"
                 android:textSize="18sp"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 />
         </TableRow>
 

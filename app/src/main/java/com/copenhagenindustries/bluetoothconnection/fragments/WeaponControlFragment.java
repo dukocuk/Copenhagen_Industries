@@ -190,6 +190,15 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     private void updateDisplay() {
 
 
+
+        if(deviceController.getDeviceCurrentlyDisplayed().isArmedState()){
+            aButton.setBackground(getResources().getDrawable(R.drawable.danger));
+            aButton.setText("Armed");
+        }
+        else {
+            aButton.setBackground(getResources().getDrawable(R.drawable.safe));
+            aButton.setText("Safe");
+        }
         if(!(deviceController.getDeviceCurrentlyDisplayed().getName()==null)) {
             if(!editMode) {
                 this.name.setText(deviceController.getDeviceCurrentlyDisplayed().getName());
