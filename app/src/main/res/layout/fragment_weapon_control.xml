@@ -36,6 +36,8 @@
                 app:srcCompat="@drawable/weapon"
                 tools:ignore="ContentDescription" />
 
+        </TableRow>
+            <TableRow>
             <EditText
                 android:id="@+id/weapon_control_name"
                 android:layout_width="match_parent"
@@ -51,8 +53,8 @@
                 android:text="Weapon Name"
                 android:textColor="@android:color/white"
                 android:textSize="22sp" />
+            </TableRow>
 
-        </TableRow>
 
 
 
@@ -185,7 +187,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Mode"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/white"
                 />
