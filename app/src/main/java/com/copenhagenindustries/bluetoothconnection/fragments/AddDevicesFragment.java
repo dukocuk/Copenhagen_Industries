@@ -2,18 +2,28 @@ package com.copenhagenindustries.bluetoothconnection.fragments;
 
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
 import android.content.Intent;
@@ -25,13 +35,17 @@ import com.copenhagenindustries.bluetoothconnection.controllers.DeviceController
 import com.copenhagenindustries.bluetoothconnection.R;
 import com.copenhagenindustries.bluetoothconnection.exceptions.DeviceControllerNotInstantiatedException;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Set;
 import java.util.ArrayList;
 
-public class AddDevicesFragment extends Fragment implements View.OnClickListener{
+public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+
+
+    SwipeRefreshLayout swipeLayout;
 
     //Widgets
-    private FloatingActionButton btnPaired;
     private ListView pairedBTDevicesList;
 
     //Bluetooth
@@ -41,66 +55,102 @@ public class AddDevicesFragment extends Fragment implements View.OnClickListener
     private ArrayList<String> devicesMacAddress = new ArrayList<>();
     private DeviceController deviceController;
 
+    private ArrayList<Device> deviceList = new ArrayList<>();
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_add_device,container,false);
-
-        //Calling widgets
-        btnPaired = (FloatingActionButton) root.findViewById(R.id.add_device_floatingActionButton);
-        pairedBTDevicesList = (ListView) root.findViewById(R.id.add_device_listview);
-        btnPaired.setOnClickListener(this);
-
         deviceController = DeviceController.getInstance();
-
-
-        //if the device has bluetooth
-        myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        if(myBluetoothAdapter == null)
-        {
-           Toast.makeText(getActivity(),"NoBTAdapter",Toast.LENGTH_LONG).show();
-            getActivity().finish();
-        }
-        //If it isn't enabled
-        else if(!myBluetoothAdapter.isEnabled())
-        {
-            //Ask to the user turn the bluetooth on
-            Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBTIntent,1);
-        }
         pairedDevicesList();
+        swipeLayout = (SwipeRefreshLayout) root.findViewById(R.id.add_device_swipe_container);
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setColorSchemeColors(   getResources().getColor(android.R.color.holo_blue_bright),
+                                            getResources().getColor(android.R.color.holo_green_light),
+                                            getResources().getColor(android.R.color.holo_orange_light),
+                                            getResources().getColor(android.R.color.holo_red_light));
 
-        final BroadcastReceiver bReciever = new BroadcastReceiver() {
-            public void onReceive(Context context, Intent intent) {
-                String action = intent.getAction();
-                if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                    BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                    // Create a new device item
-                    devicesName.add(device.getName());
-                    devicesMacAddress.add(device.getAddress());
 
-                }
+
+        pairedBTDevicesList = (ListView) root.findViewById(R.id.add_device_listview);
+        pairedBTDevicesList.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
             }
-        };
 
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int t) {
+                /*
+                Koden i onScroll() er fundet på http://nlopez.io/swiperefreshlayout-with-listview-done-right/
+                 */
+                int topRowVerticalPosition;
+                if(pairedBTDevicesList==null || pairedBTDevicesList.getChildCount() == 0) {
+                    topRowVerticalPosition = 0;
+                }
+                else {
+                    topRowVerticalPosition = pairedBTDevicesList.getChildAt(0).getTop();
+                }
+                swipeLayout.setEnabled(firstVisibleItem == 0 && topRowVerticalPosition >= 0);
+            }
+        });
+
+        final ArrayAdapter adapter = new DeviceAdapter(getActivity(),deviceList);
+        pairedBTDevicesList.setAdapter(adapter);
+        pairedBTDevicesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Device device = (Device) pairedBTDevicesList.getItemAtPosition(position);
+                try {
+                    deviceController.addDevice(device);
+                } catch (DeviceControllerNotInstantiatedException e) {
+                    e.printStackTrace();
+                }
+                KnownDevicesListFragment fragment = new KnownDevicesListFragment();
+                getFragmentManager().popBackStack();
+                getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).addToBackStack(null).commit();
+            }
+        }); //Method called when the device from the list is clicked
+
+
+
+
+
+
+
+
+        Animation animation = AnimationUtils.makeInChildBottomAnimation(getActivity());
+        root.startAnimation(animation);
 
         return root;
     }
 
     //Find paired devices (if any) and add them to the listview.
     private void pairedDevicesList()
-    {
-        Set<BluetoothDevice> pairedDevices = myBluetoothAdapter.getBondedDevices();
+        {
+            //if the device has bluetooth
+            myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-
+            if(myBluetoothAdapter == null)
+            {
+                Toast.makeText(getActivity(),"NoBTAdapter",Toast.LENGTH_LONG).show();
+                getActivity().finish();
+            }
+            //If it isn't enabled
+            else if(!myBluetoothAdapter.isEnabled())
+            {
+                //Ask to the user turn the bluetooth on
+                Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBTIntent,1);
+            }
+        final Set<BluetoothDevice> pairedDevices = myBluetoothAdapter.getBondedDevices();
         if (pairedDevices.size()>0)
         {
+            deviceList = new ArrayList<>();
             for(BluetoothDevice bt : pairedDevices)
             {
-                devicesName.add(bt.getName()); //Get the device's name
-                devicesMacAddress.add(bt.getAddress());
+                deviceList.add(new Device(bt.getName(),bt.getAddress()));
             }
         }
         else
@@ -108,52 +158,51 @@ public class AddDevicesFragment extends Fragment implements View.OnClickListener
             Toast.makeText(getActivity(), "No Paired Bluetooth Devices Found.", Toast.LENGTH_LONG).show();
         }
 
-        final ArrayAdapter adapter = new ArrayAdapter(getActivity(),android.R.layout.simple_list_item_1, devicesName);
-        pairedBTDevicesList.setAdapter(adapter);
-        pairedBTDevicesList.setOnItemClickListener(myListClickListener); //Method called when the device from the list is clicked
 
     }
 
 
 
-    private AdapterView.OnItemClickListener myListClickListener = new AdapterView.OnItemClickListener()
-    {
-        public void onItemClick (AdapterView<?> parent, View view, int position, long id)
-        {
-            String name = devicesName.get(position);
-            String macAddress = devicesMacAddress.get(position);
-            if(deviceController.inDeviceList(macAddress)) {
-                Toast.makeText(getActivity(), "Device already added", Toast.LENGTH_SHORT).show();
 
-                return;
-            }
-            
-            try {
-                deviceController.addDevice(new Device(name,macAddress));
-                deviceController.saveData(getActivity());
-            } catch (DeviceControllerNotInstantiatedException deviceControllerNotInstantiated) {
-                deviceControllerNotInstantiated.printStackTrace();
-                            
-                
-            }
-            KnownDevicesListFragment fragment = new KnownDevicesListFragment();
-            getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).commit();
-
-        }
-    };
 
 
     @Override
-    public void onClick(View v)
-    {
-        if(v == btnPaired) {
-            pairedDevicesList(); //method that will be called
-            scanForDevices();
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override public void run() {
+                swipeLayout.setRefreshing(false);
+                pairedDevicesList();
+
+
+            }
+        }, 2000);
+    }
+
+    class DeviceAdapter extends ArrayAdapter<Device> {
+
+        public DeviceAdapter(Context context, ArrayList<Device> devices) {
+            super(context, 0, devices);
+        }
+
+        @NonNull
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            final Device device = getItem(position);
+
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.add_device_list_item, parent, false);
+            }
+            // Lookup view for data population
+            TextView deviceName = (TextView) convertView.findViewById(R.id.add_device_device_name);
+            TextView deviceMacAddress = (TextView) convertView.findViewById(R.id.add_device_mac_address);
+
+            deviceName.setText(device.getName());
+            deviceMacAddress.setText(device.getMacAddress());
+
+            // Return the completed view to render on screen
+            return convertView;
         }
     }
 
-    public void scanForDevices() {
-
-    }
 
 }
