@@ -1,18 +1,20 @@
 body{
     margin: 0;
     padding: 0;
+    background-color: #303030;
 }
 
 footer {
     width: 100%;
     margin: 0;
-    background-color: lightgrey;
+    background-color: #303030;
 }
 
 footer #ci-info{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    color: white;
 }
 
 footer #ci-info img {
@@ -73,4 +75,14 @@ footer #ci-info div {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
+}
+
+/* unvisited link */
+a:link {
+    color: lightblue;
+}
+
+/* visited link */
+a:visited {
+    color: green;
 }
