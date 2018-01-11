@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="250dp"
-            android:text="Click the + icon \n to add a weapon via bluetooth"
+            android:text="@string/known_devices_info"
             android:textAlignment="center"
             android:textAppearance="@android:style/TextAppearance.Material.Medium"
             android:textColor="@android:color/white"

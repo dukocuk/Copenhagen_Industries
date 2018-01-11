@@ -32,4 +32,7 @@
     <string name="adddevice_paireddevices">Paired Devices</string>
 
 
+    <string name="known_devices_info">Click the + icon   to add a weapon via bluetooth</string>
+
+
 </resources>
