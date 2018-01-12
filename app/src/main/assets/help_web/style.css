@@ -28,6 +28,7 @@ footer #ci-info div {
 
 
 .panel p{
+
     padding-left: 15px;
 }
 
@@ -59,7 +60,7 @@ footer #ci-info div {
 
 .accordion:after {
     content: "+";
-    color: #777;
+    color: #777777;
     font-weight: bold;
     float: right;
     margin-left: 5px;
@@ -70,8 +71,9 @@ footer #ci-info div {
 }
 
 .panel {
+    border: 0.5px solid white;
     padding: 0 18px;
-    background-color: #353535;
+    background-color: #404040;
       color: #ffffff;
     max-height: 0;
     overflow: hidden;
