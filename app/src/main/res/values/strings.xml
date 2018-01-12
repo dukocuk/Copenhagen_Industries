@@ -5,34 +5,43 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
-
-
-    <!--Help-->
-    <string name="help_fragment">Help</string>
-
-
-    <!--Devices-->
-
-    <!--Settings-->
-
-    <!--Weapon Control-->
-    <string name="weaponcontrol">Weapon Control</string>
-    <string name="weaponcontrol_safe">Safe</string>
-    <string name="weaponcontrol_battery">Battery</string>
-    <string name="weaponcontrol_weaponname">Big Bob</string>
-    <string name="weaponcontrol_oxygen">Oxygen</string>
-    <string name="weaponcontrol_propan">Propan</string>
-    <string name="weaponcontrol_mode">Mode</string>
-    <string name="devicelist_name">Device</string>
-    <string name="devicelist_safe">Safe</string>
-    <string name="adddevices_paried">Paried Devices</string>
     <string name="maindrawer_devices">Devices</string>
     <string name="maindrawer_settings">Settings</string>
     <string name="maindrawer_help">Help</string>
-    <string name="adddevice_paireddevices">Paired Devices</string>
 
 
-    <string name="known_devices_info">Click the + icon   to add a weapon via bluetooth</string>
+    <!--Device List Elem-->
+    <string name="devicelist_name">Device</string>
+    <string name="devicelist_safe">Safe</string>
 
+    <!--Add Device-->
+    <string name="add_device_name">Device Name</string>
+    <string name="add_device_mac">Mac Address</string>
+
+
+    <!--Known Devices-->
+    <string name="known_devices_info1">You\'re not connected to any devices</string>
+    <string name="known_devices_info2">Click the + icon   to add a weapon via bluetooth</string>
+
+
+    <!--Weapon Control-->
+    <string name="weapon_control_name">Weapon Name</string>
+    <string name="weapon_control_battery">Battery</string>
+    <string name="weapon_control_oxygen">Oxygen</string>
+    <string name="weapon_control_oxygen_level">Oxygen Level</string>
+    <string name="weapon_control_propane">Propane</string>
+    <string name="weapon_control_propane_level">Propane Level</string>
+    <string name="weapon_control_mode">Mode</string>
+    <string name="weapon_control_rate_of_fire">Rate of Fire</string>
+    <string name="weapon_control_rof_number">1000</string>
+    <string name="weapon_control_safe">Safe</string>
+    <string name="weapon_control_start_editing">Start Editing</string>
+
+
+    <!-- Help -->
+    <!-- This gets translated by using anotger html file -->
+
+
+    <!--Settings-->
 
 </resources>

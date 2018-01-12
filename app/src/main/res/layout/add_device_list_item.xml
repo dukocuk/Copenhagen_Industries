@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="Device Name"
+        android:text="@string/add_device_name"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
 
@@ -18,6 +18,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/add_device_device_name"
-        android:text="Mac Address"
+        android:text="@string/add_device_mac"
         android:textColor="@android:color/white" />
 </RelativeLayout>
