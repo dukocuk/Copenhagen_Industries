@@ -1,43 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory
-        android:title="@string/pref_pincode_title1">
+    <PreferenceCategory android:title="@string/pref_pincode_title1">
 
 
         <ListPreference
-            android:key="pincode"
-            android:title="@string/pref_pincode_title2"
+
             android:dialogTitle="@string/pref_pincode_dialog"
+            android:entries="@array/language_entries"
+            android:entryValues="@array/language_values"
+            android:key="pincode"
             android:summary="@string/pref_pincode_summary"
-            android:entries="@array/language"
-            android:entryValues="@array/listvalues"/>
+            android:title="@string/pref_pincode_title2" />
         />
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="@string/pref_language_title1">
+    <PreferenceCategory android:title="@string/pref_language_title1">
 
         <ListPreference
-            android:key="language"
-            android:title="@string/pref_language_title2"
+            android:defaultValue="0"
             android:dialogTitle="@string/pref_language_dialog"
+            android:entries="@array/language_entries"
+            android:entryValues="@array/language_values"
+            android:key="@string/pref_key_language"
             android:summary="@string/pref_language_summary"
-            android:entries="@array/language"
-            android:entryValues="@array/listvalues"/>
-            />
+            android:title="@string/pref_language_title2" />
+        />
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="@string/pref_homepage_title1">
+    <PreferenceCategory android:title="@string/pref_homepage_title1">
 
-        <Preference
-            android:title="@string/pref_homepage_title2">
-            <intent android:action="android.intent.action.VIEW"
+        <Preference android:title="@string/pref_homepage_title2">
+            <intent
+                android:action="android.intent.action.VIEW"
                 android:data="http://cph.industries" />
         </Preference>
 
