@@ -87,12 +87,12 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
                         deviceController.getDeviceCurrentlyDisplayed().setArmedState(!deviceController.getDeviceCurrentlyDisplayed().isArmedState());
                         if(deviceController.getDeviceCurrentlyDisplayed().isArmedState()){
-                            aButton.setBackgroundColor(getResources().getColor(R.color.colorButtonRed));
+                            //aButton.setBackgroundColor(getResources().getColor(R.color.colorButtonRed));
                             aButton.setBackground(getResources().getDrawable(R.drawable.danger));
                             aButton.setText("Armed");
                         }
                         else {
-                            aButton.setBackgroundColor(getResources().getColor(R.color.colorButtonGreen));
+                            //aButton.setBackgroundColor(getResources().getColor(R.color.colorButtonGreen));
                             aButton.setBackground(getResources().getDrawable(R.drawable.safe));
                             aButton.setText("Safe");
                         }
@@ -103,8 +103,9 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                     }
                 }
                 else {
-                    aButton.setBackgroundColor(getResources().getColor(R.color.colorButtonGrey));
-                    aButton.setBackground(getResources().getDrawable(R.drawable.weapon_control_button_disconnected));
+                    //aButton.setBackgroundColor(getResources().getColor(R.color.colorButtonGrey));
+                    aButton.setBackground(getResources().getDrawable(R.drawable.disconnected));
+                    aButton.setText("Disconnected");
                 }
             }
         });

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/pref_pincode_title1">
+
+
+        <ListPreference
+            android:key="pincode"
+            android:title="@string/pref_pincode_title2"
+            android:dialogTitle="@string/pref_pincode_dialog"
+            android:summary="@string/pref_pincode_summary"
+            android:entries="@array/language"
+            android:entryValues="@array/listvalues"/>
+        />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_language_title1">
+
+        <ListPreference
+            android:key="language"
+            android:title="@string/pref_language_title2"
+            android:dialogTitle="@string/pref_language_dialog"
+            android:summary="@string/pref_language_summary"
+            android:entries="@array/language"
+            android:entryValues="@array/listvalues"/>
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_homepage_title1">
+
+        <Preference
+            android:title="@string/pref_homepage_title2">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="http://cph.industries" />
+        </Preference>
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

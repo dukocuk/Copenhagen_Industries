@@ -7,7 +7,7 @@ body{
 footer {
     width: 100%;
     margin: 0;
-    background-color: #303030;
+    background-color: #000000;
 }
 
 footer #ci-info{
@@ -28,13 +28,14 @@ footer #ci-info div {
 
 
 .panel p{
+
     padding-left: 15px;
 }
 
 .panel span.named {
     font-weight: bold;
-    background-color: lightgrey;
-    border: 1px solid green;
+    background-color: #454545;
+    border: 1px solid white;
     border-radius: 8px;
     padding-top: 3px;
     padding-bottom: 3px;
@@ -44,8 +45,8 @@ footer #ci-info div {
 
 /* Fra: https://www.w3schools.com/howto/howto_js_accordion.asp */
 .accordion {
-    background-color: #eee;
-    color: #444;
+    background-color: #303030;
+    color: #ffffff;
     cursor: pointer;
     padding: 18px;
     width: 100%;
@@ -59,7 +60,7 @@ footer #ci-info div {
 
 .accordion:after {
     content: "+";
-    color: #777;
+    color: #777777;
     font-weight: bold;
     float: right;
     margin-left: 5px;
@@ -70,8 +71,10 @@ footer #ci-info div {
 }
 
 .panel {
+    border: 0.5px solid white;
     padding: 0 18px;
-    background-color: white;
+    background-color: #404040;
+      color: #ffffff;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
@@ -86,3 +89,4 @@ a:link {
 a:visited {
     color: green;
 }
+

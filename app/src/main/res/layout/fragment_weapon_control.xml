@@ -49,10 +49,10 @@
                 android:enabled="false"
                 android:fontFamily="@font/aldrich"
                 android:gravity="center"
-                android:hint="Weapon Name"
+                android:hint="@string/weapon_control_name"
                 android:inputType="text"
                 android:maxLength="25"
-                android:text="Weapon Name"
+                android:text="@string/weapon_control_name"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
 
@@ -71,7 +71,6 @@
         android:stretchColumns="*"
         android:layout_below="@+id/tablelayout1"
         android:id="@+id/tableLayout">
-        <!--android:background="@drawable/weapon_control_row_background"  border in tablelayout-->
 
 
 
@@ -101,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|start"
 
-                android:text="Battery"
+                android:text="@string/weapon_control_battery"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 
@@ -112,7 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|end"
-                android:layout_marginRight="4dp"
+                android:layout_marginEnd="4dp"
                 android:src="@drawable/battery4" />
 
 
@@ -129,7 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="Oxygen"
+                android:text="@string/weapon_control_oxygen"
                 android:textSize="18sp"
                 
                 android:textColor="@android:color/white"/>
@@ -139,8 +138,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:gravity="right"
-                android:text="Oxygen Level"
+                android:gravity="end"
+                android:text="@string/weapon_control_oxygen_level"
                 android:textSize="18sp"
                 android:textColor="@android:color/white"
                 />
@@ -154,7 +153,7 @@
                 android:id="@+id/weapon_control_propane_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Propane"
+                android:text="@string/weapon_control_propane"
                 android:textSize="18sp"
                 android:textColor="@android:color/white"
                 
@@ -164,10 +163,10 @@
                 android:id="@+id/weapon_control_propane"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Propane Level"
+                android:text="@string/weapon_control_propane_level"
                 android:textSize="18sp"
                 android:textColor="@android:color/white"
-                android:gravity="right"
+                android:gravity="end"
                 
                 />
         </TableRow>
@@ -203,7 +202,7 @@
                 android:id="@+id/weapon_control_mode_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mode"
+                android:text="@string/weapon_control_mode"
                 android:textSize="18sp"
                 android:textColor="@android:color/white"
                 />
@@ -222,7 +221,7 @@
                 android:id="@+id/weapon_control_RoF_text"
                 android:layout_width="74dp"
                 android:layout_height="wrap_content"
-                android:text="Rate of Fire"
+                android:text="@string/weapon_control_rate_of_fire"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 />
@@ -237,7 +236,7 @@
                 android:gravity="end"
                 android:inputType="number"
                 android:maxLength="10"
-                android:text="1000"
+                android:text="@string/weapon_control_rof_number"
                 android:textSize="18sp"
                 android:textColor="@android:color/white"
                 />
@@ -252,7 +251,7 @@
         android:layout_below="@+id/tableLayout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
-        android:text="Safe"
+        android:text="@string/weapon_control_safe"
         android:background="@drawable/safe"
 
         />
@@ -264,7 +263,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="40dp"
-        android:text="Start Editing"
+        android:text="@string/weapon_control_start_editing"
         android:textAllCaps="false" />
 
 
