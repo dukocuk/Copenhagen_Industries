@@ -96,8 +96,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
 
                     //preference.setSummary(newValue.toString());
-
-
+                    
                     Log.d("PREF_TEST", preference.toString());
                     Log.d("PREF_TEST", newValue.toString());
                     Log.d("PREF_TEST", Locale.getDefault().getLanguage());
