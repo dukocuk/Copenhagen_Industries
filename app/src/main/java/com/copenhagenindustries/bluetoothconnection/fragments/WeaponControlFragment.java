@@ -3,8 +3,10 @@ package com.copenhagenindustries.bluetoothconnection.fragments;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -191,8 +193,11 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     private void updateDisplay() {
 
 
-
-        if(deviceController.getDeviceCurrentlyDisplayed().isArmedState()){
+        if(!deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
+            aButton.setBackground(getResources().getDrawable(R.drawable.weapon_control_button_disconnected));
+            aButton.setText("DC");
+        }
+        else if(deviceController.getDeviceCurrentlyDisplayed().isArmedState()){
             aButton.setBackground(getResources().getDrawable(R.drawable.danger));
             aButton.setText("Armed");
         }
@@ -296,16 +301,22 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         protected Boolean doInBackground(String... params) {
             try {
                 deviceController.getDeviceCurrentlyDisplayed().startConnection();
-                if(deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
-                    deviceController.getDeviceCurrentlyDisplayed().getTotalStatus();
-
-                }
-                else {
-                    handler.obtainMessage(handlerStates.getHandlerStateToast()).sendToTarget();
-
-                }
-            } catch (BTNotEnabledException | NoBTAdapterException e) {
+            } catch (BTNotEnabledException e) {
                 e.printStackTrace();
+                //Ask to the user turn the bluetooth on
+                Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBTIntent,1);
+            } catch (NoBTAdapterException e) {
+                e.printStackTrace();
+                getActivity().finish();
+            }
+            if(deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
+                deviceController.getDeviceCurrentlyDisplayed().getTotalStatus();
+
+            }
+            else {
+                handler.obtainMessage(handlerStates.getHandlerStateToast()).sendToTarget();
+
             }
 
             return null;

@@ -2,14 +2,11 @@ package com.copenhagenindustries.bluetoothconnection.fragments;
 
 
 import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,8 +16,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import android.widget.TextView;
@@ -35,36 +30,28 @@ import com.copenhagenindustries.bluetoothconnection.controllers.DeviceController
 import com.copenhagenindustries.bluetoothconnection.R;
 import com.copenhagenindustries.bluetoothconnection.exceptions.DeviceControllerNotInstantiatedException;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Set;
 import java.util.ArrayList;
 
 public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-
     SwipeRefreshLayout swipeLayout;
-
     //Widgets
-    private ListView pairedBTDevicesList;
-
+    private ListView pairedDevicesListView;
     //Bluetooth
     protected BluetoothAdapter myBluetoothAdapter = null;             //The devices bluetoothadapter.
 
-    private ArrayList<String> devicesName = new ArrayList<>();
-    private ArrayList<String> devicesMacAddress = new ArrayList<>();
     private DeviceController deviceController;
 
     private ArrayList<Device> deviceList = new ArrayList<>();
 
-    private ArrayAdapter<Device> adapter;
+    private DeviceAdapter deviceListAdapter = null;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_add_device,container,false);
         deviceController = DeviceController.getInstance();
-        pairedDevicesList();
         swipeLayout = (SwipeRefreshLayout) root.findViewById(R.id.add_device_swipe_container);
         swipeLayout.setOnRefreshListener(this);
         swipeLayout.setColorSchemeColors(   getResources().getColor(android.R.color.holo_blue_bright),
@@ -74,8 +61,8 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
 
 
 
-        pairedBTDevicesList = (ListView) root.findViewById(R.id.add_device_listview);
-        pairedBTDevicesList.setOnScrollListener(new AbsListView.OnScrollListener() {
+        pairedDevicesListView = (ListView) root.findViewById(R.id.add_device_listview);
+        pairedDevicesListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
 
@@ -87,22 +74,25 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
                 Koden i onScroll() er fundet på http://nlopez.io/swiperefreshlayout-with-listview-done-right/
                  */
                 int topRowVerticalPosition;
-                if(pairedBTDevicesList==null || pairedBTDevicesList.getChildCount() == 0) {
+                if(pairedDevicesListView ==null || pairedDevicesListView.getChildCount() == 0) {
                     topRowVerticalPosition = 0;
                 }
                 else {
-                    topRowVerticalPosition = pairedBTDevicesList.getChildAt(0).getTop();
+                    topRowVerticalPosition = pairedDevicesListView.getChildAt(0).getTop();
                 }
                 swipeLayout.setEnabled(firstVisibleItem == 0 && topRowVerticalPosition >= 0);
             }
         });
 
-        adapter = new DeviceAdapter(getActivity(),deviceList);
-        pairedBTDevicesList.setAdapter(adapter);
-        pairedBTDevicesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        enableBluetooth();
+        getPairedDevices();
+        deviceListAdapter = new DeviceAdapter(getActivity(),deviceList);
+
+        pairedDevicesListView.setAdapter(deviceListAdapter);
+        pairedDevicesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Device device = (Device) pairedBTDevicesList.getItemAtPosition(position);
+                Device device = (Device) pairedDevicesListView.getItemAtPosition(position);
                 try {
                     deviceController.addDevice(device);
                 } catch (DeviceControllerNotInstantiatedException e) {
@@ -128,41 +118,50 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("onActivityResult","requestCode: " + requestCode + " resultCode: " + resultCode);
 
-        // check if the request code is same as what is passed  here it is 2
+        // check if the request code is same as what is passed  here it is 1
         if(requestCode==1)
         {
-            adapter.notifyDataSetChanged();
-
+            getPairedDevices();
+            for(Device d: deviceList) {
+                Log.d("device",d.getName());
+            }
+            Log.d("DeviceList", deviceList.toString());
+            deviceListAdapter = new DeviceAdapter(getActivity(),deviceList);
+            pairedDevicesListView.setAdapter(deviceListAdapter);
+            deviceListAdapter.notifyDataSetChanged();
         }
 
     }
 
-    //Find paired devices (if any) and add them to the listview.
-    private void pairedDevicesList()
-        {
-            //if the device has bluetooth
-            myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    private void enableBluetooth() {
+        //if the device has bluetooth
+        myBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-            if(myBluetoothAdapter == null)
-            {
-                Toast.makeText(getActivity(),"NoBTAdapter",Toast.LENGTH_LONG).show();
-                getActivity().finish();
-            }
-            //If it isn't enabled
-            else if(!myBluetoothAdapter.isEnabled())
-            {
-                //Ask to the user turn the bluetooth on
-                Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBTIntent,1);
-            }
+        if(myBluetoothAdapter == null)
+        {
+            Toast.makeText(getActivity(),"NoBTAdapter",Toast.LENGTH_LONG).show();
+            getActivity().finish();
+        }
+        //If it isn't enabled
+        else if(!myBluetoothAdapter.isEnabled())
+        {
+            //Ask to the user turn the bluetooth on
+            Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBTIntent,1);
+        }
+    }
+
+    //Find paired devices (if any) and add them to the listview.
+    private void getPairedDevices()
+    {
         final Set<BluetoothDevice> pairedDevices = myBluetoothAdapter.getBondedDevices();
         if (pairedDevices.size()>0)
         {
-            deviceList = new ArrayList<>();
+            deviceList.clear();
             for(BluetoothDevice bt : pairedDevices)
             {
                 deviceList.add(new Device(bt.getName(),bt.getAddress()));
@@ -172,8 +171,6 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
         {
             Toast.makeText(getActivity(), "No Paired Bluetooth Devices Found.", Toast.LENGTH_LONG).show();
         }
-
-
     }
 
 
@@ -186,11 +183,11 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
         new Handler().postDelayed(new Runnable() {
             @Override public void run() {
                 swipeLayout.setRefreshing(false);
-                pairedDevicesList();
-
-
+                enableBluetooth();
+                getPairedDevices();
+                deviceListAdapter.notifyDataSetChanged();
             }
-        }, 2000);
+        }, 1000);
     }
 
     class DeviceAdapter extends ArrayAdapter<Device> {
@@ -216,6 +213,12 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
 
             // Return the completed view to render on screen
             return convertView;
+        }
+        public void updateDeviceList(ArrayList<Device> list) {
+            deviceList.clear();
+            deviceList.addAll(list);
+            this.notifyDataSetChanged();
+
         }
     }
 
