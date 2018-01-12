@@ -320,8 +320,9 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
             }
             else {
-                handler.obtainMessage(handlerStates.getHandlerStateToast()).sendToTarget();
-
+                if(handler!= null) {
+                    handler.obtainMessage(handlerStates.getHandlerStateToast()).sendToTarget();
+                }
             }
 
             return null;
@@ -349,13 +350,13 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        deviceController.getDeviceCurrentlyDisplayed().removeFromObserverList(this);
         handler = null;
-        task = null;
+        deviceController.getDeviceCurrentlyDisplayed().removeFromObserverList(this);
         if(isTaskRunning()) {
             task.cancel(true);
         }
+
+
 
     }
 
