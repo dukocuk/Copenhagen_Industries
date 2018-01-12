@@ -27,8 +27,9 @@
         android:id="@+id/device_arm_status"
         android:layout_width="64dp"
         android:layout_height="match_parent"
-        android:background="@color/colorButtonGrey"
+        android:background="@drawable/disconnected"
         android:text="@string/devicelist_safe"
         android:gravity="center"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:textColor="@android:color/black"/>
 </LinearLayout>

@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class KnownDevicesListFragment extends Fragment implements View.OnClickListener{
+public class KnownDevicesListFragment extends Fragment implements View.OnClickListener {
 
     private FloatingActionButton addNewDevice;
     private ListView listView;
@@ -39,7 +39,7 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_known_devices,container,false);
+        View root = inflater.inflate(R.layout.fragment_known_devices, container, false);
 
         addNewDevice = (FloatingActionButton) root.findViewById(R.id.known_devices_floatingActionButton);
         listView = (ListView) root.findViewById(R.id.known_devices_listView);
@@ -70,10 +70,10 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
      */
     @Override
     public void onClick(View v) {
-        if(v==addNewDevice) {
+        if (v == addNewDevice) {
             AddDevicesFragment fragment = new AddDevicesFragment();
             getFragmentManager().popBackStack();
-            getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).addToBackStack(null).commit();
+            getFragmentManager().beginTransaction().replace(R.id.content_main_fragment, fragment).addToBackStack(null).commit();
         }
     }
 
@@ -103,18 +103,20 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
             deviceLogo.setImageResource(findLogoForGunType(device.getGunType()));
             deviceName.setText(device.getName());
             String armStatusText = "";
-            if(device.connectionAlive()) {
+            if (device.connectionAlive()) {
                 if (device.isArmedState()) {
                     armStatusText = "Armed";
-                    deviceArmStatus.setBackgroundColor(getResources().getColor(R.color.colorButtonRed));
+                    //deviceArmStatus.setBackgroundColor(getResources().getColor(R.color.colorButtonRed));
+                    deviceArmStatus.setBackground(getResources().getDrawable(R.drawable.danger));
                 } else {
                     armStatusText = "Safe";
-                    deviceArmStatus.setBackgroundColor(getResources().getColor(R.color.colorButtonGreen));
+                    //deviceArmStatus.setBackgroundColor(getResources().getColor(R.color.colorButtonGreen));
+                    deviceArmStatus.setBackground(getResources().getDrawable(R.drawable.safe));
                 }
-            }
-            else {
+            } else {
                 armStatusText = "DC";
-                deviceArmStatus.setBackgroundColor(getResources().getColor(R.color.colorButtonGrey));
+                //deviceArmStatus.setBackgroundColor(getResources().getColor(R.color.colorButtonGrey));
+                deviceArmStatus.setBackground(getResources().getDrawable(R.drawable.disconnected));
             }
 
             deviceArmStatus.setText(armStatusText);
@@ -129,7 +131,7 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
                     deviceController.setDeviceCurrentlyDisplayed(name);
 
                     WeaponControlFragment fragment = new WeaponControlFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).addToBackStack(null).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.content_main_fragment, fragment).addToBackStack(null).commit();
                 }
             };
             deviceLogo.setOnClickListener(goToControlFragment);
@@ -141,24 +143,27 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
                 public void onClick(View v) {
                     String buttonText = "DC";
                     Button b = (Button) v;
-                    b.setBackgroundColor(getResources().getColor(R.color.colorButtonGrey));
+                    //b.setBackgroundColor(getResources().getColor(R.color.colorButtonGrey));
+                    b.setBackground(getResources().getDrawable(R.drawable.disconnected));
 
                     try {
-                        if(device.connectionAlive()) {
+                        if (device.connectionAlive()) {
                             boolean state = device.isArmedState();
                             device.setArmedState(!state);
-                            if(device.isArmedState()) {
-                                b.setBackgroundColor(getResources().getColor(R.color.colorButtonRed));
+                            if (device.isArmedState()) {
+                                //b.setBackgroundColor(getResources().getColor(R.color.colorButtonRed));
+                                b.setBackground(getResources().getDrawable(R.drawable.danger));
                                 buttonText = "Armed";
-                            }
-                            else {
-                                b.setBackgroundColor(getResources().getColor(R.color.colorButtonGreen));
+                            } else {
+                                //b.setBackgroundColor(getResources().getColor(R.color.colorButtonGreen));
+                                b.setBackground(getResources().getDrawable(R.drawable.safe));
                                 buttonText = "Safe";
                             }
                         }
                     } catch (IOException e) {
                         buttonText = "DC";
-                        b.setBackgroundColor(getResources().getColor(R.color.colorButtonGrey));
+                        //b.setBackgroundColor(getResources().getColor(R.color.colorButtonGrey));
+                        b.setBackground(getResources().getDrawable(R.drawable.disconnected));
 
                     }
                     b.setText(buttonText);
@@ -172,14 +177,13 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
         }
 
 
-//        // Finds the appropriate logo for a given guntype
-        private int findLogoForGunType(String guntype){
+        //        // Finds the appropriate logo for a given guntype
+        private int findLogoForGunType(String guntype) {
             int gunlogo = R.drawable.ic_help;
-            if (gunTypeLogos.get(guntype)!=null) gunlogo = gunTypeLogos.get(guntype);
+            if (gunTypeLogos.get(guntype) != null) gunlogo = gunTypeLogos.get(guntype);
             return gunlogo;
         }
     }
-
 
 
 }
