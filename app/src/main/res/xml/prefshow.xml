@@ -4,14 +4,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:title="Passcode">
+        android:title="Pincode">
 
 
         <ListPreference
-            android:key="passcode"
-            android:title="Change Your Passcode"
-            android:dialogTitle="Type a 4 digit code"
-            android:summary="Click here to change your passcode"
+            android:key="pincode"
+            android:title="Change Your Pincode"
+            android:dialogTitle="Type a 4 digit pincode"
+            android:summary="Click here to change your pincode"
             android:entries="@array/language"
             android:entryValues="@array/listvalues"/>
         />

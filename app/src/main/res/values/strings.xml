@@ -21,7 +21,6 @@
 
     <!--Known Devices-->
     <string name="known_devices_info1">You\'re not connected to any devices</string>
-    <string name="known_devices_info2">Click the + icon   to add a weapon via bluetooth</string>
 
 
     <!--Weapon Control-->
@@ -36,6 +35,7 @@
     <string name="weapon_control_rof_number">1000</string>
     <string name="weapon_control_safe">Safe</string>
     <string name="weapon_control_start_editing">Start Editing</string>
+    <string name="known_devices_info2">Click the + icon to add a weapon via bluetooth</string>
 
 
     <!-- Help -->
