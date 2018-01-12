@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,28 +14,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.copenhagenindustries.bluetoothconnection.activities.CustomApplication"
+            android:name=".activities.CustomApplication"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            android:noHistory="true">
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.copenhagenindustries.bluetoothconnection.activities.SplashScreen" ></activity>
+        <activity android:name=".activities.SplashScreen" />
         <activity
-            android:name="com.copenhagenindustries.bluetoothconnection.activities.MainActivity"
-            android:windowSoftInputMode="adjustPan"
-            >
-        </activity>
-        <activity android:name="com.copenhagenindustries.bluetoothconnection.activities.CustomPinActivity"/>
+            android:name=".activities.MainActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".activities.CustomPinActivity" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="492836018c84cdc8cea4137bd1654e8abd773c5e" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
     </application>
 
 </manifest>

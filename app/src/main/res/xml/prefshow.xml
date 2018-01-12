@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="Passcode">
+
+
+        <ListPreference
+            android:key="passcode"
+            android:title="Change Your Passcode"
+            android:dialogTitle="Type a 4 digit code"
+            android:summary="Click here to change your passcode"
+            android:entries="@array/language"
+            android:entryValues="@array/listvalues"/>
+        />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Language">
+
+        <ListPreference
+            android:key="language"
+            android:title="Choose Language"
+            android:dialogTitle="Choose you language"
+            android:summary="Click here to change your languge"
+            android:entries="@array/language"
+            android:entryValues="@array/listvalues"/>
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Homepage">
+
+        <Preference
+            android:title="Visit our website">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="http://cph.industries" />
+        </Preference>
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>
