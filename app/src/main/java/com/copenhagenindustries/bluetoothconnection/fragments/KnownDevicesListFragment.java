@@ -56,6 +56,7 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
 
         // devicelist
         ArrayList<Device> deviceList = (ArrayList<Device>) deviceController.getDevices();
+
         final DeviceAdapter deviceAdapter = new DeviceAdapter(getActivity(), deviceList);
         listView.setAdapter(deviceAdapter);
 

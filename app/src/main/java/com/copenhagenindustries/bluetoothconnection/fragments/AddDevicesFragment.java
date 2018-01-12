@@ -57,6 +57,7 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
 
     private ArrayList<Device> deviceList = new ArrayList<>();
 
+    private ArrayAdapter<Device> adapter;
 
     @Nullable
     @Override
@@ -96,7 +97,7 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
             }
         });
 
-        final ArrayAdapter adapter = new DeviceAdapter(getActivity(),deviceList);
+        adapter = new DeviceAdapter(getActivity(),deviceList);
         pairedBTDevicesList.setAdapter(adapter);
         pairedBTDevicesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -124,6 +125,20 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
         root.startAnimation(animation);
 
         return root;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // check if the request code is same as what is passed  here it is 2
+        if(requestCode==1)
+        {
+            adapter.notifyDataSetChanged();
+
+        }
+
     }
 
     //Find paired devices (if any) and add them to the listview.
