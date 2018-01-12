@@ -6,7 +6,6 @@
 
 
         <ListPreference
-
             android:dialogTitle="@string/pref_pincode_dialog"
             android:entries="@array/language_entries"
             android:entryValues="@array/language_values"

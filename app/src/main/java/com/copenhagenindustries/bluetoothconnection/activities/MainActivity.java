@@ -1,6 +1,7 @@
 package com.copenhagenindustries.bluetoothconnection.activities;
 
 import android.app.Fragment;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -9,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -18,18 +20,19 @@ import com.copenhagenindustries.bluetoothconnection.fragments.KnownDevicesListFr
 import com.copenhagenindustries.bluetoothconnection.fragments.SettingsFragment;
 import com.crashlytics.android.Crashlytics;
 
+import java.util.Locale;
+
 import io.fabric.sdk.android.Fabric;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
-{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @Override
     @SuppressWarnings("unchecked")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        Log.d("PREF_TEST", Locale.getDefault().getLanguage());
 
         // Nedbrudsrapportering sker kun når appen testes udenfor emulatoren
         boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
@@ -50,18 +53,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        if(savedInstanceState == null) {
-            KnownDevicesListFragment  fragment = new KnownDevicesListFragment();
-            getFragmentManager().beginTransaction().add(R.id.content_main_fragment,fragment).commit();
+        if (savedInstanceState == null) {
+            KnownDevicesListFragment fragment = new KnownDevicesListFragment();
+            getFragmentManager().beginTransaction().add(R.id.content_main_fragment, fragment).commit();
 
         }
         //else {
         //    KnownDevicesListFragment  fragment = new KnownDevicesListFragment();
         // }
-
-
-
-
 
 
     }
@@ -97,6 +96,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+    }
+
+    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
         // Handle navigation view item clicks here.
@@ -107,16 +112,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         if (itemId == R.id.nav_settings) {
             fragment = new SettingsFragment();
+
         }
         if (itemId == R.id.nav_help) {
             fragment = new HelpFragment();
         }
 
         if (fragment != null) {
-            getFragmentManager().beginTransaction().replace(R.id.content_main_fragment, fragment).commit();
+            if (fragment instanceof SettingsFragment) {
+                getFragmentManager().beginTransaction().replace(R.id.content_main_fragment, fragment,"Settings").commit();
+            } else {
+                getFragmentManager().beginTransaction().replace(R.id.content_main_fragment, fragment).commit();
+            }
         }
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawer.closeDrawer(GravityCompat.START);
-            return true;
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
