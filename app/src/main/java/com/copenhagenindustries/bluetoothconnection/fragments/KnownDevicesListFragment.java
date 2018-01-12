@@ -74,6 +74,8 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
         if (v == addNewDevice) {
             AddDevicesFragment fragment = new AddDevicesFragment();
             getFragmentManager().popBackStack();
+
+            Log.d("BackStackEntryCount", "" + getFragmentManager().getBackStackEntryCount());
             getFragmentManager().beginTransaction().replace(R.id.content_main_fragment, fragment).addToBackStack(null).commit();
         }
     }

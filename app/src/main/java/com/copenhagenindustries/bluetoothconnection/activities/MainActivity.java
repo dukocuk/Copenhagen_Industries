@@ -1,33 +1,24 @@
 package com.copenhagenindustries.bluetoothconnection.activities;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import com.crashlytics.android.Crashlytics;
-import com.github.omadahealth.lollipin.lib.PinActivity;
-import com.github.omadahealth.lollipin.lib.managers.AppLock;
-import com.github.omadahealth.lollipin.lib.managers.LockManager;
 import com.copenhagenindustries.bluetoothconnection.R;
 import com.copenhagenindustries.bluetoothconnection.fragments.HelpFragment;
 import com.copenhagenindustries.bluetoothconnection.fragments.KnownDevicesListFragment;
 import com.copenhagenindustries.bluetoothconnection.fragments.SettingsFragment;
-
+import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
-
-import static android.content.ContentValues.TAG;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
@@ -37,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         // Nedbrudsrapportering sker kun når appen testes udenfor emulatoren
         boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
@@ -56,8 +49,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        KnownDevicesListFragment  fragment = new KnownDevicesListFragment();
-        getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).commit();
+
+        if(savedInstanceState == null) {
+            KnownDevicesListFragment  fragment = new KnownDevicesListFragment();
+            getFragmentManager().beginTransaction().add(R.id.content_main_fragment,fragment).commit();
+
+        }
+        //else {
+        //    KnownDevicesListFragment  fragment = new KnownDevicesListFragment();
+        // }
+
+
+
+
+
 
     }
 

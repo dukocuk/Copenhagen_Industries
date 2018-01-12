@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.copenhagenindustries.bluetoothconnection.R;
+import com.copenhagenindustries.bluetoothconnection.controllers.Device;
 import com.copenhagenindustries.bluetoothconnection.controllers.DeviceController;
 import com.copenhagenindustries.bluetoothconnection.exceptions.BTNotEnabledException;
 import com.copenhagenindustries.bluetoothconnection.exceptions.NoBTAdapterException;
@@ -299,6 +300,9 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         }
         @Override
         protected Boolean doInBackground(String... params) {
+            if(deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
+                return null;
+            }
             try {
                 deviceController.getDeviceCurrentlyDisplayed().startConnection();
             } catch (BTNotEnabledException e) {
@@ -306,6 +310,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                 //Ask to the user turn the bluetooth on
                 Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBTIntent,1);
+                return null;
             } catch (NoBTAdapterException e) {
                 e.printStackTrace();
                 getActivity().finish();
@@ -323,13 +328,34 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("onActivityResult","requestCode: " + requestCode + " resultCode: " + resultCode);
+
+        // check if the request code is same as what is passed  here it is 1
+        if(requestCode==1) {
+            if(isTaskRunning()) {
+                task.cancel(true);
+            }
+            task = new ProgressTask(getActivity()).execute();
+        }
+    }
+    private boolean isTaskRunning() {
+        return (task != null) && (task.getStatus() == AsyncTask.Status.RUNNING);
+    }
+
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
+
         deviceController.getDeviceCurrentlyDisplayed().removeFromObserverList(this);
         handler = null;
         task = null;
-        super.onDestroy();
+        if(isTaskRunning()) {
+            task.cancel(true);
+        }
 
     }
 
@@ -337,7 +363,6 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     // make the fragments menu from the ressource file
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        Log.d("yo", "onCreateOptionsMenu: ");
         inflater.inflate(R.menu.weapon_control, menu);
     }
 
