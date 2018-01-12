@@ -24,4 +24,14 @@
     <string name="weapon_control_rof_number">1000</string>
     <string name="weapon_control_safe">Sikker</string>
     <string name="weapon_control_start_editing">Start Redigering</string>
+    <string name="pref_pincode_title2">Skift din pinkode</string>
+    <string name="pref_pincode_dialog">Indtast en 4-cifret PIN-kode</string>
+    <string name="pref_pincode_summary">Klik her for at ændre din pinkode</string>
+    <string name="pref_pincode_title1">Pinkode</string>
+    <string name="pref_language_title1">Sprog</string>
+    <string name="pref_language_title2">Vælg sprog</string>
+    <string name="pref_language_dialog">Vælg dit sprog</string>
+    <string name="pref_language_summary">Klik her for at ændre dit sprog</string>
+    <string name="pref_homepage_title1">Hjemmeside</string>
+    <string name="pref_homepage_title2">Besøg vores hjemmeside</string>
 </resources>

@@ -4,14 +4,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:title="Pincode">
+        android:title="@string/pref_pincode_title1">
 
 
         <ListPreference
             android:key="pincode"
-            android:title="Change Your Pincode"
-            android:dialogTitle="Type a 4 digit pincode"
-            android:summary="Click here to change your pincode"
+            android:title="@string/pref_pincode_title2"
+            android:dialogTitle="@string/pref_pincode_dialog"
+            android:summary="@string/pref_pincode_summary"
             android:entries="@array/language"
             android:entryValues="@array/listvalues"/>
         />
@@ -19,13 +19,13 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Language">
+        android:title="@string/pref_language_title1">
 
         <ListPreference
             android:key="language"
-            android:title="Choose Language"
-            android:dialogTitle="Choose you language"
-            android:summary="Click here to change your languge"
+            android:title="@string/pref_language_title2"
+            android:dialogTitle="@string/pref_language_dialog"
+            android:summary="@string/pref_language_summary"
             android:entries="@array/language"
             android:entryValues="@array/listvalues"/>
             />
@@ -33,10 +33,10 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Homepage">
+        android:title="@string/pref_homepage_title1">
 
         <Preference
-            android:title="Visit our website">
+            android:title="@string/pref_homepage_title2">
             <intent android:action="android.intent.action.VIEW"
                 android:data="http://cph.industries" />
         </Preference>

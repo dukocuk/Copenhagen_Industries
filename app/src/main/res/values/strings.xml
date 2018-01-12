@@ -21,7 +21,19 @@
 
     <!--Known Devices-->
     <string name="known_devices_info1">You\'re not connected to any devices</string>
+    <string name="known_devices_info2">Click the + icon to add a weapon via bluetooth</string>
 
+    <!-- Preferences -->
+    <string name="pref_pincode_title2">Change Your Pincode</string>
+    <string name="pref_pincode_dialog">Type a 4 digit pincode</string>
+    <string name="pref_pincode_summary">Click here to change your pincode</string>
+    <string name="pref_pincode_title1">Pincode</string>
+    <string name="pref_language_title1">Language</string>
+    <string name="pref_language_title2">Choose Language</string>
+    <string name="pref_language_dialog">Choose you language</string>
+    <string name="pref_language_summary">Click here to change your languge</string>
+    <string name="pref_homepage_title1">Homepage</string>
+    <string name="pref_homepage_title2">Visit our website</string>
 
     <!--Weapon Control-->
     <string name="weapon_control_name">Weapon Name</string>
@@ -35,7 +47,8 @@
     <string name="weapon_control_rof_number">1000</string>
     <string name="weapon_control_safe">Safe</string>
     <string name="weapon_control_start_editing">Start Editing</string>
-    <string name="known_devices_info2">Click the + icon to add a weapon via bluetooth</string>
+
+
 
 
     <!-- Help -->
