@@ -1,7 +1,6 @@
 package com.copenhagenindustries.bluetoothconnection.fragments;
 
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -18,13 +17,12 @@ import com.copenhagenindustries.bluetoothconnection.R;
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener{
 
     private ListPreference mListPreference;
-    SharedPreferences sharedPreferences;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.prefshow);
+        addPreferencesFromResource(R.xml.preferences);
 
         for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); i++) {
             initSummary(getPreferenceScreen().getPreference(i));
@@ -77,4 +75,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         updatePrefSummary(findPreference(key));
     }
+
+
 }
