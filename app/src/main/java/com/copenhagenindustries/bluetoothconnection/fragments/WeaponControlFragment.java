@@ -356,11 +356,14 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         Log.d("onActivityResult","requestCode: " + requestCode + " resultCode: " + resultCode);
 
         // check if the request code is same as what is passed  here it is 1
-        if(requestCode==1) {
+        if(resultCode == -1) {
             if(isTaskRunning()) {
                 task.cancel(true);
             }
             task = new ProgressTask(getActivity()).execute();
+        }
+        else if(resultCode == 0) {
+            Toast.makeText(getActivity(),"Please enable bluetooth",Toast.LENGTH_LONG).show();
         }
     }
     private boolean isTaskRunning() {

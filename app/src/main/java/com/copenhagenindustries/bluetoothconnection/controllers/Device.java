@@ -105,7 +105,9 @@ public class Device implements ISubject{
 
     public void setName(String name) throws IOException {
         this.name = name;
-        connection.setGunName(name);
+        if(connectionAlive()) {
+            connection.setGunName(name);
+        }
     }
 
     public String getSerialNumber() {
@@ -121,7 +123,9 @@ public class Device implements ISubject{
     }
     public void setArmedState(boolean armedState) throws IOException {
         this.armedState = armedState;
-        connection.setArmedState(armedState);
+        if(connectionAlive()) {
+            connection.setArmedState(armedState);
+        }
     }
 
     public int getFireMode() {
@@ -129,7 +133,9 @@ public class Device implements ISubject{
     }
     public void setFireMode(int fireMode) throws IOException {
         this.fireMode = fireMode;
-        connection.setFireMode(fireMode);
+        if(connectionAlive()) {
+            connection.setFireMode(fireMode);
+        }
     }
 
     public int getRateOfFire() {
@@ -138,7 +144,9 @@ public class Device implements ISubject{
 
     public void setRateOfFire(int rateOfFire) throws IOException {
         this.rateOfFire = rateOfFire;
-        connection.setRateOfFire(rateOfFire);
+        if(connectionAlive()) {
+
+        }
     }
 
     public String getOxygen() {
@@ -276,7 +284,7 @@ public class Device implements ISubject{
                 if (endOfLineIndex > 0) {                               //If we have the end char, handle the message.
                     String dataInPrint = recDataString.substring(1, endOfLineIndex);    //Remove 1st char and get the rest of the msg.
                     Log.i("dataInPrint", dataInPrint);
-                        if(dataInPrint.equals("")) {            //If we received an empty msg.
+                    if(dataInPrint.equals("")) {            //If we received an empty msg.
                         return;
                     }
                     updateInformation(dataInPrint);             //Act according to the msg.
