@@ -8,6 +8,6 @@
     <!-- you can add more different arrays for other uses in preferences -->
     <string-array name="language_values">
         <item>English</item>
-        <item>Danish</item>
+        <item>Dansk</item>
     </string-array>
 </resources>

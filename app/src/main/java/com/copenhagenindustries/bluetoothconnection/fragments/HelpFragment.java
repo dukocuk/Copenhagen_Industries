@@ -30,7 +30,7 @@ public class HelpFragment extends Fragment {
         if (Locale.getDefault().getLanguage().equalsIgnoreCase("da")) {
             webview.loadUrl("file:///android_asset/help_web/index_da.html");
         }
-        else {
+        else if (Locale.getDefault().getLanguage().equalsIgnoreCase("en")){
             webview.loadUrl("file:///android_asset/help_web/index_en.html");
         }
         WebSettings webSettings = webview.getSettings();

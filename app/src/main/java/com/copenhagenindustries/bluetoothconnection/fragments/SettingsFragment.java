@@ -45,6 +45,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         addPreferencesFromResource(R.xml.preferences);
 
 
+
+
         for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); i++) {
             initSummary(getPreferenceScreen().getPreference(i));
         }
@@ -74,6 +76,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     }
 
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -98,14 +102,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         if (p instanceof android.preference.ListPreference) {
             final android.preference.ListPreference listPref = (android.preference.ListPreference) p;
 
-            listPref.setSelectable(true);
 
-
-
-
-
-
-
+            listPref.setDefaultValue("English");
 
 
 
@@ -143,7 +141,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                                 getActivity().getResources().updateConfiguration(config, getActivity().getResources().getDisplayMetrics());
                                 getActivity().recreate();
                                 break;
-                            case "Danish":
+                            case "Dansk":
                                 language = "da";
                                 locale = new Locale(language);
                                 Locale.setDefault(locale);
@@ -167,6 +165,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
 
     }
+
+
 
     @Override
     public void onResume() {

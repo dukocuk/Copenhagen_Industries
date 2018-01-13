@@ -20,6 +20,7 @@ public class CustomApplication extends PinActivity{
     public void onStart() {
         super.onStart();
 
+
         LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
         lockManager.enableAppLock(this, CustomPinActivity.class);
         lockManager.getAppLock().setLogoId(R.drawable.ci_logo_login_50);
