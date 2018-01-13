@@ -52,6 +52,9 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
         Preference pref = getPreferenceManager().findPreference(getString(R.string.pref_key_pincode));
 
+
+
+
         pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
@@ -62,6 +65,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 startActivity(intent);
 
 
+
                 return true;
             }
 
@@ -70,6 +74,10 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     private void initSummary(android.preference.Preference p) {
         //init summary for PreferenceCategories
@@ -87,19 +95,36 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     private void updatePrefSummary(android.preference.Preference p) {
 
 
-
-
         if (p instanceof android.preference.ListPreference) {
             final android.preference.ListPreference listPref = (android.preference.ListPreference) p;
-            p.setSummary(listPref.getEntry());
+
+            listPref.setSelectable(true);
+
+
+
+
+
+
+
+
+
 
             Log.d("TEST", p.getKey().toString());
 
 
 
-            if (p.getKey().equalsIgnoreCase(getString(R.string.pref_key_language))) {
 
-                p.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            if (listPref.getKey().equalsIgnoreCase(getString(R.string.pref_key_language))) {
+
+
+                if (Locale.getDefault().getLanguage().equalsIgnoreCase("da")) {
+
+
+                } else {
+                    listPref.setDefaultValue("Engelsk");
+                }
+
+                listPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
 

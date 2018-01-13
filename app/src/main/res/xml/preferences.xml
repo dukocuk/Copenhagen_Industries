@@ -16,7 +16,7 @@
     <PreferenceCategory android:title="@string/pref_language_title1">
 
         <ListPreference
-            android:defaultValue="0"
+            android:defaultValue="English"
             android:dialogTitle="@string/pref_language_dialog"
             android:entries="@array/language_entries"
             android:entryValues="@array/language_values"
