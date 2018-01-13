@@ -384,7 +384,9 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     public void onDestroy() {
         super.onDestroy();
         handler = null;
-        deviceController.getDeviceCurrentlyDisplayed().removeFromObserverList(this);
+        if(deviceController!=null) {
+            deviceController.getDeviceCurrentlyDisplayed().removeFromObserverList(this);
+        }
         if(isTaskRunning()) {
             task.cancel(true);
         }
