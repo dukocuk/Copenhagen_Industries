@@ -26,10 +26,13 @@ public class HelpFragment extends Fragment {
 
         WebView webview = root.findViewById(R.id.webview);
 
-        if (Locale.getDefault().getLanguage().equalsIgnoreCase("da"))
+        Log.d("PREF_TEST", Locale.getDefault().getLanguage());
+        if (Locale.getDefault().getLanguage().equalsIgnoreCase("da")) {
             webview.loadUrl("file:///android_asset/help_web/index_da.html");
-        else
+        }
+        else if (Locale.getDefault().getLanguage().equalsIgnoreCase("en")){
             webview.loadUrl("file:///android_asset/help_web/index_en.html");
+        }
         WebSettings webSettings = webview.getSettings();
         webSettings.setJavaScriptEnabled(true);
 

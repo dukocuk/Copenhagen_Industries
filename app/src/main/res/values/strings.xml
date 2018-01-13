@@ -30,11 +30,12 @@
     <string name="pref_pincode_title1">Pincode</string>
     <string name="pref_language_title1">Language</string>
     <string name="pref_language_title2">Choose Language</string>
-    <string name="pref_language_dialog">Choose you language</string>
+    <string name="pref_language_dialog">Choose your language</string>
     <string name="pref_language_summary">Click here to change your languge</string>
     <string name="pref_homepage_title1">Homepage</string>
     <string name="pref_homepage_title2">Visit our website</string>
-    <string name="pref_key_language">key_language</string>
+    <string name="pref_key_language">language</string>
+    <string name="pref_key_pincode">pincode</string>
 
     <!--Weapon Control-->
     <string name="weapon_control_name">Weapon Name</string>
