@@ -57,7 +57,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             public boolean onPreferenceClick(Preference preference) {
 
 
-                Intent intent = new Intent(getActivity().getApplicationContext(), CustomPinActivity.class);
+                Intent intent = new Intent(getActivity(), CustomPinActivity.class);
                 intent.putExtra(AppLock.EXTRA_TYPE, AppLock.CHANGE_PIN);
                 startActivity(intent);
 
