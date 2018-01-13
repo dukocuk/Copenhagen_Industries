@@ -23,12 +23,21 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
         </activity>
-        <activity android:name=".activities.SplashScreen" />
+        <activity android:name=".activities.SplashScreen" >
+        </activity>
+
         <activity
             android:name=".activities.MainActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name=".activities.CustomPinActivity" />
+            android:windowSoftInputMode="adjustPan">
+
+        </activity>
+        <activity android:name=".activities.CustomPinActivity" >
+
+
+        </activity>
 
         <meta-data
             android:name="io.fabric.ApiKey"

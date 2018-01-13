@@ -5,14 +5,11 @@
     <PreferenceCategory android:title="@string/pref_pincode_title1">
 
 
-        <ListPreference
-            android:dialogTitle="@string/pref_pincode_dialog"
-            android:entries="@array/language_entries"
-            android:entryValues="@array/language_values"
-            android:key="pincode"
+        <Preference android:title="@string/pref_pincode_title1"
             android:summary="@string/pref_pincode_summary"
-            android:title="@string/pref_pincode_title2" />
-        />
+            android:key="@string/pref_key_pincode">
+
+        </Preference>
 
     </PreferenceCategory>
 

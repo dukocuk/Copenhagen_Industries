@@ -1,5 +1,6 @@
 package com.copenhagenindustries.bluetoothconnection.activities;
 
+import android.app.Application;
 import android.content.Intent;
 import android.util.Log;
 
@@ -27,6 +28,8 @@ public class CustomApplication extends PinActivity{
         //lockManager.disableAppLock();
         //lockManager.getAppLock().disableAndRemoveConfiguration();
 
+
+
         Intent intent = new Intent(CustomApplication.this, CustomPinActivity.class);
         intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
 
@@ -40,6 +43,9 @@ public class CustomApplication extends PinActivity{
             lockManager.getAppLock().setFingerprintAuthEnabled(true);
             Log.d(TAG, "Pincode enabled");
         }
+
+
+
     }
 
 }

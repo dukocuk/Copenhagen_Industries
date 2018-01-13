@@ -34,7 +34,8 @@
     <string name="pref_language_summary">Click here to change your languge</string>
     <string name="pref_homepage_title1">Homepage</string>
     <string name="pref_homepage_title2">Visit our website</string>
-    <string name="pref_key_language">key_language</string>
+    <string name="pref_key_language">language</string>
+    <string name="pref_key_pincode">pincode</string>
 
     <!--Weapon Control-->
     <string name="weapon_control_name">Weapon Name</string>

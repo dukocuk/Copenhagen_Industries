@@ -56,16 +56,10 @@ dependencies {
         transitive = true
     }
     //Lollipin
-    compile('com.github.omadahealth:lollipin:2.1.0@aar') {
+    compile ('com.github.omadahealth:lollipin:2.1.0@aar') {
         transitive = true
     }
 
-
-
         compile(name:'ldialogs',ext:'aar')
-
-
-
-
 
 }
