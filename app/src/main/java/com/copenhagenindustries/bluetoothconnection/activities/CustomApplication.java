@@ -2,6 +2,8 @@ package com.copenhagenindustries.bluetoothconnection.activities;
 
 import android.app.Application;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.copenhagenindustries.bluetoothconnection.R;
@@ -17,9 +19,8 @@ import static android.content.ContentValues.TAG;
 
 public class CustomApplication extends PinActivity{
     @SuppressWarnings("unchecked")
-    public void onStart() {
-        super.onStart();
-
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
         lockManager.enableAppLock(this, CustomPinActivity.class);
@@ -29,11 +30,7 @@ public class CustomApplication extends PinActivity{
         //lockManager.disableAppLock();
         //lockManager.getAppLock().disableAndRemoveConfiguration();
 
-
-
         Intent intent = new Intent(CustomApplication.this, CustomPinActivity.class);
-        intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
-
         //If there is a passcode, go to normal unlockscreen, if there isn't force them to make one
         if (lockManager.getAppLock().isPasscodeSet()) {
             intent.putExtra(AppLock.EXTRA_TYPE, AppLock.CONFIRM_PIN);

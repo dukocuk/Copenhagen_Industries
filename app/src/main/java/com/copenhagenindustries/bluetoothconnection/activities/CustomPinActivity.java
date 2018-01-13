@@ -33,13 +33,12 @@ public class CustomPinActivity extends AppLockActivity {
     /*
     write forget popup here
     */
-
         Resources res = getResources();
         // Create the builder with required paramaters - Context, Title, Positive Text
         CustomDialog.Builder builder = new CustomDialog.Builder(this,
-                "Skift din PIN-kode",
+                "Glemt din PIN-kode?",
                 "Ja");
-        builder.content("Skift din PIN-kode");
+        builder.content("Tryk herunder hvis du vil komme ind i appen uden din kode");
         builder.negativeText("Nej");
 
         //Set theme
@@ -51,7 +50,6 @@ public class CustomPinActivity extends AppLockActivity {
         builder.titleAlignment(BaseDialog.Alignment.CENTER);
         builder.buttonAlignment(BaseDialog.Alignment.CENTER);
         //builder.setButtonStacking(false);
-
 
         //Set text sizes
         builder.titleTextSize((int) 22);
@@ -66,7 +64,9 @@ public class CustomPinActivity extends AppLockActivity {
         customDialog.setClickListener(new CustomDialog.ClickListener() {
             @Override
             public void onConfirmClick() {
-                Toast.makeText(getApplicationContext(), "Yes", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Unlock", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(CustomPinActivity.this, MainActivity.class);
+                startActivity(intent);
             }
 
             @Override
@@ -77,7 +77,6 @@ public class CustomPinActivity extends AppLockActivity {
 
         // Show the dialog.
         customDialog.show();
-
     }
 
     @Override
@@ -87,9 +86,9 @@ public class CustomPinActivity extends AppLockActivity {
 
     @Override
     public void onPinSuccess(int attempts) {
+        Log.d(TAG, "onPinSuccess: pls stop");
         Intent intent2 = new Intent(CustomPinActivity.this, MainActivity.class);
         startActivity(intent2);
-        finish();
     }
 
     @Override
