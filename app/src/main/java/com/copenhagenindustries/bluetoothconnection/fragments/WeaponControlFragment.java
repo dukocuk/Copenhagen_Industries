@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +38,9 @@ import java.io.IOException;
 
 public class WeaponControlFragment extends Fragment implements IObserver {
 
+    private static final String STATE_TASK_RUNNING = "taskRunning";
+    private static final String STATE_CONNECT_ONCE = "connectInce";
+    private boolean connectOnce = false;
 
     //Textviews:
 
@@ -162,8 +166,22 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
 
         resetDisplay();
-        if(!deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
-            task = new ProgressTask(getActivity()).execute();
+
+
+
+        if(savedInstanceState!=null) {
+            connectOnce = savedInstanceState.getBoolean(STATE_CONNECT_ONCE,false);
+            if(!connectOnce) {
+                if (savedInstanceState.getBoolean(STATE_TASK_RUNNING, false) && !deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
+                    task = new ProgressTask(getActivity()).execute();
+                }
+            }
+        }
+        else {
+            if (!deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
+
+                task = new ProgressTask(getActivity()).execute();
+            }
         }
 
         updateDisplay();
@@ -171,6 +189,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
             public void handleMessage(android.os.Message msg) {
                 if(msg.what == handlerStates.getHandlerStateToast()) {
                     Toast.makeText(getActivity().getApplicationContext(),"Connection Not Established",Toast.LENGTH_LONG).show();
+                    connectOnce = true;
                 }
             }
         };
@@ -300,34 +319,36 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         }
         @Override
         protected Boolean doInBackground(String... params) {
-            if(deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
-                return null;
-            }
-            try {
-                deviceController.getDeviceCurrentlyDisplayed().startConnection();
-            } catch (BTNotEnabledException e) {
-                e.printStackTrace();
-                //Ask to the user turn the bluetooth on
-                Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBTIntent,1);
-                return null;
-            } catch (NoBTAdapterException e) {
-                e.printStackTrace();
-                getActivity().finish();
-            }
-            if(deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
-                deviceController.getDeviceCurrentlyDisplayed().getTotalStatus();
-
-            }
-            else {
-                if(handler!= null) {
-                    handler.obtainMessage(handlerStates.getHandlerStateToast()).sendToTarget();
+                if (deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
+                    return null;
                 }
-            }
+                try {
+                    deviceController.getDeviceCurrentlyDisplayed().startConnection();
+                } catch (BTNotEnabledException e) {
+                    e.printStackTrace();
+                    //Ask to the user turn the bluetooth on
+                    Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableBTIntent, 1);
+                    return null;
+                } catch (NoBTAdapterException e) {
+                    e.printStackTrace();
+                    getActivity().finish();
+                }
+                if (deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
+                    deviceController.getDeviceCurrentlyDisplayed().getTotalStatus();
+                    connectOnce=true;
 
+
+                } else {
+                    if (handler != null) {
+                        handler.obtainMessage(handlerStates.getHandlerStateToast()).sendToTarget();
+                        connectOnce = true;
+                    }
+                }
             return null;
         }
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -346,7 +367,16 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         return (task != null) && (task.getStatus() == AsyncTask.Status.RUNNING);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
 
+        // If the task is running, save it in our state
+        if (isTaskRunning()) {
+            outState.putBoolean(STATE_TASK_RUNNING, true);
+        }
+        outState.putBoolean(STATE_CONNECT_ONCE,connectOnce);
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

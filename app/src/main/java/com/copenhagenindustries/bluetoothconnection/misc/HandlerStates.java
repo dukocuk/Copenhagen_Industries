@@ -16,4 +16,5 @@ public final class HandlerStates {
     public int getHandlerStateToast() {
         return handlerStateToast;
     }
+
 }

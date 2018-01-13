@@ -290,6 +290,7 @@ public class Device implements ISubject{
                     o.notifyObsConnectionLost();
                 }
             }
+
         }
     }
 
