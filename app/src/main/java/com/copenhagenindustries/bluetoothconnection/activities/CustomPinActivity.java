@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -84,8 +85,12 @@ public class CustomPinActivity extends AppLockActivity {
     @Override
     public void onPinSuccess(int attempts) {
         Log.d(TAG, "onPinSuccess: pls stop");
-        Intent intent2 = new Intent(CustomPinActivity.this, MainActivity.class);
-        startActivity(intent2);
+        if(!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("Login",false)) {
+            Intent intent2 = new Intent(CustomPinActivity.this, MainActivity.class);
+            startActivity(intent2);
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("Login", true).apply();
+        }
+
     }
 
     @Override
@@ -98,4 +103,12 @@ public class CustomPinActivity extends AppLockActivity {
         return super.getPinLength();//override this method to get a longer pin code
     }
 
+    @Override
+    public void onBackPressed() {
+        Log.d("CPA_BackStackCount", "" + getFragmentManager().getBackStackEntryCount());
+
+        super.onBackPressed();
+
+
+    }
 }

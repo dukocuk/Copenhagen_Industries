@@ -109,7 +109,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
 
-
                         String language;
                         Locale locale;
                         Configuration config = new Configuration();
