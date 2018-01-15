@@ -11,6 +11,7 @@
 
         </Preference>
 
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_language_title1">

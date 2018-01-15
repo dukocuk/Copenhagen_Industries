@@ -30,9 +30,6 @@ public class CustomPinActivity extends AppLockActivity {
 
     @Override
     public void showForgotDialog() {
-    /*
-    write forget popup here
-    */
         Resources res = getResources();
         // Create the builder with required paramaters - Context, Title, Positive Text
         CustomDialog.Builder builder = new CustomDialog.Builder(this,

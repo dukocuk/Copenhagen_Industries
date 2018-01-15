@@ -55,7 +55,7 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.8.0@aar') {
         transitive = true
     }
-    //Lollipin
+    //Lollipin, det library vi bruger til login, taget fra https://github.com/omadahealth/LolliPin/
     compile ('com.github.omadahealth:lollipin:2.1.0@aar') {
         transitive = true
     }
