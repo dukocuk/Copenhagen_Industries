@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Log.d("MA_","Created");
         Log.d("PREF_TEST", Locale.getDefault().getLanguage());
 
         // Nedbrudsrapportering sker kun når appen testes udenfor emulatoren
@@ -54,23 +55,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         if (savedInstanceState == null) {
+            Log.d("MA_SavedInstance","null");
+            Log.d("MA_BackStackCount","" + getFragmentManager().getBackStackEntryCount());
             KnownDevicesListFragment fragment = new KnownDevicesListFragment();
+            getFragmentManager().popBackStack();
             getFragmentManager().beginTransaction().add(R.id.content_main_fragment, fragment).commit();
 
         }
-        //else {
-        //    KnownDevicesListFragment  fragment = new KnownDevicesListFragment();
-        // }
-
 
     }
 
     @Override
     public void onBackPressed() {
+        Log.d("MA_BackStackCount","" + getFragmentManager().getBackStackEntryCount());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            Log.d("MA_OnBackPressed","Else");
             super.onBackPressed();
         }
     }
@@ -80,6 +82,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("Login",false).apply();
 
     }
 
@@ -110,19 +119,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (itemId == R.id.nav_devices) {
             fragment = new KnownDevicesListFragment();
         }
-        if (itemId == R.id.nav_settings) {
+        else if (itemId == R.id.nav_settings) {
             fragment = new SettingsFragment();
 
         }
-        if (itemId == R.id.nav_help) {
+        else if (itemId == R.id.nav_help) {
             fragment = new HelpFragment();
         }
 
         if (fragment != null) {
+            getFragmentManager().popBackStack();
             if (fragment instanceof SettingsFragment) {
                 getFragmentManager().beginTransaction().replace(R.id.content_main_fragment, fragment,"Settings").commit();
             } else {
-                getFragmentManager().beginTransaction().replace(R.id.content_main_fragment, fragment).commit();
+                getFragmentManager().popBackStack();
+                Log.d("MA_BackStackCount", "" + getFragmentManager().getBackStackEntryCount());
+                getFragmentManager().beginTransaction().replace(R.id.content_main_fragment, fragment).addToBackStack(null).commit();
             }
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

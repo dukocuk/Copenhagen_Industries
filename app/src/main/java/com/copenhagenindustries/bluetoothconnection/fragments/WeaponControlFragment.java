@@ -191,14 +191,9 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                 if(msg.what == handlerStates.getHandlerStateToast()) {
                     Toast.makeText(getActivity().getApplicationContext(),"Connection Not Established",Toast.LENGTH_LONG).show();
                     connectOnce = true;
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(isTaskRunning()) {
-                                task.cancel(true);
-                            }
-                        }
-                    },500);
+                    if(isTaskRunning()) {
+                        task.cancel(true);
+                    }
                 }
             }
         };
@@ -348,11 +343,21 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
-            Log.d("onPostExecute","Reached OnPostExecute");
-            Log.d("aBoolean","" + aBoolean);
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
+            if(deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
+                deviceController.getDeviceCurrentlyDisplayed().getTotalStatus();
+                connectOnce=true;
+            } else {
+                if (handler != null) {
+                    if(!canceled) {
+                        handler.obtainMessage(handlerStates.getHandlerStateToast()).sendToTarget();
+                    }
+                    connectOnce = true;
+                }
+            }
+
         }
         @Override
         protected Boolean doInBackground(String... params) {
@@ -370,22 +375,6 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                 } catch (NoBTAdapterException e) {
                     e.printStackTrace();
                     getActivity().finish();
-                }
-                if (deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
-                    deviceController.getDeviceCurrentlyDisplayed().getTotalStatus();
-                    connectOnce=true;
-                    return true;
-
-
-                } else {
-                    if (handler != null) {
-                        if(!canceled) {
-                            handler.obtainMessage(handlerStates.getHandlerStateToast()).sendToTarget();
-                        }
-                        connectOnce = true;
-                        return false;
-
-                    }
                 }
             return null;
         }
