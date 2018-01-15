@@ -17,6 +17,7 @@
     <!--Add Device-->
     <string name="add_device_name">Device Name</string>
     <string name="add_device_mac">Mac Address</string>
+    <string name="add_device">Add a device</string>
 
 
     <!--Known Devices-->

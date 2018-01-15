@@ -52,7 +52,7 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_add_device,container,false);
         deviceController = DeviceController.getInstance();
-        getActivity().setTitle("Add a device");
+        getActivity().setTitle(R.string.add_device);
 
         swipeLayout = (SwipeRefreshLayout) root.findViewById(R.id.add_device_swipe_container);
         swipeLayout.setOnRefreshListener(this);

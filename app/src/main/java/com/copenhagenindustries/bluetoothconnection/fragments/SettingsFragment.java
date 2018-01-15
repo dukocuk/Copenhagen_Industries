@@ -40,7 +40,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
-        getActivity().setTitle("Settings");
+        getActivity().setTitle(R.string.action_settings);
 
 
         for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); i++) {
