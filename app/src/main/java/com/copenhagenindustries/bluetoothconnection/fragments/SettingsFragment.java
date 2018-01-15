@@ -174,20 +174,21 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     private void showAbout() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
         dialog.setCancelable(false);
-        dialog.setTitle("Dialog on Android");
-        dialog.setMessage("Are you sure you want to delete this entry?" );
-        dialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        dialog.setTitle("Developpers of Conpenhagen Indsutries App");
+        dialog.setMessage("Lasse, Duran, Johan, Emil, " );
+        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 //Action for "Delete".
             }
         })
-                .setNegativeButton("Cancel ", new DialogInterface.OnClickListener() {
+
+                /*.setNegativeButton("Cancel ", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //Action for "Cancel".
                     }
-                });
+                })*/;
 
         final AlertDialog alert = dialog.create();
         alert.show();
