@@ -1,7 +1,6 @@
 package com.copenhagenindustries.bluetoothconnection.fragments;
 
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
@@ -37,14 +36,10 @@ import java.util.Locale;
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
-
-
 
 
         for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); i++) {
@@ -52,9 +47,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         }
 
 
+
         Preference pref = getPreferenceManager().findPreference(getString(R.string.pref_key_pincode));
-
-
 
 
         pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -67,7 +61,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 startActivity(intent);
 
 
-
                 return true;
             }
 
@@ -75,7 +68,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         });
 
     }
-
 
 
     @Override
@@ -101,26 +93,12 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
         if (p instanceof android.preference.ListPreference) {
             final android.preference.ListPreference listPref = (android.preference.ListPreference) p;
-
-
-            listPref.setDefaultValue("English");
-
-
-
-            Log.d("TEST", p.getKey().toString());
-
-
-
+            listPref.setSummary(listPref.getEntry());
 
             if (listPref.getKey().equalsIgnoreCase(getString(R.string.pref_key_language))) {
 
 
-                if (Locale.getDefault().getLanguage().equalsIgnoreCase("da")) {
 
-
-                } else {
-                    listPref.setDefaultValue("Engelsk");
-                }
 
                 listPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                     @Override
@@ -157,7 +135,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                         Log.d("PREF_TEST", preference.toString());
                         Log.d("PREF_TEST", newValue.toString());
                         Log.d("PREF_TEST", Locale.getDefault().getLanguage());
-                        return false;
+                        return true;
                     }
                 });
             }
@@ -167,17 +145,16 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     }
 
 
-
     @Override
     public void onResume() {
         super.onResume();
-        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+        getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+        getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
