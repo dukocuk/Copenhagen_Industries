@@ -52,6 +52,8 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_add_device,container,false);
         deviceController = DeviceController.getInstance();
+        getActivity().setTitle("Add a device");
+
         swipeLayout = (SwipeRefreshLayout) root.findViewById(R.id.add_device_swipe_container);
         swipeLayout.setOnRefreshListener(this);
         swipeLayout.setColorSchemeColors(   getResources().getColor(android.R.color.holo_blue_bright),
@@ -119,7 +121,6 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d("onActivityResult","requestCode: " + requestCode + " resultCode: " + resultCode);
-
         // check if the request code is same as what is passed  here it is 1
         if(requestCode==1) {
             initializeList();

@@ -76,6 +76,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(com.copenhagenindustries.bluetoothconnection.R.layout.fragment_weapon_control,container,false);
         setHasOptionsMenu(true);
+        getActivity().setTitle("Weapon Control");
 
         name = (EditText) root.findViewById(R.id.weapon_control_name);
         battery = (ImageView) root.findViewById(R.id.weapon_control_battery_image);
@@ -190,9 +191,18 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                 if(msg.what == handlerStates.getHandlerStateToast()) {
                     Toast.makeText(getActivity().getApplicationContext(),"Connection Not Established",Toast.LENGTH_LONG).show();
                     connectOnce = true;
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(isTaskRunning()) {
+                                task.cancel(true);
+                            }
+                        }
+                    },500);
                 }
             }
         };
+
         deviceController.getDeviceCurrentlyDisplayed().addToObserverList(this);
 
 
@@ -293,12 +303,16 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
         private Context context;
         private ProgressDialog dialog;
+        private final Handler dialogHandler = new Handler();
+        private boolean canceled = false;
 
 
 
         public ProgressTask(Context context) {
             this.context = context;
             dialog = new ProgressDialog(context);
+
+
             dialog.setCancelable(false);
         }
 
@@ -306,13 +320,36 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         @Override
         protected void onPreExecute() {
             this.dialog.setMessage("Connecting...");
+            this.dialog.setButton(DialogInterface.BUTTON_NEGATIVE,"Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if(i == DialogInterface.BUTTON_NEGATIVE) {
+                        canceled = true;
+                        return;
+                    }
+                }
+            });
             this.dialog.show();
+            this.dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setVisibility(View.INVISIBLE);
+            this.dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setClickable(false);
+
+            dialogHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(dialog.isShowing()) {
+                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setClickable(true);
+                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setVisibility(View.VISIBLE);
+                    }
+                }
+            },3000);
 
         }
 
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
+            Log.d("onPostExecute","Reached OnPostExecute");
+            Log.d("aBoolean","" + aBoolean);
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
@@ -337,12 +374,17 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                 if (deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
                     deviceController.getDeviceCurrentlyDisplayed().getTotalStatus();
                     connectOnce=true;
+                    return true;
 
 
                 } else {
                     if (handler != null) {
-                        handler.obtainMessage(handlerStates.getHandlerStateToast()).sendToTarget();
+                        if(!canceled) {
+                            handler.obtainMessage(handlerStates.getHandlerStateToast()).sendToTarget();
+                        }
                         connectOnce = true;
+                        return false;
+
                     }
                 }
             return null;
