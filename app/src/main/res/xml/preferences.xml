@@ -38,5 +38,14 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="About Us">
+
+        <Preference
+            android:title="The developpers"
+            android:key="@string/pref_key_dev"
+            >
+        </Preference>
+
+    </PreferenceCategory>
 
 </PreferenceScreen>
