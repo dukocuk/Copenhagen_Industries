@@ -20,7 +20,7 @@ public class HelpFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_help, container, false);
-
+        getActivity().setTitle("Help");
 
         Log.d("getLanguage", Locale.getDefault().getLanguage());
 

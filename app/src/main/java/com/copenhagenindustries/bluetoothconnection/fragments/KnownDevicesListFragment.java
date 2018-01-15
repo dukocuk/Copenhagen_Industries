@@ -40,6 +40,8 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_known_devices, container, false);
+        getActivity().setTitle("Devices");
+
 
         addNewDevice = (FloatingActionButton) root.findViewById(R.id.known_devices_floatingActionButton);
         listView = (ListView) root.findViewById(R.id.known_devices_listView);
