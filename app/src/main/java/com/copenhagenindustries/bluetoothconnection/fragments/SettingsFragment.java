@@ -2,9 +2,12 @@ package com.copenhagenindustries.bluetoothconnection.fragments;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.preference.PreferenceActivity;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -21,6 +24,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 import com.copenhagenindustries.bluetoothconnection.R;
@@ -40,32 +44,36 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
-        getActivity().setTitle("Settings");
+        getActivity().setTitle(R.string.action_settings);
 
 
         for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); i++) {
             initSummary(getPreferenceScreen().getPreference(i));
         }
 
+        Preference pref_pin = getPreferenceManager().findPreference(getString(R.string.pref_key_pincode));
+        Preference pref_dev = getPreferenceManager().findPreference(getString(R.string.pref_key_dev));
 
 
-        Preference pref = getPreferenceManager().findPreference(getString(R.string.pref_key_pincode));
-
-
-        pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        pref_pin.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-
-
                 Intent intent = new Intent(getActivity(), CustomPinActivity.class);
                 intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
                 startActivity(intent);
-
-
                 return true;
             }
+        });
+
+        pref_dev.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 
 
+
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                showAbout();
+                return true;
+            }
         });
 
     }
@@ -98,9 +106,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
             if (listPref.getKey().equalsIgnoreCase(getString(R.string.pref_key_language))) {
 
-
-
-
                 listPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                     @Override
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -118,6 +123,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                                 config.locale = locale;
                                 getActivity().getResources().updateConfiguration(config, getActivity().getResources().getDisplayMetrics());
                                 getActivity().recreate();
+                                listPref.setSummary(listPref.getEntry());
                                 break;
                             case "Dansk":
                                 language = "da";
@@ -126,6 +132,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                                 config.locale = locale;
                                 getActivity().getResources().updateConfiguration(config, getActivity().getResources().getDisplayMetrics());
                                 getActivity().recreate();
+                                listPref.setSummary(listPref.getEntry());
                                 break;
                         }
 
@@ -160,6 +167,30 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         updatePrefSummary(findPreference(key));
+    }
+
+
+    private void showAbout() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+        dialog.setCancelable(false);
+        dialog.setTitle("Developpers of Conpenhagen Indsutries App");
+        dialog.setMessage("Lasse, Duran, Johan, Emil, " );
+        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                //Action for "Delete".
+            }
+        })
+
+                /*.setNegativeButton("Cancel ", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Action for "Cancel".
+                    }
+                })*/;
+
+        final AlertDialog alert = dialog.create();
+        alert.show();
     }
 
 

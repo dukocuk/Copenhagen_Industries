@@ -17,6 +17,7 @@
     <!--Add Device-->
     <string name="add_device_name">Device Name</string>
     <string name="add_device_mac">Mac Address</string>
+    <string name="add_device">Add a device</string>
 
 
     <!--Known Devices-->
@@ -34,8 +35,9 @@
     <string name="pref_language_summary">Click here to change your languge</string>
     <string name="pref_homepage_title1">Homepage</string>
     <string name="pref_homepage_title2">Visit our website</string>
-    <string name="pref_key_language">language</string>
-    <string name="pref_key_pincode">pincode</string>
+    <string name="pref_key_language" translatable="false">language</string>
+    <string name="pref_key_pincode" translatable="false">pincode</string>
+    <string name="pref_key_dev" translatable="false">dev</string>
 
     <!--Weapon Control-->
     <string name="weapon_control_name">Weapon Name</string>
