@@ -38,10 +38,10 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="About Us">
+    <PreferenceCategory android:title="@string/pref_about_title1">
 
         <Preference
-            android:title="The developpers"
+            android:title="@string/pref_about_summary"
             android:key="@string/pref_key_dev"
             >
         </Preference>

@@ -35,4 +35,7 @@
     <string name="pref_homepage_title1">Hjemmeside</string>
     <string name="pref_homepage_title2">Besøg vores hjemmeside</string>
     <string name="add_device">Tilføj en enhed</string>
+    <string name="pref_about_summary">Udviklerne</string>
+    <string name="pref_about_title1">Om appen</string>
+    <string name="pref_about_title2">Udviklerne af Copenhagen Industries App</string>
 </resources>

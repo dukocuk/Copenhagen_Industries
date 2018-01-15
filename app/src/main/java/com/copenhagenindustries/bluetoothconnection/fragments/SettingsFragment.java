@@ -68,7 +68,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         pref_dev.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 
 
-
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 showAbout();
@@ -173,16 +172,22 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     private void showAbout() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+
+        LayoutInflater factory = LayoutInflater.from(getActivity());
+
+        final View view = factory.inflate(R.layout.about, null);
+
+        dialog.setView(view);
+
         dialog.setCancelable(false);
-        dialog.setTitle("Developpers of Conpenhagen Indsutries App");
-        dialog.setMessage("Lasse, Duran, Johan, Emil, " );
-        dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        dialog.setTitle(R.string.pref_about_title2);
+        dialog.setMessage(R.string.pref_about_devs);
+        dialog.setPositiveButton(R.string.pref_about_btn_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 //Action for "Delete".
             }
         })
-
                 /*.setNegativeButton("Cancel ", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

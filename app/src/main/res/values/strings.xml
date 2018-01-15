@@ -35,9 +35,14 @@
     <string name="pref_language_summary">Click here to change your languge</string>
     <string name="pref_homepage_title1">Homepage</string>
     <string name="pref_homepage_title2">Visit our website</string>
+    <string name="pref_about_title1">About the app</string>
+    <string name="pref_about_title2">Developpers of Conpenhagen Indsutries App</string>
+    <string name="pref_about_devs" translatable="false">"Lasse A. Jensen(s165221)\nDuran Köse (s147153)\nJohan H. Sjursen(s154674)\nEmil B. Kristiansen(s165200)\nFrederik H. Lørup(s165249)\n"</string>
+    <string name="pref_about_btn_ok" translatable="false">Ok</string>
     <string name="pref_key_language" translatable="false">language</string>
     <string name="pref_key_pincode" translatable="false">pincode</string>
     <string name="pref_key_dev" translatable="false">dev</string>
+    <string name="pref_about_summary">The developpers</string>
 
     <!--Weapon Control-->
     <string name="weapon_control_name">Weapon Name</string>
