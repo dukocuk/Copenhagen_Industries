@@ -2,21 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group>
-    <item
-        android:title="Rediger"
-        app:showAsAction="ifRoom">
-        <menu>
+    <group android:id="@+id/weapon_control_group_edit">
             <item
-                android:id="@+id/edit_weapon"
-                android:title="WeaponName" />
+                android:id="@+id/weapon_control_menu_name"
+                android:title="Change weapon name" />
             <item
-                android:id="@+id/menuSortRating"
-                android:title="Sort by rating" />
-        </menu>
-    </item>
+                android:id="@+id/weapon_control_menu_RoF"
+                android:title="Set rate of fire" />
+
+    </group>
+    <group android:id="@+id/weapon_control_group_delete">
     <item
-        android:id="@+id/delete_weapon"
-        android:title="Slet" />
+        android:id="@+id/weapon_control_delete_weapon"
+        android:title="Delete" />
     </group>
 </menu>

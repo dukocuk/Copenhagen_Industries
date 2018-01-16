@@ -426,35 +426,13 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d("trykkede på noget", "onOptionsItemSelected: ");
         switch (item.getItemId()) {
-            case R.id.edit_weapon:
-                if(!editMode) {
-                    //editBtn.setText("Done Editing");
-                    item.setTitle("Done Editing");
-                    editMode = true;
-
-
-                    name.setEnabled(true);
-                    rateOfFire.setEnabled(true);
-
-                }
-                else {
-                    editMode = false;
-                    try {
-                        deviceController.getDeviceCurrentlyDisplayed().setName(name.getText().toString());
-                        deviceController.getDeviceCurrentlyDisplayed().setRateOfFire(Integer.parseInt(rateOfFire.getText().toString()));
-                        name.clearFocus();
-                        rateOfFire.clearFocus();
-                        name.setEnabled(false);
-                        rateOfFire.setEnabled(false);
-                        //editBtn.setText("Start Editing");
-                        item.setTitle("Start Editing");
-                    } catch (IOException e) {
-                        Toast.makeText(getActivity(), "Invalid Rate of Fire", Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                    }
-                }
-                return true;
-            case R.id.delete_weapon:
+            case R.id.weapon_control_menu_name:
+                getUserInputDialog("Change the weapon name",0);
+                break;
+            case R.id.weapon_control_menu_RoF:
+                getUserInputDialog("Change the Rate of Fire",1);
+                break;
+            case R.id.weapon_control_delete_weapon: {
                 try {
                     deviceController.removeDevice(deviceController.getDeviceCurrentlyDisplayed());
                 } catch (DeviceControllerNotInstantiatedException e) {
@@ -463,7 +441,8 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                 KnownDevicesListFragment fragment = new KnownDevicesListFragment();
                 getFragmentManager().popBackStack();
                 getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).commit();
-                return true;
+                break;
+            }
             default:
                 break;
         }
@@ -481,12 +460,10 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.weapon_control_menu_edit_name:  {
-                getUserInputDialog("Change the weapon name",0);
-                break;
+
             }
             case R.id.weapon_control_menu_edit_RoF: {
-                getUserInputDialog("Change the Rate of Fire",1);
-                break;
+
             }
         }
 
@@ -543,4 +520,8 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         });
         builder.show();
     }
+
+
+
+
 }

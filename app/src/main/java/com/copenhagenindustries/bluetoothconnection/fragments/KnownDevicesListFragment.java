@@ -89,6 +89,8 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
             super(context, 0, devices);
 
             gunTypeLogos.put("AK47", R.drawable.ic_rifle);
+            gunTypeLogos.put("Gun", R.drawable.ic_gun);
+            gunTypeLogos.put("Sniper", R.drawable.ic_sniper_rifle);
         }
 
         @NonNull
@@ -105,7 +107,7 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
             Button deviceArmStatus = (Button) convertView.findViewById(R.id.device_arm_status);
 
             // Populate template view using the data object
-            deviceLogo.setImageResource(findLogoForGunType(device.getGunType()));
+            deviceLogo.setImageResource(findLogoForGunType(device.getGunType(),position));
             deviceName.setText(device.getName());
             String armStatusText = "";
             if (device.connectionAlive()) {
@@ -183,10 +185,22 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
 
 
         //        // Finds the appropriate logo for a given guntype
-        private int findLogoForGunType(String guntype) {
-            int gunlogo = R.drawable.ic_help;
-            if (gunTypeLogos.get(guntype) != null) gunlogo = gunTypeLogos.get(guntype);
-            return gunlogo;
+        private int findLogoForGunType(String guntype,int position) {
+            switch(position){
+                case 0: {
+                    return gunTypeLogos.get("Gun");
+                }
+                case 1: {
+                    return gunTypeLogos.get("Sniper");
+                }
+                case 2: {
+                    return gunTypeLogos.get("AK47");
+                }
+                default: return R.drawable.ic_help;
+            }
+            //int gunlogo = R.drawable.ic_help;
+            //if (gunTypeLogos.get(guntype) != null) gunlogo = gunTypeLogos.get(guntype);
+            //return gunlogo;
         }
     }
 
