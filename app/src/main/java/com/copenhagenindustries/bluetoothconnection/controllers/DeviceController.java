@@ -133,8 +133,11 @@ public class DeviceController implements Serializable {
             stringBuilder.append(d.getMacAddress() + ",");
             stringBuilder.append(d.getSerialNumber()+";");
         }
-        stringBuilder.deleteCharAt(stringBuilder.length()-1);
+        if(!devices.isEmpty()) {
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        }
         Log.d("savaData",stringBuilder.toString());
+        PreferenceManager.getDefaultSharedPreferences(activity).edit().remove("deviceList").apply();
         PreferenceManager.getDefaultSharedPreferences(activity).edit().putString("deviceList",stringBuilder.toString()).apply();
 
     }
@@ -149,14 +152,20 @@ public class DeviceController implements Serializable {
             return;
         }
         String deviceList = PreferenceManager.getDefaultSharedPreferences(activity).getString("deviceList", "");
+        if(deviceList.equals("")||deviceList==null) {
+            return;
+        }
 
+        Log.d("deviceList",deviceList);
         String[] deviceArray = deviceList.split(";");
-        for(String d : deviceArray) {
-            String[] info = d.split(",");
-            Device toBeAdded = new Device(info[0],info[1]);
-            toBeAdded.setSerialNumber(info[2]);
-            if(!inDeviceList(toBeAdded.getMacAddress())) {
-                addDevice(toBeAdded);
+        if(deviceArray.length!=0) {
+            for(String d : deviceArray) {
+                String[] info = d.split(",");
+                Device toBeAdded = new Device(info[0], info[1]);
+                toBeAdded.setSerialNumber(info[2]);
+                if (!inDeviceList(toBeAdded.getMacAddress())) {
+                    addDevice(toBeAdded);
+                }
             }
 
         }
