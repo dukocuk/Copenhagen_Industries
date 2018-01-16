@@ -27,8 +27,8 @@ public class CustomApplication extends PinActivity{
 
         LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
         lockManager.enableAppLock(this, CustomPinActivity.class);
-        lockManager.getAppLock().setLogoId(R.drawable.ci_logo_login_50);
         lockManager.getAppLock().setFingerprintAuthEnabled(true);
+        lockManager.getAppLock().setLogoId(1);
 
         //lockManager.disableAppLock();
         //lockManager.getAppLock().disableAndRemoveConfiguration();
@@ -40,7 +40,7 @@ public class CustomApplication extends PinActivity{
         } else {
             intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
             startActivityForResult(intent, 11);
-            lockManager.getAppLock().setLogoId(R.drawable.ci_logo_login_50);
+            lockManager.getAppLock().setLogoId(1);
             lockManager.getAppLock().setFingerprintAuthEnabled(true);
             Log.d(TAG, "Pincode enabled");
         }
