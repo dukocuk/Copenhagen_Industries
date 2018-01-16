@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (fragment != null) {
             getFragmentManager().popBackStack();
             if (fragment instanceof SettingsFragment) {
-                getFragmentManager().beginTransaction().replace(R.id.content_main_fragment, fragment,"Settings").commit();
+                getFragmentManager().beginTransaction().replace(R.id.content_main_fragment, fragment,"Settings").addToBackStack(null).commit();
             } else {
                 getFragmentManager().popBackStack();
                 Log.d("MA_BackStackCount", "" + getFragmentManager().getBackStackEntryCount());

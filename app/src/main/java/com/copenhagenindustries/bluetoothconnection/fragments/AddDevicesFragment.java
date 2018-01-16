@@ -93,6 +93,10 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Device device = (Device) pairedDevicesListView.getItemAtPosition(position);
+                if(deviceController.inDeviceList(device.getMacAddress())) {
+                    Toast.makeText(getActivity(),"Device Already In List",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 try {
                     deviceController.addDevice(device);
                     deviceController.saveData(getActivity());
