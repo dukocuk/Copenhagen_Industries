@@ -2,18 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group android:id="@+id/weapon_control_group_edit">
+    <item
+        android:title="Rediger"
+        android:id="@+id/menu1"
+        >
+        <menu>
             <item
-                android:id="@+id/weapon_control_menu_name"
-                android:title="Change weapon name" />
+                android:title="Change Weapon Name"
+                android:id="@id/weapon_control_menu_edit_name"
+                >
+            </item>
             <item
-                android:id="@+id/weapon_control_menu_RoF"
-                android:title="Set rate of fire" />
+                android:title="Change Rate of Fire"
+                android:id="@+id/weapon_control_menu_edit_RoF"
+                >
+            </item>
 
-    </group>
-    <group android:id="@+id/weapon_control_group_delete">
+        </menu>
+    </item>
     <item
         android:id="@+id/weapon_control_delete_weapon"
         android:title="Delete" />
-    </group>
+
 </menu>

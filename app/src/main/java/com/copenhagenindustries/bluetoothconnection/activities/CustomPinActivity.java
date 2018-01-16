@@ -88,6 +88,7 @@ public class CustomPinActivity extends AppLockActivity {
         if(!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("Login",false)) {
             Intent intent2 = new Intent(CustomPinActivity.this, MainActivity.class);
             startActivity(intent2);
+            Log.d("onPinSuccess","pls");
             PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("Login", true).apply();
         }
 
@@ -109,6 +110,13 @@ public class CustomPinActivity extends AppLockActivity {
 
         super.onBackPressed();
 
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("Login", false).apply();
 
     }
 }

@@ -68,9 +68,6 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     private Button aButton;
 
 
-    private boolean editMode = false;
-
-
     private DeviceController deviceController;
 
     private static Handler handler;
@@ -209,7 +206,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
             aButton.setBackground(getResources().getDrawable(R.drawable.safe));
             aButton.setText("Safe");
         }
-        if(!(deviceController.getDeviceCurrentlyDisplayed().getName()==null) && !editMode) {
+        if(!(deviceController.getDeviceCurrentlyDisplayed().getName()==null)) {
             this.name.setText(deviceController.getDeviceCurrentlyDisplayed().getName());
         }
         if(!(deviceController.getDeviceCurrentlyDisplayed().getBattery()==null)) {
@@ -232,9 +229,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
         }
         if(deviceController.getDeviceCurrentlyDisplayed().getRateOfFire()!=-1) {
-            if(!editMode){
-                rateOfFire.setText("" + deviceController.getDeviceCurrentlyDisplayed().getRateOfFire());
-            }
+            rateOfFire.setText("" + deviceController.getDeviceCurrentlyDisplayed().getRateOfFire());
         }
     }
 
@@ -426,10 +421,10 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d("trykkede på noget", "onOptionsItemSelected: ");
         switch (item.getItemId()) {
-            case R.id.weapon_control_menu_name:
+            case R.id.weapon_control_menu_edit_name:
                 getUserInputDialog("Change the weapon name",0);
                 break;
-            case R.id.weapon_control_menu_RoF:
+            case R.id.weapon_control_menu_edit_RoF:
                 getUserInputDialog("Change the Rate of Fire",1);
                 break;
             case R.id.weapon_control_delete_weapon: {
