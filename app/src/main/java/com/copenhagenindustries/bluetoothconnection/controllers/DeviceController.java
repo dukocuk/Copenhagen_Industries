@@ -52,6 +52,7 @@ public class DeviceController implements Serializable {
             throw new DeviceControllerNotInstantiatedException();
         }
         devices.add(device);
+
     }
 
     /**

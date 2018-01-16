@@ -12,7 +12,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.text.InputType;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ import com.copenhagenindustries.bluetoothconnection.R;
 import com.copenhagenindustries.bluetoothconnection.controllers.Device;
 import com.copenhagenindustries.bluetoothconnection.controllers.DeviceController;
 import com.copenhagenindustries.bluetoothconnection.exceptions.BTNotEnabledException;
+import com.copenhagenindustries.bluetoothconnection.exceptions.DeviceControllerNotInstantiatedException;
 import com.copenhagenindustries.bluetoothconnection.exceptions.NoBTAdapterException;
 import com.copenhagenindustries.bluetoothconnection.interfacePackage.IObserver;
 import com.copenhagenindustries.bluetoothconnection.misc.HandlerStates;
@@ -39,8 +43,11 @@ import java.io.IOException;
 public class WeaponControlFragment extends Fragment implements IObserver {
 
     private static final String STATE_TASK_RUNNING = "taskRunning";
-    private static final String STATE_CONNECT_ONCE = "connectInce";
+    private static final String STATE_CONNECT_ONCE = "connectOnce";
+    private static final String STATE_CANCEL_BUTTON_SHOWING = "cancelButtonShowing";
     private boolean connectOnce = false;
+    private boolean cancelButtonShowing = false;
+
 
     //Textviews:
 
@@ -60,7 +67,6 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
     private Button aButton;
 
-    private Button editBtn;
 
     private boolean editMode = false;
 
@@ -76,6 +82,8 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(com.copenhagenindustries.bluetoothconnection.R.layout.fragment_weapon_control,container,false);
         setHasOptionsMenu(true);
+        RelativeLayout layout = root.findViewById(R.id.weapon_control);
+        registerForContextMenu(layout);
         getActivity().setTitle("Weapon Control");
 
         name = (EditText) root.findViewById(R.id.weapon_control_name);
@@ -85,7 +93,6 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         mode = (ImageView) root.findViewById(R.id.weapon_control_mode_imageView);
         rateOfFire = (EditText) root.findViewById(R.id.weapon_control_RoF);
         aButton = (Button) root.findViewById(R.id.weapon_control_switch);
-        editBtn = (Button) root.findViewById(R.id.weapon_control_doneEditing_button);
 
         aButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,12 +102,10 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
                         deviceController.getDeviceCurrentlyDisplayed().setArmedState(!deviceController.getDeviceCurrentlyDisplayed().isArmedState());
                         if(deviceController.getDeviceCurrentlyDisplayed().isArmedState()){
-                            //aButton.setBackgroundColor(getResources().getColor(R.color.colorButtonRed));
                             aButton.setBackground(getResources().getDrawable(R.drawable.danger));
                             aButton.setText("Armed");
                         }
                         else {
-                            //aButton.setBackgroundColor(getResources().getColor(R.color.colorButtonGreen));
                             aButton.setBackground(getResources().getDrawable(R.drawable.safe));
                             aButton.setText("Safe");
                         }
@@ -112,40 +117,13 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                 }
                 else {
                     //aButton.setBackgroundColor(getResources().getColor(R.color.colorButtonGrey));
-                    aButton.setBackground(getResources().getDrawable(R.drawable.disconnected));
+                    aButton.setBackground(getResources().getDrawable(R.drawable.weapon_control_button_disconnected));
                     aButton.setText("Disconnected");
                 }
             }
         });
 
-        editBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!editMode) {
-                    editBtn.setText("Done Editing");
-                    editMode = true;
 
-                    name.setEnabled(true);
-                    rateOfFire.setEnabled(true);
-
-                }
-                else {
-                    editMode = false;
-                    try {
-                        deviceController.getDeviceCurrentlyDisplayed().setName(name.getText().toString());
-                        deviceController.getDeviceCurrentlyDisplayed().setRateOfFire(Integer.parseInt(rateOfFire.getText().toString()));
-                        name.clearFocus();
-                        rateOfFire.clearFocus();
-                        name.setEnabled(false);
-                        rateOfFire.setEnabled(false);
-                        editBtn.setText("Start Editing");
-                    } catch (IOException e) {
-                        Toast.makeText(getActivity(), "Invalid Rate of Fire", Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
         mode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -172,8 +150,9 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
         if(savedInstanceState!=null) {
             connectOnce = savedInstanceState.getBoolean(STATE_CONNECT_ONCE,false);
+            cancelButtonShowing = savedInstanceState.getBoolean(STATE_CANCEL_BUTTON_SHOWING,false);
             if(!connectOnce) {
-                if (savedInstanceState.getBoolean(STATE_TASK_RUNNING, false) && !deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
+                if (savedInstanceState.getBoolean(STATE_TASK_RUNNING,false) && !deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
                     task = new ProgressTask(getActivity()).execute();
                 }
             }
@@ -219,8 +198,8 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
 
         if(!deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
-            aButton.setBackground(getResources().getDrawable(R.drawable.weapon_control_button_disconnected));
-            aButton.setText("DC");
+            aButton.setBackground(getResources().getDrawable(R.drawable.disconnected));
+            aButton.setText("Disconnected");
         }
         else if(deviceController.getDeviceCurrentlyDisplayed().isArmedState()){
             aButton.setBackground(getResources().getDrawable(R.drawable.danger));
@@ -230,22 +209,17 @@ public class WeaponControlFragment extends Fragment implements IObserver {
             aButton.setBackground(getResources().getDrawable(R.drawable.safe));
             aButton.setText("Safe");
         }
-        if(!(deviceController.getDeviceCurrentlyDisplayed().getName()==null)) {
-            if(!editMode) {
-                this.name.setText(deviceController.getDeviceCurrentlyDisplayed().getName());
-            }
+        if(!(deviceController.getDeviceCurrentlyDisplayed().getName()==null) && !editMode) {
+            this.name.setText(deviceController.getDeviceCurrentlyDisplayed().getName());
         }
         if(!(deviceController.getDeviceCurrentlyDisplayed().getBattery()==null)) {
             Log.d("battery", "" + deviceController.getDeviceCurrentlyDisplayed().getBattery());
-
             try {
                 battery.setImageResource(batteryImages[Math.abs(Integer.parseInt(deviceController.getDeviceCurrentlyDisplayed().getBattery())) / 25]);
             }
             catch (Exception e) {
                 e.printStackTrace();
             }
-
-
         }
         if(!(deviceController.getDeviceCurrentlyDisplayed().getOxygen()==null)) {
             oxygen.setText(deviceController.getDeviceCurrentlyDisplayed().getOxygen() + "%");
@@ -257,7 +231,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
             mode.setImageResource(modeImages[deviceController.getDeviceCurrentlyDisplayed().getFireMode()]);
 
         }
-        if(deviceController.getDeviceCurrentlyDisplayed().getFireMode()!=-1) {
+        if(deviceController.getDeviceCurrentlyDisplayed().getRateOfFire()!=-1) {
             if(!editMode){
                 rateOfFire.setText("" + deviceController.getDeviceCurrentlyDisplayed().getRateOfFire());
             }
@@ -325,18 +299,27 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                 }
             });
             this.dialog.show();
-            this.dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setVisibility(View.INVISIBLE);
-            this.dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setClickable(false);
-
-            dialogHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if(dialog.isShowing()) {
-                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setClickable(true);
-                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setVisibility(View.VISIBLE);
+            if(!cancelButtonShowing) {
+                this.dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setVisibility(View.INVISIBLE);
+                this.dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setClickable(false);
+                dialogHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(dialog.isShowing()) {
+                            dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setClickable(true);
+                            dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setVisibility(View.VISIBLE);
+                            cancelButtonShowing = true;
+                        }
                     }
+                },1500);
+            }
+            else {
+                if(dialog.isShowing()) {
+                    dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setClickable(true);
+                    dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setVisibility(View.VISIBLE);
                 }
-            },3000);
+            }
+
 
         }
 
@@ -378,6 +361,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                 }
             return null;
         }
+
     }
 
 
@@ -408,8 +392,10 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         // If the task is running, save it in our state
         if (isTaskRunning()) {
             outState.putBoolean(STATE_TASK_RUNNING, true);
+            outState.putBoolean(STATE_CANCEL_BUTTON_SHOWING,cancelButtonShowing);
         }
         outState.putBoolean(STATE_CONNECT_ONCE,connectOnce);
+
     }
     @Override
     public void onDestroy() {
@@ -421,6 +407,8 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         if(isTaskRunning()) {
             task.cancel(true);
         }
+        task = null;
+
 
 
 
@@ -439,9 +427,42 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         Log.d("trykkede på noget", "onOptionsItemSelected: ");
         switch (item.getItemId()) {
             case R.id.edit_weapon:
-                changeNameDialog();
+                if(!editMode) {
+                    //editBtn.setText("Done Editing");
+                    item.setTitle("Done Editing");
+                    editMode = true;
+
+
+                    name.setEnabled(true);
+                    rateOfFire.setEnabled(true);
+
+                }
+                else {
+                    editMode = false;
+                    try {
+                        deviceController.getDeviceCurrentlyDisplayed().setName(name.getText().toString());
+                        deviceController.getDeviceCurrentlyDisplayed().setRateOfFire(Integer.parseInt(rateOfFire.getText().toString()));
+                        name.clearFocus();
+                        rateOfFire.clearFocus();
+                        name.setEnabled(false);
+                        rateOfFire.setEnabled(false);
+                        //editBtn.setText("Start Editing");
+                        item.setTitle("Start Editing");
+                    } catch (IOException e) {
+                        Toast.makeText(getActivity(), "Invalid Rate of Fire", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                }
                 return true;
             case R.id.delete_weapon:
+                try {
+                    deviceController.removeDevice(deviceController.getDeviceCurrentlyDisplayed());
+                } catch (DeviceControllerNotInstantiatedException e) {
+                    e.printStackTrace();
+                }
+                KnownDevicesListFragment fragment = new KnownDevicesListFragment();
+                getFragmentManager().popBackStack();
+                getFragmentManager().beginTransaction().replace(R.id.content_main_fragment,fragment).commit();
                 return true;
             default:
                 break;
@@ -449,17 +470,77 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         return false;
     }
 
-    private void changeNameDialog(){
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = new MenuInflater(getActivity());
+        inflater.inflate(R.menu.weapon_control_edit_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.weapon_control_menu_edit_name:  {
+                getUserInputDialog("Change the weapon name",0);
+                break;
+            }
+            case R.id.weapon_control_menu_edit_RoF: {
+                getUserInputDialog("Change the Rate of Fire",1);
+                break;
+            }
+        }
+
+        return true;
+
+    }
+
+    private void getUserInputDialog(String title, final int type){
         Log.d("min log", "changeNameDialog: ");
 
         // 1. Instantiate an AlertDialog.Builder with its constructor
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(title);
 
-        // 2. Chain together various setter methods to set the dialog characteristics
-                builder.setMessage("Whatup?")
-                        .setTitle("Er du nede?");
+        final EditText input = new EditText(getActivity());
+        if(type==1) {
+            input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
+        builder.setView(input);
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                 String textInput = input.getText().toString();
+                 Log.d("GetUserInput",textInput);
+                 switch (type) {
+                     case 0: {
+                         try {
+                             deviceController.getDeviceCurrentlyDisplayed().setName(textInput);
+                             updateDisplay();
 
-        // 3. Get the AlertDialog from create()
-        AlertDialog dialog = builder.create();
+                         } catch (IOException e) {
+                             e.printStackTrace();
+                         }
+                         break;
+                     }
+                     case 1: {
+                         try {
+                             deviceController.getDeviceCurrentlyDisplayed().setRateOfFire(Integer.parseInt(textInput));
+                             updateDisplay();
+                         } catch (IOException e) {
+                             e.printStackTrace();
+                         }
+                         break;
+                     }
+
+                 }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
 }

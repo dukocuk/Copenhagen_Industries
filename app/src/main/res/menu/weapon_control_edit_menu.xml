@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/weapon_control_menu_edit_name"
+        android:title="Edit weapon name." />
+    <item
+        android:id="@+id/weapon_control_menu_edit_RoF"
+        android:title="Edit Rate of Fire" />
+</menu>

@@ -6,6 +6,7 @@
     tools:context="com.copenhagenindustries.bluetoothconnection.fragments.WeaponControlFragment"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp"
+    android:id="@+id/weapon_control"
     >
 
 
@@ -260,16 +261,6 @@
         android:background="@drawable/safe"
 
         />
-
-    <Button
-        android:id="@+id/weapon_control_doneEditing_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="40dp"
-        android:text="@string/weapon_control_start_editing"
-        android:textAllCaps="false" />
 
 
 </RelativeLayout>
