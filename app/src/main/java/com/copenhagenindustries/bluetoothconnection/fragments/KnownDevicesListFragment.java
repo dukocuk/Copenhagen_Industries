@@ -90,7 +90,9 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
 
             gunTypeLogos.put("AK47", R.drawable.ic_rifle);
             gunTypeLogos.put("Gun", R.drawable.ic_gun);
-            gunTypeLogos.put("Sniper", R.drawable.ic_sniper_rifle);
+            gunTypeLogos.put("Sub", R.drawable.ic_sub);
+            gunTypeLogos.put("Sniper", R.drawable.ic_sniper);
+            gunTypeLogos.put("Musket", R.drawable.ic_musket);
         }
 
         @NonNull
@@ -191,10 +193,16 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
                     return gunTypeLogos.get("Gun");
                 }
                 case 1: {
-                    return gunTypeLogos.get("Sniper");
+                    return gunTypeLogos.get("Sub");
                 }
                 case 2: {
+                    return gunTypeLogos.get("Sniper");
+                }
+                case 3: {
                     return gunTypeLogos.get("AK47");
+                }
+                case 4: {
+                    return gunTypeLogos.get("Musket");
                 }
                 default: return R.drawable.ic_help;
             }
