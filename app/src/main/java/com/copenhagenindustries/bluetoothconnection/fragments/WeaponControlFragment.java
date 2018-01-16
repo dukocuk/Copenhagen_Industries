@@ -10,11 +10,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.text.InputType;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,7 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.copenhagenindustries.bluetoothconnection.R;
-import com.copenhagenindustries.bluetoothconnection.controllers.Device;
 import com.copenhagenindustries.bluetoothconnection.controllers.DeviceController;
 import com.copenhagenindustries.bluetoothconnection.exceptions.BTNotEnabledException;
 import com.copenhagenindustries.bluetoothconnection.exceptions.DeviceControllerNotInstantiatedException;
@@ -53,6 +50,8 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
     private TextView oxygen;
     private TextView propane;
+    private TextView rateOfFire;
+    private TextView name;
 
     //Shooting mode information
     private ImageView mode;
@@ -62,13 +61,9 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     private ImageView battery;
     private int[] batteryImages = {R.drawable.battery0,R.drawable.battery1,R.drawable.battery2,R.drawable.battery3,R.drawable.battery4};
 
-    private EditText rateOfFire;
-    private EditText name;
-
-    private Button aButton;
 
 
-    private boolean editMode = false;
+    private Button armingButton;
 
 
     private DeviceController deviceController;
@@ -86,15 +81,15 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         registerForContextMenu(layout);
         getActivity().setTitle("Weapon Control");
 
-        name = (EditText) root.findViewById(R.id.weapon_control_name);
+        name = (TextView) root.findViewById(R.id.weapon_control_name);
         battery = (ImageView) root.findViewById(R.id.weapon_control_battery_image);
         oxygen = (TextView) root.findViewById(R.id.weapon_control_oxygen);
         propane = (TextView) root.findViewById(R.id.weapon_control_propane);
         mode = (ImageView) root.findViewById(R.id.weapon_control_mode_imageView);
-        rateOfFire = (EditText) root.findViewById(R.id.weapon_control_RoF);
-        aButton = (Button) root.findViewById(R.id.weapon_control_switch);
+        rateOfFire = (TextView) root.findViewById(R.id.weapon_control_RoF);
+        armingButton = (Button) root.findViewById(R.id.weapon_control_switch);
 
-        aButton.setOnClickListener(new View.OnClickListener() {
+        armingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
@@ -102,12 +97,12 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
                         deviceController.getDeviceCurrentlyDisplayed().setArmedState(!deviceController.getDeviceCurrentlyDisplayed().isArmedState());
                         if(deviceController.getDeviceCurrentlyDisplayed().isArmedState()){
-                            aButton.setBackground(getResources().getDrawable(R.drawable.danger));
-                            aButton.setText("Armed");
+                            armingButton.setBackground(getResources().getDrawable(R.drawable.danger));
+                            armingButton.setText("Armed");
                         }
                         else {
-                            aButton.setBackground(getResources().getDrawable(R.drawable.safe));
-                            aButton.setText("Safe");
+                            armingButton.setBackground(getResources().getDrawable(R.drawable.safe));
+                            armingButton.setText("Safe");
                         }
                         deviceController.getDeviceCurrentlyDisplayed().getTotalStatus();
 
@@ -116,9 +111,9 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                     }
                 }
                 else {
-                    //aButton.setBackgroundColor(getResources().getColor(R.color.colorButtonGrey));
-                    aButton.setBackground(getResources().getDrawable(R.drawable.weapon_control_button_disconnected));
-                    aButton.setText("Disconnected");
+                    //armingButton.setBackgroundColor(getResources().getColor(R.color.colorButtonGrey));
+                    armingButton.setBackground(getResources().getDrawable(R.drawable.weapon_control_button_disconnected));
+                    armingButton.setText("Disconnected");
                 }
             }
         });
@@ -198,18 +193,18 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
 
         if(!deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
-            aButton.setBackground(getResources().getDrawable(R.drawable.disconnected));
-            aButton.setText("Disconnected");
+            armingButton.setBackground(getResources().getDrawable(R.drawable.disconnected));
+            armingButton.setText("Disconnected");
         }
         else if(deviceController.getDeviceCurrentlyDisplayed().isArmedState()){
-            aButton.setBackground(getResources().getDrawable(R.drawable.danger));
-            aButton.setText("Armed");
+            armingButton.setBackground(getResources().getDrawable(R.drawable.danger));
+            armingButton.setText("Armed");
         }
         else {
-            aButton.setBackground(getResources().getDrawable(R.drawable.safe));
-            aButton.setText("Safe");
+            armingButton.setBackground(getResources().getDrawable(R.drawable.safe));
+            armingButton.setText("Safe");
         }
-        if(!(deviceController.getDeviceCurrentlyDisplayed().getName()==null) && !editMode) {
+        if(!(deviceController.getDeviceCurrentlyDisplayed().getName()==null)) {
             this.name.setText(deviceController.getDeviceCurrentlyDisplayed().getName());
         }
         if(!(deviceController.getDeviceCurrentlyDisplayed().getBattery()==null)) {
@@ -232,9 +227,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
         }
         if(deviceController.getDeviceCurrentlyDisplayed().getRateOfFire()!=-1) {
-            if(!editMode){
-                rateOfFire.setText("" + deviceController.getDeviceCurrentlyDisplayed().getRateOfFire());
-            }
+            rateOfFire.setText("" + deviceController.getDeviceCurrentlyDisplayed().getRateOfFire());
         }
     }
 
@@ -260,7 +253,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                aButton.setClickable(false);
+                armingButton.setClickable(false);
             }
         });
         AlertDialog alertDialog = builder.create();
@@ -426,15 +419,17 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d("trykkede på noget", "onOptionsItemSelected: ");
         switch (item.getItemId()) {
-            case R.id.weapon_control_menu_name:
+            case R.id.weapon_control_menu_edit_name:
                 getUserInputDialog("Change the weapon name",0);
+
                 break;
-            case R.id.weapon_control_menu_RoF:
+            case R.id.weapon_control_menu_edit_RoF:
                 getUserInputDialog("Change the Rate of Fire",1);
                 break;
             case R.id.weapon_control_delete_weapon: {
                 try {
                     deviceController.removeDevice(deviceController.getDeviceCurrentlyDisplayed());
+                    deviceController.saveData(getActivity());
                 } catch (DeviceControllerNotInstantiatedException e) {
                     e.printStackTrace();
                 }
@@ -472,6 +467,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                          try {
                              deviceController.getDeviceCurrentlyDisplayed().setName(textInput);
                              updateDisplay();
+                             deviceController.saveData(getActivity());
 
                          } catch (IOException e) {
                              e.printStackTrace();

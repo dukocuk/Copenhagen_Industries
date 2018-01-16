@@ -95,6 +95,7 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
                 Device device = (Device) pairedDevicesListView.getItemAtPosition(position);
                 try {
                     deviceController.addDevice(device);
+                    deviceController.saveData(getActivity());
                 } catch (DeviceControllerNotInstantiatedException e) {
                     e.printStackTrace();
                 }
