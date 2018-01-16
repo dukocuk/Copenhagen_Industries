@@ -35,6 +35,7 @@ import com.copenhagenindustries.bluetoothconnection.interfacePackage.IObserver;
 import com.copenhagenindustries.bluetoothconnection.misc.HandlerStates;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 
 public class WeaponControlFragment extends Fragment implements IObserver {
@@ -61,7 +62,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     private ImageView battery;
     private int[] batteryImages = {R.drawable.battery0,R.drawable.battery1,R.drawable.battery2,R.drawable.battery3,R.drawable.battery4};
 
-
+    private ImageView gunImage;
 
     private Button armingButton;
 
@@ -73,6 +74,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
     private AsyncTask task;
 
+    HashMap<String, Integer> gunTypeLogos = new HashMap<>();
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(com.copenhagenindustries.bluetoothconnection.R.layout.fragment_weapon_control,container,false);
@@ -80,6 +82,14 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         RelativeLayout layout = root.findViewById(R.id.weapon_control);
         registerForContextMenu(layout);
         getActivity().setTitle("Weapon Control");
+        deviceController = DeviceController.getInstance();
+
+
+        gunTypeLogos.put("AK47", R.drawable.ic_rifle_big);
+        gunTypeLogos.put("Gun", R.drawable.ic_gun_big);
+        gunTypeLogos.put("Sub", R.drawable.ic_sub_big);
+        gunTypeLogos.put("Sniper", R.drawable.ic_sniper_big);
+        gunTypeLogos.put("Musket", R.drawable.ic_musket_big);
 
         name = (TextView) root.findViewById(R.id.weapon_control_name);
         battery = (ImageView) root.findViewById(R.id.weapon_control_battery_image);
@@ -88,6 +98,8 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         mode = (ImageView) root.findViewById(R.id.weapon_control_mode_imageView);
         rateOfFire = (TextView) root.findViewById(R.id.weapon_control_RoF);
         armingButton = (Button) root.findViewById(R.id.weapon_control_switch);
+        gunImage = (ImageView) root.findViewById(R.id.weapon_control_image_header);
+        gunImage.setImageResource(gunTypeLogos.get(deviceController.getDeviceCurrentlyDisplayed().getGunType()));
 
         armingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,7 +148,6 @@ public class WeaponControlFragment extends Fragment implements IObserver {
             }
         });
 
-        deviceController = DeviceController.getInstance();
 
 
         resetDisplay();

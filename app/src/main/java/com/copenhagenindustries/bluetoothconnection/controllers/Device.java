@@ -15,6 +15,7 @@ import com.copenhagenindustries.bluetoothconnection.misc.HandlerStates;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class Device implements ISubject{
@@ -162,7 +163,13 @@ public class Device implements ISubject{
     }
 
     public String getGunType() {
-        return gunType;
+        String[] temp = {"AK47","Gun","Sub","Sniper","Musket"};
+        Random random = new Random();
+        int i = random.nextInt(5);
+        //int i = (int) Math.random() * 5;
+        Log.d("gunType int","" + i);
+
+        return temp[i];
     }
 
     public String getMacAddress() { return macAddress;}
