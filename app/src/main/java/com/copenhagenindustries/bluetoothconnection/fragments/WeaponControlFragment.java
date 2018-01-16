@@ -80,7 +80,6 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         View root = inflater.inflate(com.copenhagenindustries.bluetoothconnection.R.layout.fragment_weapon_control,container,false);
         setHasOptionsMenu(true);
         RelativeLayout layout = root.findViewById(R.id.weapon_control);
-        registerForContextMenu(layout);
         getActivity().setTitle("Weapon Control");
         deviceController = DeviceController.getInstance();
 
@@ -423,6 +422,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.weapon_control, menu);
+
     }
 
     // menu item was pressed

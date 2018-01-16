@@ -15,7 +15,4 @@
             android:icon="@drawable/ic_help"
             android:title="@string/maindrawer_help" />
     </group>
-
-
-
 </menu>

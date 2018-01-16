@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.copenhagenindustries.bluetoothconnection.R;
+import com.copenhagenindustries.bluetoothconnection.controllers.DeviceController;
 import com.copenhagenindustries.bluetoothconnection.fragments.HelpFragment;
 import com.copenhagenindustries.bluetoothconnection.fragments.KnownDevicesListFragment;
 import com.copenhagenindustries.bluetoothconnection.fragments.SettingsFragment;
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onDestroy() {
         super.onDestroy();
         PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("Login",false).apply();
-
+        DeviceController.getInstance().saveData(this);
     }
 
     @Override
@@ -142,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
 
 }
