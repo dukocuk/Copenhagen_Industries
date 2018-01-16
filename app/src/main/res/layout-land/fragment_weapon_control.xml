@@ -11,7 +11,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
 
         android:shrinkColumns="*">
         <!--android:background="@drawable/weapon_control_row_background"  border in tablelayout-->
@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|start"
 
-                android:text="Battery"
+                android:text="@string/weapon_control_battery"
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
 
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|end"
-                android:layout_marginRight="4dp"
+                android:layout_marginEnd="4dp"
                 android:src="@drawable/battery4" />
 
 
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="Oxygen"
+                android:text="@string/oxygen"
                 android:textColor="@android:color/white"
 
                 android:textSize="24sp" />
@@ -70,8 +70,8 @@
                 android:layout_width="233dp"
                 android:layout_height="wrap_content"
 
-                android:gravity="right"
-                android:text="Oxygen Level"
+                android:gravity="end"
+                android:text="@string/oxygen_default_value"
                 android:textColor="@android:color/white"
                 android:textSize="24sp" />
         </TableRow>
@@ -84,7 +84,7 @@
                 android:id="@+id/weapon_control_propane_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Propane"
+                android:text="@string/propane"
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
 
@@ -94,8 +94,8 @@
                 android:id="@+id/weapon_control_propane"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                android:text="Propane Level"
+                android:gravity="end"
+                android:text="@string/propane_default_value"
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
 
@@ -123,7 +123,7 @@
                 android:id="@+id/weapon_control_mode_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mode"
+                android:text="@string/mode"
                 android:textColor="@android:color/white"
                 android:textSize="24sp" />
 
@@ -141,7 +141,7 @@
                 android:id="@+id/weapon_control_RoF_text"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="Rate of Fire"
+                android:text="@string/rate_of_fire"
                 android:textColor="@android:color/white"
                 android:textSize="24sp" />
 
@@ -155,7 +155,7 @@
                 android:gravity="end"
                 android:inputType="number"
                 android:maxLength="10"
-                android:text="1000"
+                android:text="@string/rate_of_fire_default_value"
                 android:textColor="@android:color/white"
                 android:textSize="24sp" />
         </TableRow>
@@ -168,7 +168,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginStart="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_toEndOf="@+id/tableLayout"
         android:layout_alignTop="@+id/tableLayout"
         android:layout_alignBottom="@+id/tableLayout">

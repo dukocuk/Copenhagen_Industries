@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.copenhagenindustries.bluetoothconnection.R;
 import com.copenhagenindustries.bluetoothconnection.controllers.DeviceController;
@@ -72,10 +74,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            Log.d("MA_OnBackPressed","Else");
-            super.onBackPressed();
         }
+        if(getFragmentManager().getBackStackEntryCount()==0) {
+            if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("BackStackEmpty",false)) {
+                super.onBackPressed();
+                PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("BackStackEmpty",false).apply();
+
+            }
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("BackStackEmpty",true).apply();
+            Toast.makeText(this, "Back to quit.", Toast.LENGTH_SHORT).show();
+        }
+        else if (getFragmentManager().getBackStackEntryCount()>0) {
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("BackStackEmpty",false).apply();
+            super.onBackPressed();
+
+        }
+
+
     }
 
     @Override
@@ -91,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onDestroy();
         PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("Login",false).apply();
         DeviceController.getInstance().saveData(this);
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("BackStackEmpty",false).apply();
+
     }
 
     @Override

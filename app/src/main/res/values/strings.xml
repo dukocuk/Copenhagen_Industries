@@ -56,7 +56,20 @@
     <string name="weapon_control_rof_number">1000</string>
     <string name="weapon_control_safe">Safe</string>
     <string name="weapon_control_start_editing">Start Editing</string>
-
+    <string name="battery">Battery</string>
+    <string name="oxygen" translatable="false">Oxygen</string>
+    <string name="oxygen_default_value">Oxygen Level</string>
+    <string name="propane">Propane</string>
+    <string name="propane_default_value">Propane Level</string>
+    <string name="mode">Mode</string>
+    <string name="rate_of_fire">Rate of Fire</string>
+    <string name="rate_of_fire_default_value" translatable="false">1000</string>
+    <string name="edit">Edit</string>
+    <string name="change_weapon_name">Change Weapon Name</string>
+    <string name="change_rate_of_fire">Change Rate of Fire</string>
+    <string name="delete">Delete</string>
+    <string name="chance_the_rate_of_fire">Change the Rate of Fire</string>
+    <string name="change_the_weapon_name">Change the weapon name</string>
 
 
     <!-- Help -->

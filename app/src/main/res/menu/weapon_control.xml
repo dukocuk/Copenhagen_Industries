@@ -5,7 +5,7 @@
     <item
         android:id="@+id/menu1"
         android:actionLayout="@color/colorPrimary"
-        android:title="Rediger"
+        android:title="@string/edit"
         android:visible="true"
 
         app:showAsAction="never">
@@ -13,16 +13,16 @@
         <menu>
 
             <item
-                android:id="@id/weapon_control_menu_edit_name"
-                android:title="Change Weapon Name"></item>
+                android:id="@+id/weapon_control_menu_edit_name"
+                android:title="@string/change_weapon_name"></item>
             <item
                 android:id="@+id/weapon_control_menu_edit_RoF"
-                android:title="Change Rate of Fire"></item>
+                android:title="@string/change_rate_of_fire"></item>
 
         </menu>
     </item>
     <item
         android:id="@+id/weapon_control_delete_weapon"
-        android:title="Delete" />
+        android:title="@string/delete" />
 
 </menu>

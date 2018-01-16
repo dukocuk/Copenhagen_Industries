@@ -431,11 +431,11 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         Log.d("trykkede på noget", "onOptionsItemSelected: ");
         switch (item.getItemId()) {
             case R.id.weapon_control_menu_edit_name:
-                getUserInputDialog("Change the weapon name",0);
+                getUserInputDialog(getString(R.string.change_the_weapon_name),0);
 
                 break;
             case R.id.weapon_control_menu_edit_RoF:
-                getUserInputDialog("Change the Rate of Fire",1);
+                getUserInputDialog(getString(R.string.chance_the_rate_of_fire),1);
                 break;
             case R.id.weapon_control_delete_weapon: {
                 try {

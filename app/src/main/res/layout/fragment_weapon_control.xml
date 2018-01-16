@@ -215,7 +215,7 @@
                 android:layout_gravity="end"
                 android:scaleType="fitEnd"
                 android:minWidth="50dp"
-                android:paddingRight="2dp"
+                android:paddingEnd="2dp"
                 android:paddingBottom="2dp"
                 android:src="@drawable/bullet_auto"
 
