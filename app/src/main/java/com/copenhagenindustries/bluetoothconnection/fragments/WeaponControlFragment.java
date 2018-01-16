@@ -449,27 +449,6 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         return false;
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = new MenuInflater(getActivity());
-        inflater.inflate(R.menu.weapon_control_edit_menu, menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.weapon_control_menu_edit_name:  {
-
-            }
-            case R.id.weapon_control_menu_edit_RoF: {
-
-            }
-        }
-
-        return true;
-
-    }
 
     private void getUserInputDialog(String title, final int type){
         Log.d("min log", "changeNameDialog: ");
