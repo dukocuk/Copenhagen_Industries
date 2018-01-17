@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("Login",false).apply();
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("LOGIN",false).apply();
         DeviceController.getInstance().saveData(this);
         PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("BackStackEmpty",false).apply();
 
