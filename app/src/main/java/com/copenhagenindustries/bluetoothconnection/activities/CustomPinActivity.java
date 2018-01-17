@@ -7,20 +7,18 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.copenhagenindustries.bluetoothconnection.R;
+import com.copenhagenindustries.bluetoothconnection.misc.RequestCodes;
+import com.copenhagenindustries.bluetoothconnection.misc.SharedPreferencesStrings;
 import com.github.omadahealth.lollipin.lib.managers.AppLock;
 import com.github.omadahealth.lollipin.lib.managers.AppLockActivity;
-import com.github.omadahealth.lollipin.lib.managers.LockManager;
 
 import uk.me.lewisdeane.ldialogs.BaseDialog;
 import uk.me.lewisdeane.ldialogs.CustomDialog;
-
-import static android.content.ContentValues.TAG;
 
 
 /**
@@ -79,19 +77,36 @@ public class CustomPinActivity extends AppLockActivity {
 
     @Override
     public void onPinFailure(int attempts) {
+        if(attempts > 2 && PreferenceManager.getDefaultSharedPreferences(this).getBoolean(SharedPreferencesStrings.CHANGING_PIN,false)) {
+            PreferenceManager.getDefaultSharedPreferences(this).edit().remove(SharedPreferencesStrings.CHANGING_PIN).apply();
+            Intent cancel = new Intent(CustomPinActivity.this,MainActivity.class);
+            startActivityForResult(cancel,RequestCodes.STATE_CHANGE_PIN_FAILURE);
+            Toast.makeText(this, R.string.change_pin_wrong_password, Toast.LENGTH_SHORT).show();
 
+        }
     }
 
     @Override
     public void onPinSuccess(int attempts) {
-        Log.d(TAG, "onPinSuccess: pls stop");
-        if(!PreferenceManager.getDefaultSharedPreferences(this).getBoolean("Login",false)) {
-            Intent intent2 = new Intent(CustomPinActivity.this, MainActivity.class);
-            startActivity(intent2);
-            Log.d("onPinSuccess","pls");
-            PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("Login", true).apply();
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean(SharedPreferencesStrings.CHANGING_PIN,false)) {
+            PreferenceManager.getDefaultSharedPreferences(this).edit().remove(SharedPreferencesStrings.CHANGING_PIN).apply();
+            return;
         }
 
+        if(!PreferenceManager.getDefaultSharedPreferences(this).getBoolean(SharedPreferencesStrings.LOGIN,false)) {
+            Intent intent2 = new Intent(CustomPinActivity.this, MainActivity.class);
+            startActivity(intent2);
+            Log.d("ASDFonPinSuccess","pls");
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(SharedPreferencesStrings.LOGIN, true).apply();
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("ASDFOnActivityResult","RequestCode: " + requestCode + " ResultCode: " + resultCode);
+        Log.d("ASDFOnActivityResult","InsideActivityResult");
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -116,7 +131,7 @@ public class CustomPinActivity extends AppLockActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("Login", false).apply();
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("LOGIN", false).apply();
 
     }
 }

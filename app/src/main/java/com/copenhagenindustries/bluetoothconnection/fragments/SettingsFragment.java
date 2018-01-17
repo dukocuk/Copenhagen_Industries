@@ -31,9 +31,12 @@ import com.copenhagenindustries.bluetoothconnection.R;
 import com.copenhagenindustries.bluetoothconnection.activities.CustomApplication;
 import com.copenhagenindustries.bluetoothconnection.activities.CustomPinActivity;
 import com.copenhagenindustries.bluetoothconnection.activities.MainActivity;
+import com.copenhagenindustries.bluetoothconnection.misc.RequestCodes;
+import com.copenhagenindustries.bluetoothconnection.misc.SharedPreferencesStrings;
 import com.github.omadahealth.lollipin.lib.managers.AppLock;
 
 
+import java.lang.ref.PhantomReference;
 import java.util.Locale;
 
 
@@ -58,9 +61,13 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         pref_pin.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Intent intent = new Intent(getActivity(), CustomPinActivity.class);
-                intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
-                startActivity(intent);
+                getPreferenceManager().getSharedPreferences().edit().putBoolean(SharedPreferencesStrings.CHANGING_PIN,true).apply();
+                Intent changePin = new Intent(getActivity(), CustomPinActivity.class);
+                changePin.putExtra(AppLock.EXTRA_TYPE, AppLock.CONFIRM_PIN);
+                startActivityForResult(changePin, RequestCodes.STATE_CHANGE_PIN);
+                Intent enablePin = new Intent(getActivity(),CustomPinActivity.class);
+                enablePin.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
+                startActivityForResult(enablePin,RequestCodes.STATE_CHANGE_PIN);
                 return true;
             }
         });

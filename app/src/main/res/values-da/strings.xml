@@ -50,4 +50,5 @@
     <string name="delete">Slet</string>
     <string name="chance_the_rate_of_fire">Skift skydehastighed</string>
     <string name="change_the_weapon_name">Skift våbennavn</string>
+    <string name="change_pin_wrong_password">Kode forkert</string>
 </resources>
