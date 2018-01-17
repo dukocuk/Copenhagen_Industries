@@ -3,6 +3,8 @@ package com.copenhagenindustries.bluetoothconnection.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.TaskStackBuilder;
+import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -62,12 +64,20 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 getPreferenceManager().getSharedPreferences().edit().putBoolean(SharedPreferencesStrings.CHANGING_PIN,true).apply();
+
+
                 Intent changePin = new Intent(getActivity(), CustomPinActivity.class);
-                changePin.putExtra(AppLock.EXTRA_TYPE, AppLock.CONFIRM_PIN);
-                startActivityForResult(changePin, RequestCodes.STATE_CHANGE_PIN);
+                changePin.putExtra(AppLock.EXTRA_TYPE, AppLock.DISABLE_PINLOCK);
+                startActivityForResult(changePin,RequestCodes.STATE_CHANGE_PIN);
+
+                Intent disableLock = new Intent(getActivity(),CustomPinActivity.class);
+                disableLock.putExtra(AppLock.EXTRA_TYPE, AppLock.DISABLE_PINLOCK);
+
+
                 Intent enablePin = new Intent(getActivity(),CustomPinActivity.class);
                 enablePin.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
-                startActivityForResult(enablePin,RequestCodes.STATE_CHANGE_PIN);
+                TaskStackBuilder.create(getActivity()).addNextIntent(changePin).addNextIntent(enablePin).startActivities();
+
                 return true;
             }
         });
@@ -87,6 +97,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("MA_Settings","asdf");
+        Log.d("MA_Settings","requestCode:" + requestCode + " ResultCode: " + resultCode);
         super.onActivityResult(requestCode, resultCode, data);
     }
 

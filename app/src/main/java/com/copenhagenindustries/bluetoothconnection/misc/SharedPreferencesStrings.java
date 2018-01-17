@@ -5,7 +5,7 @@ package com.copenhagenindustries.bluetoothconnection.misc;
  */
 
 public class SharedPreferencesStrings {
-    public static final String LOGIN = "LOGIN";
+    public static final String ON_PIN_SUCCESS_NR = "onPinSuccessNR";
     public static final String CHANGING_PIN = "ChangingPin";
 
 
