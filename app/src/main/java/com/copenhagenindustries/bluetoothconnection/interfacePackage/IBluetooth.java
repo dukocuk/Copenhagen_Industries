@@ -19,7 +19,7 @@ public interface IBluetooth {
      * @param macAddress
      *
      */
-    void startConnection(String macAddress) throws BTNotEnabledException,NoBTAdapterException, BTNotEnabledException, NoBTAdapterException;
+    void startConnection(String macAddress) throws BTNotEnabledException, NoBTAdapterException;
 
     /**
      * Stops the bt connection
@@ -43,7 +43,6 @@ public interface IBluetooth {
      */
     void getShootingStatus() throws IOException;
 
-    //Should probably return a table.
     /**
      * Returns all the information related to the gun: <br>
      *     - Serialnumber           <br>
@@ -63,10 +62,10 @@ public interface IBluetooth {
 
     /**
      * Sets the fire mode       <br>
-     *  - 0 Semi                <br>
-     *  - 1 Burst               <br>
-     *  - 2 full automatic      <br>
-     * @param state
+     *
+     * @param state - 0 Semi                <br>
+     *              - 1 Burst               <br>
+     *              - 2 full automatic      <br>
      */
     void setFireMode(int state) throws IOException;
 

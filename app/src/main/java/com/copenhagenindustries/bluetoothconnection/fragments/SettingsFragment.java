@@ -1,44 +1,27 @@
 package com.copenhagenindustries.bluetoothconnection.fragments;
 
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TaskStackBuilder;
-import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
-import android.preference.PreferenceActivity;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v7.preference.ListPreference;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
 
 import com.copenhagenindustries.bluetoothconnection.R;
-import com.copenhagenindustries.bluetoothconnection.activities.CustomApplication;
 import com.copenhagenindustries.bluetoothconnection.activities.CustomPinActivity;
-import com.copenhagenindustries.bluetoothconnection.activities.MainActivity;
 import com.copenhagenindustries.bluetoothconnection.misc.RequestCodes;
 import com.copenhagenindustries.bluetoothconnection.misc.SharedPreferencesStrings;
 import com.github.omadahealth.lollipin.lib.managers.AppLock;
 
-
-import java.lang.ref.PhantomReference;
 import java.util.Locale;
 
 
@@ -59,34 +42,37 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         Preference pref_pin = getPreferenceManager().findPreference(getString(R.string.pref_key_pincode));
         Preference pref_dev = getPreferenceManager().findPreference(getString(R.string.pref_key_dev));
 
-
-        pref_pin.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                getPreferenceManager().getSharedPreferences().edit().putBoolean(SharedPreferencesStrings.CHANGING_PIN,true).apply();
-
-
-                Intent changePin = new Intent(getActivity(), CustomPinActivity.class);
-                changePin.putExtra(AppLock.EXTRA_TYPE, AppLock.CONFIRM_PIN);
-                startActivityForResult(changePin,RequestCodes.STATE_CHANGE_PIN);
-
-                Intent enablePin = new Intent(getActivity(),CustomPinActivity.class);
-                enablePin.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
-                TaskStackBuilder.create(getActivity()).addNextIntent(changePin).addNextIntent(enablePin).startActivities();
-
-                return true;
-            }
-        });
-
-        pref_dev.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+        if(pref_pin!=null) {
+            pref_pin.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    getPreferenceManager().getSharedPreferences().edit().putBoolean(SharedPreferencesStrings.CHANGING_PIN, true).apply();
 
 
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                showAbout();
-                return true;
-            }
-        });
+                    Intent changePin = new Intent(getActivity(), CustomPinActivity.class);
+                    changePin.putExtra(AppLock.EXTRA_TYPE, AppLock.CONFIRM_PIN);
+                    startActivityForResult(changePin, RequestCodes.STATE_CHANGE_PIN);
+
+                    Intent enablePin = new Intent(getActivity(), CustomPinActivity.class);
+                    enablePin.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
+                    TaskStackBuilder.create(getActivity()).addNextIntent(changePin).addNextIntent(enablePin).startActivities();
+
+                    return true;
+                }
+            });
+        }
+
+        if(pref_dev!=null) {
+            pref_dev.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    showAbout();
+                    return true;
+                }
+            });
+        }
 
     }
 

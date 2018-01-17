@@ -69,8 +69,8 @@ public class Device implements ISubject{
 
     /**
      * Start the bluetoothconnection
-     * @throws BTNotEnabledException
-     * @throws NoBTAdapterException
+     * @throws BTNotEnabledException BluetoothAdapter isn't enabled
+     * @throws NoBTAdapterException BluetoothAdapter doesn't exist on the android device
      */
     public void startConnection() throws BTNotEnabledException, NoBTAdapterException {
         connection = new BluetoothConnection(deviceHandler);
@@ -79,7 +79,7 @@ public class Device implements ISubject{
 
     /**
      * If the connection isn't null, returns the connections status.
-     * @return
+     * @return true if connection is alive
      */
     public boolean connectionAlive() {
         if(connection == null) {
@@ -177,7 +177,7 @@ public class Device implements ISubject{
 
     /**
      * Add observer to list to be notified.
-     * @param observer
+     * @param observer Observer that wants to be notified when new data arrives.
      */
     @Override
     public void addToObserverList(IObserver observer) {
@@ -186,7 +186,7 @@ public class Device implements ISubject{
 
     /**
      * Remove an observer from the observer-list.
-     * @param observer
+     * @param observer Observer that wants to be notified when new data arrives.
      */
     @Override
     public void removeFromObserverList(IObserver observer) {

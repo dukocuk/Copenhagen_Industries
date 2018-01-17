@@ -50,5 +50,25 @@
     <string name="delete">Slet</string>
     <string name="chance_the_rate_of_fire">Skift skydehastighed</string>
     <string name="change_the_weapon_name">Skift våbennavn</string>
-    <string name="change_pin_wrong_password">Kode forkert</string>
+    <string name="change_pin_wrong_password">Koden er forkert - Kan ikke ændre pinkoden</string>
+    <string name="custom_pin_activity_forgot_dialog_title">Glemt din PIN-kode?</string>
+    <string name="weapon_control_button_armed">Armeret</string>
+    <string name="weapon_control_button_safe">Sikker</string>
+    <string name="weapon_control_button_disconnected">Ej forbundet</string>
+    <string name="weapon_control_connection_lost">Forbindelse mistet.  \nLav ny forbindelse?</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nej</string>
+    <string name="weapon_control_connecting">Forbinder...</string>
+    <string name="weapon_control_cancel">Annuller</string>
+    <string name="toast_enable_bluetooth">Venligst tænd for bluetooth</string>
+    <string name="known_devices_unable_to_load_data">Kunne ikke hente data</string>
+    <string name="known_devices_status_armed">Bevæbnet</string>
+    <string name="known_devices_status_safe">Sikker</string>
+    <string name="add_device_unable_to_fetch_list">Kunne ikke hente liste.</string>
+    <string name="add_device_no_bt_adapter">Ingen bluetooth adapter</string>
+    <string name="add_device_no_paired_devices_found">Ingen parrede enheder</string>
+    <string name="custom_pin_activity_forgot_dialog_positive_text">Ja</string>
+    <string name="custom_pin_activity_forgot_dialog_content">Tryk herunder hvis du vil komme ind i appen uden din kode</string>
+    <string name="custom_pin_activity_forgot_dialog_negative_text">Nej</string>
+    <string name="main_activity_back_to_quit_app">Tryk tilbage for at lukke appen.</string>
 </resources>

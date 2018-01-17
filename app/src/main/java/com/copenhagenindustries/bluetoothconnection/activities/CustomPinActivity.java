@@ -1,9 +1,6 @@
 package com.copenhagenindustries.bluetoothconnection.activities;
 
 
-
-import android.app.TaskStackBuilder;
-import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -16,16 +13,11 @@ import android.widget.Toast;
 import com.copenhagenindustries.bluetoothconnection.R;
 import com.copenhagenindustries.bluetoothconnection.misc.RequestCodes;
 import com.copenhagenindustries.bluetoothconnection.misc.SharedPreferencesStrings;
-import com.github.omadahealth.lollipin.lib.managers.AppLock;
 import com.github.omadahealth.lollipin.lib.managers.AppLockActivity;
 
 import uk.me.lewisdeane.ldialogs.BaseDialog;
 import uk.me.lewisdeane.ldialogs.CustomDialog;
 
-
-/**
- * Created by Ejer on 07-01-2018.
- */
 
 public class CustomPinActivity extends AppLockActivity {
 
@@ -34,10 +26,10 @@ public class CustomPinActivity extends AppLockActivity {
         Resources res = getResources();
         // Create the builder with required paramaters - Context, Title, Positive Text
         CustomDialog.Builder builder = new CustomDialog.Builder(this,
-                "Glemt din PIN-kode?",
-                "Ja");
-        builder.content("Tryk herunder hvis du vil komme ind i appen uden din kode");
-        builder.negativeText("Nej");
+                getString(R.string.custom_pin_activity_forgot_dialog_title),
+                getString(R.string.custom_pin_activity_forgot_dialog_positive_text));
+        builder.content(getString(R.string.custom_pin_activity_forgot_dialog_content));
+        builder.negativeText(getString(R.string.custom_pin_activity_forgot_dialog_negative_text));
 
         //Set theme
         builder.darkTheme(false);
@@ -50,8 +42,8 @@ public class CustomPinActivity extends AppLockActivity {
         //builder.setButtonStacking(false);
 
         //Set text sizes
-        builder.titleTextSize((int) 22);
-        builder.contentTextSize((int) 22);
+        builder.titleTextSize(22);
+        builder.contentTextSize( 22);
         //builder.positiveButtonTextSize((int) res.getDimension(R.dimen.activity_dialog_positive_button_size));
         //builder.negativeButtonTextSize((int) res.getDimension(R.dimen.activity_dialog_negative_button_size));
 
@@ -62,14 +54,12 @@ public class CustomPinActivity extends AppLockActivity {
         customDialog.setClickListener(new CustomDialog.ClickListener() {
             @Override
             public void onConfirmClick() {
-                Toast.makeText(getApplicationContext(), "Unlock", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(CustomPinActivity.this, MainActivity.class);
                 startActivity(intent);
             }
 
             @Override
             public void onCancelClick() {
-                Toast.makeText(getApplicationContext(), "Cancel", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -100,17 +90,15 @@ public class CustomPinActivity extends AppLockActivity {
 
 
         if(!login && !changing_pin) {
-            Log.d("onPinSuccess","2");
+            Log.d("onPinSuccess","Moving to MainActivity");
             Intent intent2 = new Intent(CustomPinActivity.this, MainActivity.class);
             startActivity(intent2);
-            Log.d("ASDFonPinSuccess","pls");
             PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(SharedPreferencesStrings.ON_PIN_SUCCESS_NR, true).apply();
         }
         else if(changing_pin) {
-            Log.d("onPinSuccess","1");
+            Log.d("onPinSuccess","Pin confirmed. Now possible to change it");
             PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(SharedPreferencesStrings.CHANGING_PIN,false).apply();
             PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(SharedPreferencesStrings.ON_PIN_SUCCESS_NR,true).apply();
-            return;
         }
 
     }

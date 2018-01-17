@@ -122,7 +122,7 @@ class ConnecterThread implements Runnable {
     /**
      * Terminate the thread.
      */
-    public void shutdown() {
+    protected void shutdown() {
         shutdown = true;
     }
 

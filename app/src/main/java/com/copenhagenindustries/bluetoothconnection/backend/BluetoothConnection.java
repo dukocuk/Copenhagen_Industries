@@ -115,7 +115,7 @@ public class BluetoothConnection implements IBluetooth {
     /**
      * Arms and disarms the weapon.
      * @param state boolean. true if armed false if disamred.
-     * @throws IOException
+     * @throws IOException if ConnecterThread is unable to send message
      */
     @Override
     public void setArmedState(boolean state) throws IOException {
@@ -180,7 +180,7 @@ public class BluetoothConnection implements IBluetooth {
 
     /**
      * If thread isn't null and is alive return true.
-     * @return
+     * @return true if thread is running. false if not.
      */
     @Override
     public boolean isAlive() {

@@ -54,7 +54,7 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
         deviceController = DeviceController.getInstance();
         getActivity().setTitle(R.string.add_device);
 
-        swipeLayout = (SwipeRefreshLayout) root.findViewById(R.id.add_device_swipe_container);
+        swipeLayout = root.findViewById(R.id.add_device_swipe_container);
         swipeLayout.setOnRefreshListener(this);
         swipeLayout.setColorSchemeColors(   getResources().getColor(android.R.color.holo_blue_bright),
                                             getResources().getColor(android.R.color.holo_green_light),
@@ -63,7 +63,7 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
 
 
 
-        pairedDevicesListView = (ListView) root.findViewById(R.id.add_device_listview);
+        pairedDevicesListView = root.findViewById(R.id.add_device_listview);
         pairedDevicesListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
@@ -136,7 +136,7 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
             Log.d("DeviceList", deviceList.toString());
         }
         else{
-            Toast.makeText(getActivity(),"Unable to fetch list",Toast.LENGTH_LONG);
+            Toast.makeText(getActivity(), R.string.add_device_unable_to_fetch_list,Toast.LENGTH_LONG).show();
         }
 
     }
@@ -147,7 +147,7 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
 
         if(myBluetoothAdapter == null)
         {
-            Toast.makeText(getActivity(),"NoBTAdapter",Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.add_device_no_bt_adapter,Toast.LENGTH_LONG).show();
             getActivity().finish();
         }
         //If it isn't enabled
@@ -181,7 +181,7 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
         }
         else
         {
-            Toast.makeText(getActivity(), "No Paired Bluetooth Devices Found.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.add_device_no_paired_devices_found, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -217,8 +217,8 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.add_device_list_item, parent, false);
             }
             // Lookup view for data population
-            TextView deviceName = (TextView) convertView.findViewById(R.id.add_device_device_name);
-            TextView deviceMacAddress = (TextView) convertView.findViewById(R.id.add_device_mac_address);
+            TextView deviceName = convertView.findViewById(R.id.add_device_device_name);
+            TextView deviceMacAddress = convertView.findViewById(R.id.add_device_mac_address);
 
             deviceName.setText(device.getName());
             deviceMacAddress.setText(device.getMacAddress());
@@ -226,13 +226,5 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
             // Return the completed view to render on screen
             return convertView;
         }
-        public void updateDeviceList(ArrayList<Device> list) {
-            deviceList.clear();
-            deviceList.addAll(list);
-            this.notifyDataSetChanged();
-
-        }
     }
-
-
 }

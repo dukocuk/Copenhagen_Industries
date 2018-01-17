@@ -91,14 +91,14 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         gunTypeLogos.put("Sniper", R.drawable.ic_sniper_big);
         gunTypeLogos.put("Musket", R.drawable.ic_musket_big);
 
-        name = (TextView) root.findViewById(R.id.weapon_control_name);
-        battery = (ImageView) root.findViewById(R.id.weapon_control_battery_image);
-        oxygen = (TextView) root.findViewById(R.id.weapon_control_oxygen);
-        propane = (TextView) root.findViewById(R.id.weapon_control_propane);
-        mode = (ImageView) root.findViewById(R.id.weapon_control_mode_imageView);
-        rateOfFire = (TextView) root.findViewById(R.id.weapon_control_RoF);
-        armingButton = (Button) root.findViewById(R.id.weapon_control_switch);
-        gunImage = (ImageView) root.findViewById(R.id.weapon_control_image_header);
+        name = root.findViewById(R.id.weapon_control_name);
+        battery = root.findViewById(R.id.weapon_control_battery_image);
+        oxygen = root.findViewById(R.id.weapon_control_oxygen);
+        propane = root.findViewById(R.id.weapon_control_propane);
+        mode = root.findViewById(R.id.weapon_control_mode_imageView);
+        rateOfFire = root.findViewById(R.id.weapon_control_RoF);
+        armingButton = root.findViewById(R.id.weapon_control_switch);
+        gunImage = root.findViewById(R.id.weapon_control_image_header);
         gunImage.setImageResource(gunTypeLogos.get(deviceController.getDeviceCurrentlyDisplayed().getGunType()));
 
         armingButton.setOnClickListener(new View.OnClickListener() {
@@ -110,11 +110,11 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                         deviceController.getDeviceCurrentlyDisplayed().setArmedState(!deviceController.getDeviceCurrentlyDisplayed().isArmedState());
                         if(deviceController.getDeviceCurrentlyDisplayed().isArmedState()){
                             armingButton.setBackground(getResources().getDrawable(R.drawable.danger));
-                            armingButton.setText("Armed");
+                            armingButton.setText(R.string.weapon_control_button_armed);
                         }
                         else {
                             armingButton.setBackground(getResources().getDrawable(R.drawable.safe));
-                            armingButton.setText("Safe");
+                            armingButton.setText(R.string.weapon_control_button_safe);
                         }
                         deviceController.getDeviceCurrentlyDisplayed().getTotalStatus();
 
@@ -124,8 +124,8 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                 }
                 else {
                     //armingButton.setBackgroundColor(getResources().getColor(R.color.colorButtonGrey));
-                    armingButton.setBackground(getResources().getDrawable(R.drawable.weapon_control_button_disconnected));
-                    armingButton.setText("Disconnected");
+                    armingButton.setBackground(getResources().getDrawable(R.drawable.disconnected));
+                    armingButton.setText(R.string.weapon_control_button_disconnected);
                 }
             }
         });
@@ -144,7 +144,6 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                //TODO change image resource.
             }
         });
 
@@ -205,15 +204,15 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
         if(!deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
             armingButton.setBackground(getResources().getDrawable(R.drawable.disconnected));
-            armingButton.setText("Disconnected");
+            armingButton.setText(R.string.weapon_control_button_disconnected);
         }
         else if(deviceController.getDeviceCurrentlyDisplayed().isArmedState()){
             armingButton.setBackground(getResources().getDrawable(R.drawable.danger));
-            armingButton.setText("Armed");
+            armingButton.setText(R.string.weapon_control_button_armed);
         }
         else {
             armingButton.setBackground(getResources().getDrawable(R.drawable.safe));
-            armingButton.setText("Safe");
+            armingButton.setText(R.string.weapon_control_button_safe);
         }
         if(!(deviceController.getDeviceCurrentlyDisplayed().getName()==null)) {
             this.name.setText(deviceController.getDeviceCurrentlyDisplayed().getName());
@@ -227,18 +226,20 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                 e.printStackTrace();
             }
         }
+
         if(!(deviceController.getDeviceCurrentlyDisplayed().getOxygen()==null)) {
-            oxygen.setText(deviceController.getDeviceCurrentlyDisplayed().getOxygen() + "%");
+            oxygen.setText(String.format("%s%%",deviceController.getDeviceCurrentlyDisplayed().getOxygen()));
+            // v v  oxygen.setText(deviceController.getDeviceCurrentlyDisplayed().getOxygen() + "%");
         }
         if(!(deviceController.getDeviceCurrentlyDisplayed().getPropane()==null)) {
-            propane.setText(deviceController.getDeviceCurrentlyDisplayed().getPropane() + "%");
+            propane.setText(String.format("%s%%",deviceController.getDeviceCurrentlyDisplayed().getPropane()));
         }
         if(!(deviceController.getDeviceCurrentlyDisplayed().getFireMode()==-1)) {
             mode.setImageResource(modeImages[deviceController.getDeviceCurrentlyDisplayed().getFireMode()]);
 
         }
         if(deviceController.getDeviceCurrentlyDisplayed().getRateOfFire()!=-1) {
-            rateOfFire.setText("" + deviceController.getDeviceCurrentlyDisplayed().getRateOfFire());
+            rateOfFire.setText(String.format("%s",deviceController.getDeviceCurrentlyDisplayed().getRateOfFire()));
         }
     }
 
@@ -251,8 +252,8 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     public void notifyObsConnectionLost() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setTitle("Forbindelse mistet.\nLav ny forbindelse?");
-        builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.weapon_control_connection_lost);
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -260,7 +261,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                 new ProgressTask((getActivity())).execute();
             }
         });
-        builder.setNegativeButton("Nej", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -283,7 +284,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
         public ProgressTask(Context context) {
             this.context = context;
-            dialog = new ProgressDialog(context);
+            dialog = new ProgressDialog(this.context);
 
 
             dialog.setCancelable(false);
@@ -292,13 +293,12 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
         @Override
         protected void onPreExecute() {
-            this.dialog.setMessage("Connecting...");
-            this.dialog.setButton(DialogInterface.BUTTON_NEGATIVE,"Cancel", new DialogInterface.OnClickListener() {
+            this.dialog.setMessage(getString(R.string.weapon_control_connecting));
+            this.dialog.setButton(DialogInterface.BUTTON_NEGATIVE,getString(R.string.weapon_control_cancel), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     if(i == DialogInterface.BUTTON_NEGATIVE) {
                         canceled = true;
-                        return;
                     }
                 }
             });
@@ -382,7 +382,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
             task = new ProgressTask(getActivity()).execute();
         }
         else if(resultCode == 0) {
-            Toast.makeText(getActivity(),"Please enable bluetooth",Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), R.string.toast_enable_bluetooth,Toast.LENGTH_LONG).show();
         }
     }
     private boolean isTaskRunning() {
@@ -478,7 +478,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
         }
         builder.setView(input);
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.weapon_control_user_input_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                  String textInput = input.getText().toString();
@@ -509,7 +509,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                  }
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.weapon_control_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();

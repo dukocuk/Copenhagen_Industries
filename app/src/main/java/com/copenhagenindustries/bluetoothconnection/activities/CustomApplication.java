@@ -1,30 +1,21 @@
 package com.copenhagenindustries.bluetoothconnection.activities;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.copenhagenindustries.bluetoothconnection.R;
 import com.github.omadahealth.lollipin.lib.PinActivity;
 import com.github.omadahealth.lollipin.lib.managers.AppLock;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
 
 import static android.content.ContentValues.TAG;
 
-/**
- * Created by Ejer on 10-01-2018.
- */
 
 public class CustomApplication extends PinActivity{
     @SuppressWarnings("unchecked")
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("MA_","CustomApp_Created");
-
         LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
         lockManager.enableAppLock(this, CustomPinActivity.class);
         lockManager.getAppLock().setFingerprintAuthEnabled(true);

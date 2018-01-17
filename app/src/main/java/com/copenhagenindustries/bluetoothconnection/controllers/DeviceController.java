@@ -5,6 +5,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.copenhagenindustries.bluetoothconnection.exceptions.DeviceControllerNotInstantiatedException;
+import com.copenhagenindustries.bluetoothconnection.misc.SharedPreferencesStrings;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,8 +15,8 @@ import java.util.List;
 public class DeviceController implements Serializable {
 
     private static volatile DeviceController sSoleInstance;     //Singleton cass.
-    List<Device> devices;                                       //List of devices.
-    Device deviceCurrentlyDisplayed;                            //The device currently being showed on the screen.
+    private List<Device> devices;                                       //List of devices.
+    private Device deviceCurrentlyDisplayed;                            //The device currently being showed on the screen.
 
 
     private DeviceController() {
@@ -45,7 +46,7 @@ public class DeviceController implements Serializable {
     /**
      * Add a device to the list.
      * @param device device to be added.
-     * @throws DeviceControllerNotInstantiatedException
+     * @throws DeviceControllerNotInstantiatedException DeviceController not instantiated.
      */
     public void addDevice(Device device) throws DeviceControllerNotInstantiatedException {
         if (sSoleInstance == null) {
@@ -57,8 +58,8 @@ public class DeviceController implements Serializable {
 
     /**
      * Remove a device from the list.
-     * @param device
-     * @throws DeviceControllerNotInstantiatedException
+     * @param device device device to be added.
+     * @throws DeviceControllerNotInstantiatedException DeviceController not instantiated.
      */
     public void removeDevice(Device device) throws DeviceControllerNotInstantiatedException {
         if (sSoleInstance == null) {
@@ -67,18 +68,6 @@ public class DeviceController implements Serializable {
         devices.remove(device);
     }
 
-    /**
-     * Returns an arraylist of devicenames.
-     * @return ArrayList<String> nameList
-     */
-    public ArrayList<String> getDeviceNameList() {
-        ArrayList<String> nameList = new ArrayList<>();
-        for (Device d : devices) {
-            nameList.add(d.getName());
-        }
-
-        return nameList;
-    }
 
     /**
      * getter for devicelist
@@ -90,7 +79,7 @@ public class DeviceController implements Serializable {
 
     /**
      * Sets the device Currently displayed on screen.
-     * @param name
+     * @param name Device name
      */
     public void setDeviceCurrentlyDisplayed(String name) {
         for (Device d : devices) {
@@ -110,7 +99,7 @@ public class DeviceController implements Serializable {
 
     /**
      * If macAddress already exists in devicelist return true.
-     * @param MacAddress
+     * @param MacAddress    MacAddress of the device
      * @return      True if in devicelist
      */
     public boolean inDeviceList(String MacAddress) {
@@ -124,35 +113,35 @@ public class DeviceController implements Serializable {
 
     /**
      * Save the deviceList
-     * @param activity
+     * @param activity Activity
      */
     public void saveData(Activity activity){
         StringBuilder stringBuilder = new StringBuilder();
         for(Device d : devices) {
-            stringBuilder.append(d.getName() + ",");
-            stringBuilder.append(d.getMacAddress() + ",");
-            stringBuilder.append(d.getSerialNumber()+";");
+            stringBuilder.append(String.format("%s,",d.getName()));
+            stringBuilder.append(String.format("%s,",d.getMacAddress()));
+            stringBuilder.append(String.format("%s;",d.getSerialNumber()));
         }
         if(!devices.isEmpty()) {
             stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         }
         Log.d("savaData",stringBuilder.toString());
-        PreferenceManager.getDefaultSharedPreferences(activity).edit().remove("deviceList").apply();
-        PreferenceManager.getDefaultSharedPreferences(activity).edit().putString("deviceList",stringBuilder.toString()).apply();
+        PreferenceManager.getDefaultSharedPreferences(activity).edit().remove(SharedPreferencesStrings.DEVICE_LIST).apply();
+        PreferenceManager.getDefaultSharedPreferences(activity).edit().putString(SharedPreferencesStrings.DEVICE_LIST,stringBuilder.toString()).apply();
 
     }
 
     /**
      * Load an devicelist saved to memory.
-     * @param activity
-     * @throws DeviceControllerNotInstantiatedException
+     * @param activity  Activity
+     * @throws DeviceControllerNotInstantiatedException DeviceController Not Instantiated.
      */
     public void loadData(Activity activity) throws DeviceControllerNotInstantiatedException {
         if(!PreferenceManager.getDefaultSharedPreferences(activity).contains("deviceList")) {
             return;
         }
-        String deviceList = PreferenceManager.getDefaultSharedPreferences(activity).getString("deviceList", "");
-        if(deviceList.equals("")||deviceList==null) {
+        String deviceList = PreferenceManager.getDefaultSharedPreferences(activity).getString(SharedPreferencesStrings.DEVICE_LIST, "");
+        if(deviceList.equals("")) {
             return;
         }
 

@@ -43,16 +43,16 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
         getActivity().setTitle(R.string.maindrawer_devices);
 
 
-        addNewDevice = (FloatingActionButton) root.findViewById(R.id.known_devices_floatingActionButton);
-        listView = (ListView) root.findViewById(R.id.known_devices_listView);
-        noItemView = (ConstraintLayout) root.findViewById(R.id.no_item_view);
+        addNewDevice = root.findViewById(R.id.known_devices_floatingActionButton);
+        listView = root.findViewById(R.id.known_devices_listView);
+        noItemView = root.findViewById(R.id.no_item_view);
 
         deviceController = DeviceController.getInstance();
         try {
             deviceController.loadData(getActivity());
         } catch (DeviceControllerNotInstantiatedException e) {
             e.printStackTrace();
-            Toast.makeText(getActivity(), "Unable to load data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.known_devices_unable_to_load_data, Toast.LENGTH_SHORT).show();
         }
         addNewDevice.setOnClickListener(this);
 
@@ -104,27 +104,24 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.device_list_elem, parent, false);
             }
             // Lookup view for data population
-            ImageView deviceLogo = (ImageView) convertView.findViewById(R.id.device_logo);
-            TextView deviceName = (TextView) convertView.findViewById(R.id.device_name);
-            Button deviceArmStatus = (Button) convertView.findViewById(R.id.device_arm_status);
+            ImageView deviceLogo = convertView.findViewById(R.id.device_logo);
+            TextView deviceName = convertView.findViewById(R.id.device_name);
+            Button deviceArmStatus = convertView.findViewById(R.id.device_arm_status);
 
             // Populate template view using the data object
             deviceLogo.setImageResource(findLogoForGunType(device.getGunType()));
             deviceName.setText(device.getName());
-            String armStatusText = "";
+            String armStatusText;
             if (device.connectionAlive()) {
                 if (device.isArmedState()) {
-                    armStatusText = "Armed";
-                    //deviceArmStatus.setBackgroundColor(getResources().getColor(R.color.colorButtonRed));
+                    armStatusText = getString(R.string.known_devices_status_armed);
                     deviceArmStatus.setBackground(getResources().getDrawable(R.drawable.danger));
                 } else {
-                    armStatusText = "Safe";
-                    //deviceArmStatus.setBackgroundColor(getResources().getColor(R.color.colorButtonGreen));
+                    armStatusText = getString(R.string.known_devices_status_safe);
                     deviceArmStatus.setBackground(getResources().getDrawable(R.drawable.safe));
                 }
             } else {
-                armStatusText = "DC";
-                //deviceArmStatus.setBackgroundColor(getResources().getColor(R.color.colorButtonGrey));
+                armStatusText = getString(R.string.known_devices_status_disconnected);
                 deviceArmStatus.setBackground(getResources().getDrawable(R.drawable.disconnected));
             }
 
@@ -134,7 +131,7 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
             View.OnClickListener goToControlFragment = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String name = (String) device.getName();
+                    String name = device.getName();
                     Log.d("onClick: ", name);
 
                     deviceController.setDeviceCurrentlyDisplayed(name);
@@ -150,9 +147,8 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
             View.OnClickListener toggleArm = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String buttonText = "DC";
+                    String buttonText = getResources().getString(R.string.known_devices_status_disconnected);
                     Button b = (Button) v;
-                    //b.setBackgroundColor(getResources().getColor(R.color.colorButtonGrey));
                     b.setBackground(getResources().getDrawable(R.drawable.disconnected));
 
                     try {
@@ -160,18 +156,15 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
                             boolean state = device.isArmedState();
                             device.setArmedState(!state);
                             if (device.isArmedState()) {
-                                //b.setBackgroundColor(getResources().getColor(R.color.colorButtonRed));
                                 b.setBackground(getResources().getDrawable(R.drawable.danger));
-                                buttonText = "Armed";
+                                buttonText = getResources().getString(R.string.known_devices_status_armed);
                             } else {
-                                //b.setBackgroundColor(getResources().getColor(R.color.colorButtonGreen));
                                 b.setBackground(getResources().getDrawable(R.drawable.safe));
-                                buttonText = "Safe";
+                                buttonText = getResources().getString(R.string.known_devices_status_safe);
                             }
                         }
                     } catch (IOException e) {
-                        buttonText = "DC";
-                        //b.setBackgroundColor(getResources().getColor(R.color.colorButtonGrey));
+                        buttonText = getResources().getString(R.string.known_devices_status_disconnected);
                         b.setBackground(getResources().getDrawable(R.drawable.disconnected));
 
                     }
@@ -189,7 +182,9 @@ public class KnownDevicesListFragment extends Fragment implements View.OnClickLi
         // Finds the appropriate logo for a given guntype
         private int findLogoForGunType(String guntype) {
             int gunlogo = R.drawable.ic_help;
-            if (gunTypeLogos.get(guntype) != null) gunlogo = gunTypeLogos.get(guntype);
+            if (gunTypeLogos.get(guntype) != null) {
+                gunlogo = gunTypeLogos.get(guntype);
+            }
             return gunlogo;
         }
     }

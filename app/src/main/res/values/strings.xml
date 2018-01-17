@@ -70,6 +70,29 @@
     <string name="delete">Delete</string>
     <string name="chance_the_rate_of_fire">Change the Rate of Fire</string>
     <string name="change_the_weapon_name">Change the weapon name</string>
+    <string name="weapon_control_button_armed">Armed</string>
+    <string name="weapon_control_button_safe">Safe</string>
+    <string name="weapon_control_button_disconnected">Disconnected</string>
+    <string name="weapon_control_connection_lost">Connection lost. \nCreate a new one?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="weapon_control_connecting">Connecting...</string>
+    <string name="weapon_control_cancel">Cancel</string>
+    <string name="toast_enable_bluetooth">Please enable bluetooth</string>
+    <string name="weapon_control_user_input_ok" translatable="false">Ok</string>
+    <string name="known_devices_unable_to_load_data">Unable to load data</string>
+    <string name="known_devices_status_armed">Armed</string>
+    <string name="known_devices_status_safe">Safe</string>
+    <string name="known_devices_status_disconnected" translatable="false">DC</string>
+    <string name="add_device_unable_to_fetch_list">Unable to fetch list</string>
+    <string name="add_device_no_bt_adapter">NoBTAdapter</string>
+    <string name="add_device_no_paired_devices_found">No Paired Bluetooth Devices Found.</string>
+    <string name="custom_pin_activity_forgot_dialog_positive_text">Yes</string>
+    <string name="custom_pin_activity_forgot_dialog_negative_text">No</string>
+    <string name="main_activity_back_to_quit_app">Back to quit.</string>
+    <string name="custom_pin_activity_forgot_dialog_content">Click here to enter app without pin</string>
+    <string name="change_pin_wrong_password">Pincode is wrong - Unable to change pin</string>
+    <string name="custom_pin_activity_forgot_dialog_title">Have you forgotten your PIN-code?</string>
 
 
     <!-- Help -->
