@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -465,7 +466,16 @@ public class WeaponControlFragment extends Fragment implements IObserver {
 
         final EditText input = new EditText(getActivity());
         if(type==1) {
+            InputFilter[] filterArray = new InputFilter[1];
+            filterArray[0] = new InputFilter.LengthFilter(8);
+            input.setFilters(filterArray);
             input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
+        else if(type==0) {
+            InputFilter[] filterArray = new InputFilter[1];
+            filterArray[0] = new InputFilter.LengthFilter(25);
+            input.setFilters(filterArray);
+
         }
         builder.setView(input);
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -476,6 +486,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                  switch (type) {
                      case 0: {
                          try {
+
                              deviceController.getDeviceCurrentlyDisplayed().setName(textInput);
                              updateDisplay();
                              deviceController.saveData(getActivity());

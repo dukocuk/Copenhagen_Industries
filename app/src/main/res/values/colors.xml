@@ -2,7 +2,8 @@
 <resources>
     <color name="colorPrimary">#303030</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="appBarMain">#1e1e1e</color>
+    <color name="colorAccent">#a33a3a</color>
     <color name="pure_red">#F21E17</color>
     <color name="colorButtonRed">#f70c0c</color>
     <color name="colorButtonGreen">#2cd302</color>
