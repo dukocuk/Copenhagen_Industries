@@ -67,11 +67,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
 
                 Intent changePin = new Intent(getActivity(), CustomPinActivity.class);
-                changePin.putExtra(AppLock.EXTRA_TYPE, AppLock.DISABLE_PINLOCK);
+                changePin.putExtra(AppLock.EXTRA_TYPE, AppLock.CONFIRM_PIN);
                 startActivityForResult(changePin,RequestCodes.STATE_CHANGE_PIN);
-
-                Intent disableLock = new Intent(getActivity(),CustomPinActivity.class);
-                disableLock.putExtra(AppLock.EXTRA_TYPE, AppLock.DISABLE_PINLOCK);
 
                 Intent enablePin = new Intent(getActivity(),CustomPinActivity.class);
                 enablePin.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
