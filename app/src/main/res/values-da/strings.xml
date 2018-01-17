@@ -62,7 +62,7 @@
     <string name="weapon_control_cancel">Annuller</string>
     <string name="toast_enable_bluetooth">Venligst tænd for bluetooth</string>
     <string name="known_devices_unable_to_load_data">Kunne ikke hente data</string>
-    <string name="known_devices_status_armed">Bevæbnet</string>
+    <string name="known_devices_status_armed">Armeret</string>
     <string name="known_devices_status_safe">Sikker</string>
     <string name="add_device_unable_to_fetch_list">Kunne ikke hente liste.</string>
     <string name="add_device_no_bt_adapter">Ingen bluetooth adapter</string>
