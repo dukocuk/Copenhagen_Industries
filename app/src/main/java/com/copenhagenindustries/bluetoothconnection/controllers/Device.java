@@ -166,14 +166,13 @@ public class Device implements ISubject{
         return battery;
     }
 
-    public String getGunType() {
-        String[] temp = {"AK47","Gun","Sub","Sniper","Musket"};
-        Random random = new Random();
-        int i = random.nextInt(5);
-        //int i = (int) Math.random() * 5;
-        Log.d("gunType int","" + i);
-
-        return temp[i];
+        public String getGunType() {
+        if(this.gunType!=null) {
+            return this.gunType;
+        }
+        else {
+            return "AK47";
+        }
     }
 
     public String getMacAddress() { return macAddress;}

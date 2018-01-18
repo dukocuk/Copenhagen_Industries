@@ -117,15 +117,13 @@ public class CustomPinActivity extends AppLockActivity {
     @Override
     public void onBackPressed() {
         Log.d("CPA_BackStackCount", "" + getFragmentManager().getBackStackEntryCount());
-
         super.onBackPressed();
-
-
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //Login success full. Reset value
         PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(SharedPreferencesStrings.ON_PIN_SUCCESS_NR, false).apply();
 
     }

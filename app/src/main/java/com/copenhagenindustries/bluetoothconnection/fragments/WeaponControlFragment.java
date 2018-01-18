@@ -34,6 +34,7 @@ import com.copenhagenindustries.bluetoothconnection.exceptions.DeviceControllerN
 import com.copenhagenindustries.bluetoothconnection.exceptions.NoBTAdapterException;
 import com.copenhagenindustries.bluetoothconnection.interfacePackage.IObserver;
 import com.copenhagenindustries.bluetoothconnection.misc.HandlerStates;
+import com.copenhagenindustries.bluetoothconnection.misc.RequestCodes;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -99,7 +100,12 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         rateOfFire = root.findViewById(R.id.weapon_control_RoF);
         armingButton = root.findViewById(R.id.weapon_control_switch);
         gunImage = root.findViewById(R.id.weapon_control_image_header);
-        gunImage.setImageResource(gunTypeLogos.get(deviceController.getDeviceCurrentlyDisplayed().getGunType()));
+        if(gunTypeLogos.containsKey(deviceController.getDeviceCurrentlyDisplayed().getGunType())) {
+            gunImage.setImageResource(gunTypeLogos.get(deviceController.getDeviceCurrentlyDisplayed().getGunType()));
+        }
+        else {
+            gunImage.setImageResource(R.drawable.ic_help);
+        }
 
         armingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,6 +206,12 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     }
 
     private void updateDisplay() {
+        if(gunTypeLogos.containsKey(deviceController.getDeviceCurrentlyDisplayed().getGunType())) {
+            gunImage.setImageResource(gunTypeLogos.get(deviceController.getDeviceCurrentlyDisplayed().getGunType()));
+        }
+        else {
+            gunImage.setImageResource(R.drawable.ic_help);
+        }
         if(!deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
             armingButton.setBackground(getResources().getDrawable(R.drawable.disconnected));
             armingButton.setText(R.string.weapon_control_button_disconnected);
@@ -373,15 +385,18 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         Log.d("onActivityResult","requestCode: " + requestCode + " resultCode: " + resultCode);
 
         // check if the request code is same as what is passed  here it is 1
-        if(resultCode == -1) {
-            if(isTaskRunning()) {
-                task.cancel(true);
+        if(requestCode == RequestCodes.STATE_ENABLE_BLUETOOTH) {
+            if(resultCode!=0) {
+                if(isTaskRunning()) {
+                    task.cancel(true);
+                }
+                task = new ProgressTask(getActivity()).execute();
             }
-            task = new ProgressTask(getActivity()).execute();
+            else if(resultCode == 0) {
+                Toast.makeText(getActivity(), R.string.toast_enable_bluetooth,Toast.LENGTH_LONG).show();
+            }
         }
-        else if(resultCode == 0) {
-            Toast.makeText(getActivity(), R.string.toast_enable_bluetooth,Toast.LENGTH_LONG).show();
-        }
+
     }
     private boolean isTaskRunning() {
         return (task != null) && (task.getStatus() == AsyncTask.Status.RUNNING);
@@ -404,6 +419,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
         super.onDestroy();
         handler = null;
         if(deviceController!=null) {
+            deviceController.saveData(getActivity());
             deviceController.getDeviceCurrentlyDisplayed().removeFromObserverList(this);
         }
         if(isTaskRunning()) {

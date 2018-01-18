@@ -1,6 +1,7 @@
 package com.copenhagenindustries.bluetoothconnection.controllers;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -9,7 +10,9 @@ import com.copenhagenindustries.bluetoothconnection.misc.SharedPreferencesString
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class DeviceController implements Serializable {
@@ -111,54 +114,76 @@ public class DeviceController implements Serializable {
         return false;
     }
 
+
+
+
+
+
     /**
      * Save the deviceList
      * @param activity Activity
      */
-    public void saveData(Activity activity){
-        StringBuilder stringBuilder = new StringBuilder();
-        for(Device d : devices) {
-            stringBuilder.append(String.format("%s,",d.getName()));
-            stringBuilder.append(String.format("%s,",d.getMacAddress()));
-            stringBuilder.append(String.format("%s;",d.getSerialNumber()));
+    public void saveData(Activity activity) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        Set<String> stringSet = prefs.getStringSet(SharedPreferencesStrings.DEVICE_LIST,new HashSet<String>());
+        prefs.edit().remove(SharedPreferencesStrings.DEVICE_LIST).apply();
+        stringSet.clear();
+        for(int i = 0;i<devices.size();i++) {
+            String dto = devices.get(i).getName() + ";" + devices.get(i).getMacAddress() + ";" + devices.get(i).getSerialNumber();
+            stringSet.add(dto);
+            Log.d("dto",dto);
+
         }
-        if(!devices.isEmpty()) {
-            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-        }
-        Log.d("savaData",stringBuilder.toString());
-        PreferenceManager.getDefaultSharedPreferences(activity).edit().remove(SharedPreferencesStrings.DEVICE_LIST).apply();
-        PreferenceManager.getDefaultSharedPreferences(activity).edit().putString(SharedPreferencesStrings.DEVICE_LIST,stringBuilder.toString()).apply();
+        Log.d("saveData Stringset",stringSet.toString());
+        prefs.edit().putStringSet(SharedPreferencesStrings.DEVICE_LIST, stringSet).apply();
 
     }
-
     /**
      * Load an devicelist saved to memory.
      * @param activity  Activity
      * @throws DeviceControllerNotInstantiatedException DeviceController Not Instantiated.
      */
-    public void loadData(Activity activity) throws DeviceControllerNotInstantiatedException {
+    public void loadData(Activity activity) throws DeviceControllerNotInstantiatedException{
         if(!PreferenceManager.getDefaultSharedPreferences(activity).contains("deviceList")) {
             return;
         }
-        String deviceList = PreferenceManager.getDefaultSharedPreferences(activity).getString(SharedPreferencesStrings.DEVICE_LIST, "");
-        if(deviceList.equals("")) {
-            return;
-        }
-
-        Log.d("deviceList",deviceList);
-        String[] deviceArray = deviceList.split(";");
-        if(deviceArray.length!=0) {
-            for(String d : deviceArray) {
-                String[] info = d.split(",");
-                Device toBeAdded = new Device(info[0], info[1]);
-                toBeAdded.setSerialNumber(info[2]);
-                if (!inDeviceList(toBeAdded.getMacAddress())) {
-                    addDevice(toBeAdded);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        Set<String> stringSet = prefs.getStringSet(SharedPreferencesStrings.DEVICE_LIST,new HashSet<String>());
+        Log.d("Loaddata:stringset",stringSet.toString());
+        if(!stringSet.isEmpty()) {
+            for (String dto : stringSet) {
+                if(dto==null) {
+                    Log.d("Loaddata: dto","null");
+                    break;
                 }
-            }
+                if(dto.equals("")){
+                    Log.d("Loaddata: dto","String empty");
+                    break;
+                }
+                Log.d("LoadData: dto",dto);
 
+                String[] stringparts = dto.split(";");
+                System.out.println(dto);
+                Log.d("Stringparts",stringparts.toString());
+                Log.d("part 0",stringparts[0]);
+                Log.d("part 1",stringparts[1]);
+                Log.d("part 2",stringparts[2]);
+
+                Device device = new Device(stringparts[0],stringparts[1]);
+                device.setSerialNumber(stringparts[2]);
+                Log.d("deviceDTO",device.toString());
+                if(!inDeviceList(device.getMacAddress())) {
+                    addDevice(device);
+                }
+                Log.d("doneAdding","doneAdding");
+
+            }
         }
+
+        Log.d("Loaddata: list",devices.toString());
+
     }
+
 
 
 

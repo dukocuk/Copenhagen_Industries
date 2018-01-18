@@ -21,7 +21,9 @@
             android:windowSoftInputMode="adjustPan">
 
         </activity>
-        <activity android:name=".activities.SplashScreen" >
+        <activity android:name=".activities.SplashScreen"
+            android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -33,7 +35,8 @@
             android:windowSoftInputMode="adjustPan">
 
         </activity>
-        <activity android:name=".activities.CustomPinActivity">
+        <activity android:name=".activities.CustomPinActivity"
+            android:screenOrientation="portrait">
 
 
         </activity>

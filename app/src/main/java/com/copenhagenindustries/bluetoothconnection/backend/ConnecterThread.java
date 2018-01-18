@@ -90,6 +90,7 @@ class ConnecterThread implements Runnable {
                 e.printStackTrace();
             }
         }
+        Log.d("Thread Shutdown", "Connnection now ending");
 
         //Entering this piece of code means that the thread shall terminate.
         try {

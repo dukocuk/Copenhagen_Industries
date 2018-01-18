@@ -29,6 +29,7 @@ import com.copenhagenindustries.bluetoothconnection.controllers.Device;
 import com.copenhagenindustries.bluetoothconnection.controllers.DeviceController;
 import com.copenhagenindustries.bluetoothconnection.R;
 import com.copenhagenindustries.bluetoothconnection.exceptions.DeviceControllerNotInstantiatedException;
+import com.copenhagenindustries.bluetoothconnection.misc.RequestCodes;
 
 import java.util.Set;
 import java.util.ArrayList;
@@ -112,10 +113,6 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
 
 
 
-
-
-
-
         Animation animation = AnimationUtils.makeInChildBottomAnimation(getActivity());
         root.startAnimation(animation);
 
@@ -127,16 +124,19 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
         super.onActivityResult(requestCode, resultCode, data);
         Log.d("onActivityResult","requestCode: " + requestCode + " resultCode: " + resultCode);
         // check if the request code is same as what is passed  here it is 1
-        if(requestCode==1) {
-            initializeList();
-            getPairedDevices();
-            for (Device d : deviceList) {
-                Log.d("device", d.getName());
+
+        if(requestCode==RequestCodes.STATE_ENABLE_BLUETOOTH) {
+            if (resultCode != 0) {
+                initializeList();
+                getPairedDevices();
+                for (Device d : deviceList) {
+                    Log.d("device", d.getName());
+                }
+                Log.d("DeviceList", deviceList.toString());
             }
-            Log.d("DeviceList", deviceList.toString());
-        }
-        else{
-            Toast.makeText(getActivity(), R.string.add_device_unable_to_fetch_list,Toast.LENGTH_LONG).show();
+            else{
+                Toast.makeText(getActivity(), R.string.add_device_unable_to_fetch_list,Toast.LENGTH_LONG).show();
+            }
         }
 
     }
@@ -155,7 +155,7 @@ public class AddDevicesFragment extends Fragment implements SwipeRefreshLayout.O
         {
             //Ask to the user turn the bluetooth on
             Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBTIntent,1);
+            startActivityForResult(enableBTIntent, RequestCodes.STATE_ENABLE_BLUETOOTH);
         }
     }
 
