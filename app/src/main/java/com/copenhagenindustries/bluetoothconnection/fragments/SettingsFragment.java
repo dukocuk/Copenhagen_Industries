@@ -179,7 +179,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
         dialog.setView(view);
 
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
         dialog.setTitle(R.string.pref_about_title2);
         dialog.setMessage(R.string.pref_about_devs);
         dialog.setPositiveButton(R.string.pref_about_btn_ok, new DialogInterface.OnClickListener() {
