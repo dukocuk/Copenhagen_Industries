@@ -107,7 +107,6 @@ public class BluetoothConnection implements IBluetooth {
      */
     @Override
     public void getTotalStatus() throws IOException {
-
         String command = "<GTS:>";
         connecterThread.write(command);
     }

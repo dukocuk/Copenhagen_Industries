@@ -200,8 +200,6 @@ public class WeaponControlFragment extends Fragment implements IObserver {
     }
 
     private void updateDisplay() {
-
-
         if(!deviceController.getDeviceCurrentlyDisplayed().connectionAlive()) {
             armingButton.setBackground(getResources().getDrawable(R.drawable.disconnected));
             armingButton.setText(R.string.weapon_control_button_disconnected);
@@ -440,6 +438,7 @@ public class WeaponControlFragment extends Fragment implements IObserver {
                 break;
             case R.id.weapon_control_delete_weapon: {
                 try {
+                    deviceController.getDeviceCurrentlyDisplayed().stopConnection();
                     deviceController.removeDevice(deviceController.getDeviceCurrentlyDisplayed());
                     deviceController.saveData(getActivity());
                 } catch (DeviceControllerNotInstantiatedException e) {

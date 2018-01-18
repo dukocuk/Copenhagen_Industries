@@ -76,8 +76,6 @@ class ConnecterThread implements Runnable {
                 return;
 
             }
-
-
                         //Listen for input. If any input has been received send it up the stream via the handler.
             try {
                 bytes = inputStream.read(buffer);

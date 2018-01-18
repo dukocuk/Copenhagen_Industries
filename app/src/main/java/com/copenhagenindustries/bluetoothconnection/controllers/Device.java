@@ -77,6 +77,10 @@ public class Device implements ISubject{
         connection.startConnection(macAddress);
     }
 
+    public void stopConnection() {
+        connection.stopConnection();
+    }
+
     /**
      * If the connection isn't null, returns the connections status.
      * @return true if connection is alive

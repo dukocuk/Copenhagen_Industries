@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:paddingStart="20dp"
         android:layout_below="@+id/add_device_device_name"
         android:text="@string/add_device_mac"
         android:textColor="@android:color/white" />
